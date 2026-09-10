@@ -1,0 +1,38 @@
+# Credenciais e configurações locais
+.env
+.env.*
+!.env.example
+*.local.ini
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Node / frontend
+node_modules/
+dist/
+coverage/
+*.log
+
+# Dados e arquivos gerados em execução
+backend/var/
+tmp/
+qa_report/
+qa_report_final/
+qa_report_final2/
+qa_report_word/
+
+# Ferramentas locais de design/Codex
+.agents/
+.impeccable/
+
+# Sistema operacional e IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
