@@ -12,6 +12,7 @@ O arquivo [`../PRODUCT.md`](../PRODUCT.md) é o resumo permanente do produto.
 
 ## Descoberta antes do desenvolvimento
 
+- [`discovery/2026-09-10-fluxo-requisicao-aprovacao-vaga.md`](discovery/2026-09-10-fluxo-requisicao-aprovacao-vaga.md): primeiro fluxo detalhado, com responsáveis, campos, seis histórias, critérios de aceite e pendências para validação. Proposta de backlog; não implementado.
 - [`discovery/2026-09-08-discovery-design-sprint-pbb.md`](discovery/2026-09-08-discovery-design-sprint-pbb.md): método combinado de Design Thinking, Design Sprint e Product Backlog Building, com pesquisa, oficina no Miro, testes, gates, Definition of Ready e Definition of Done.
 
 Esse documento organiza a validação anterior a qualquer nova fase de programação. Decisões confirmadas na oficina devem ser transferidas para a especificação mestre.
