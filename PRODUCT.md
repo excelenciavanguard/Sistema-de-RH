@@ -21,14 +21,15 @@ web
 
 ## Usuários
 
-- RH: cria vagas, recebe e importa currículos, revisa extrações, conduz a triagem e administra o processo seletivo.
-- Diretoria: aprova vagas antes da publicação e possui acesso integral às funcionalidades e informações do sistema.
+- Operações: cria a requisição da vaga e acompanha a decisão da diretoria.
+- RH: cria a vaga somente após a aprovação da requisição, recebe e importa currículos, revisa extrações, conduz a triagem e administra o processo seletivo.
+- Diretoria: aprova, rejeita ou solicita correção da requisição e possui acesso integral às funcionalidades e informações do sistema.
 - Candidatos: futuramente poderão consultar vagas e enviar candidatura por formulário público.
 - Administrador da plataforma: papel futuro para uma eventual comercialização; não faz parte do MVP interno.
 
 ## Objetivo do produto
 
-Centralizar o processo de recrutamento por posto de trabalho, desde a criação e aprovação da vaga até contratação ou encerramento. O sistema deve reduzir o tempo gasto pelo RH na análise de mais de 1.000 currículos por mês, preservar os documentos efetivamente importados, extrair informações com IA, comparar evidências profissionais com requisitos objetivos e apresentar o deslocamento separadamente da qualificação.
+Centralizar o processo de recrutamento por posto de trabalho, desde a requisição criada por Operações, sua aprovação pela Diretoria e a criação da vaga pelo RH até contratação ou encerramento. O sistema deve reduzir o tempo gasto pelo RH na análise de mais de 1.000 currículos por mês, preservar os documentos efetivamente importados, extrair informações com IA, comparar evidências profissionais com requisitos objetivos e apresentar o deslocamento separadamente da qualificação.
 
 O resultado esperado é permitir que o RH encontre rapidamente os candidatos que merecem análise humana, sem precisar abrir cada currículo apenas para descobrir localização, experiência ou cursos.
 
@@ -45,7 +46,7 @@ O produto combina vagas vinculadas a postos, pré-triagem de mobilidade por tran
 - O sistema atual é o ATS Quickin, fornecido pela People Technology. Ele distribui vagas para Google for Jobs, LinkedIn, Netvagas e Indeed.
 - O novo produto deverá substituir o Quickin, preservando as capacidades essenciais de um ATS e acrescentando os diferenciais próprios da operação por postos.
 - A operação inicial terá no máximo duas pessoas do RH usando o sistema simultaneamente, além da diretoria.
-- O processo confirmado começa com a criação da vaga pelo RH e aprovação obrigatória pela diretoria antes da publicação.
+- O processo confirmado começa quando Operações cria a requisição da vaga; a Diretoria decide e, quando aprovada, o RH cria a vaga.
 - O produto será desenvolvido, validado e operado primeiro para uso interno da Alpha Serviços. Uma eventual versão comercial será planejada somente depois da validação do fluxo interno.
 - Cada vaga terá endereço do posto, escala e horários de entrada e saída para permitir a pré-triagem objetiva de transporte antes da criação da candidatura.
 
@@ -54,7 +55,7 @@ O produto combina vagas vinculadas a postos, pré-triagem de mobilidade por tran
 ### Confirmadas
 
 - Cadastro e acompanhamento de vagas por posto.
-- Aprovação da vaga pela diretoria antes da publicação.
+- Aprovação da requisição pela Diretoria antes de o RH criar a vaga.
 - Importação manual e por canais externos conforme viabilidade técnica.
 - Os formatos confirmados de currículo são PDF (`.pdf`), Word legado e atual (`.doc` e `.docx`) e arquivos de texto produzidos no Bloco de Notas (`.txt`). O importador também deverá aproveitar o texto do corpo da mensagem quando ele contiver o currículo.
 - A validação usará tipo real do arquivo, assinatura binária e extensão, com limite de tamanho, verificação de conteúdo malicioso e rejeição segura de formatos executáveis ou incompatíveis. PDF com texto, Word e TXT usarão extração nativa; PDF digitalizado e imagens usarão OCR quando necessário.

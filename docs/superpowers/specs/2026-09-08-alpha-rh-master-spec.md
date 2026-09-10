@@ -75,10 +75,10 @@ Os diferenciais são:
 
 ## 4. Usuários, papéis e autoridade
 
-- **GOV-001 — Confirmado:** o RH cria a requisição e conduz o recrutamento.
-- **GOV-002 — Confirmado:** a diretoria aprova a vaga antes da publicação.
+- **GOV-001 — Confirmado:** Operações cria a requisição da vaga.
+- **GOV-002 — Confirmado:** a Diretoria aprova, rejeita ou solicita correção da requisição.
 - **GOV-003 — Confirmado:** a diretoria possui acesso a todos os módulos e registros.
-- **GOV-004 — Planejado:** o RH poderá editar rascunhos e solicitações de correção.
+- **GOV-004 — Planejado:** Operações poderá editar rascunhos e requisições devolvidas para correção.
 - **GOV-005 — Planejado:** a diretoria poderá aprovar, rejeitar ou solicitar correção, registrando motivo.
 - **GOV-006 — Planejado:** cada vaga terá responsável e equipe de trabalho.
 - **GOV-007 — Planejado:** permissões serão concedidas por função e pelo princípio do menor acesso.
@@ -102,9 +102,9 @@ Os diferenciais são:
 ## 6. Requisição, aprovação e criação da vaga
 
 - **VAC-001 — Planejado:** a primeira fase futura começará por requisição, aprovação, vaga e perguntas.
-- **VAC-002 — Confirmado:** o fluxo é RH cria e diretoria aprova.
+- **VAC-002 — Confirmado:** o fluxo é Operações cria a requisição, Diretoria aprova e RH cria a vaga.
 - **VAC-003 — Planejado:** estados da requisição: Rascunho, Aguardando aprovação, Correção solicitada, Aprovada, Rejeitada e Convertida em vaga.
-- **VAC-004 — Planejado:** aprovação criará uma vaga em rascunho preenchida com os dados da requisição.
+- **VAC-004 — Planejado:** a aprovação habilitará o RH a criar a vaga, aproveitando os dados da requisição sem publicá-la automaticamente.
 - **VAC-005 — Planejado:** a vaga somente poderá ser publicada depois da aprovação.
 - **VAC-006 — Confirmado:** cada vaga será vinculada a um posto ativo e ao seu endereço sincronizado.
 - **VAC-007 — Confirmado:** cada vaga terá função, atividades, quantidade, salário, benefícios, contrato, escala, dias, entrada, saída, requisitos obrigatórios e desejáveis, experiência, cursos/certificações, responsável e situação.

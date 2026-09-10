@@ -30,8 +30,9 @@ O processo não é rígido. Se o teste revelar uma premissa errada, o trabalho r
 As decisões abaixo vêm da especificação mestre e não precisam ser rediscutidas na oficina, salvo quando surgir evidência operacional ou jurídica nova:
 
 - o produto será usado primeiro internamente pela Alpha Serviços;
-- o RH cria a requisição e conduz o processo;
-- a diretoria aprova a vaga antes da publicação e possui acesso integral;
+- Operações cria a requisição da vaga;
+- a Diretoria aprova, rejeita ou solicita correção da requisição e possui acesso integral;
+- após a aprovação, o RH cria a vaga e conduz o processo seletivo;
 - postos ativos são lidos de `CAD_CLIENTE` no Weboper, sem gravação nesse banco;
 - dados de recrutamento ficam em banco próprio;
 - os canais atuais são Gmail/Rio Vagas, Quickin/People, Indeed gratuito, WhatsApp e currículo físico;
@@ -257,10 +258,10 @@ Ainda não são metas aprovadas. Devem ser definidas na preparação:
 
 ## 7. Fluxo futuro inicial a validar
 
-1. RH cria uma requisição.
+1. Operações cria uma requisição de vaga.
 2. Diretoria aprova, rejeita ou pede correção.
-3. Aprovada, a requisição origina vaga em rascunho.
-4. RH confirma posto ativo, requisitos, contrato, escala, horários e perguntas.
+3. Quando a requisição é aprovada, o RH recebe autorização para criar a vaga.
+4. RH cria a vaga e confirma posto ativo, requisitos, contrato, escala, horários e perguntas.
 5. RH publica ou abre a entrada controlada de currículos.
 6. Sistema valida arquivo, origem, hash e possíveis duplicidades.
 7. IA extrai informações com evidência, página e pendências.
@@ -397,4 +398,3 @@ Depois dessa sessão, a documentação deve ser atualizada antes de desenhar nov
 - Jake Knapp, John Zeratsky e Braden Kowitz — *Sprint: o método usado no Google para testar e aplicar novas ideias em apenas cinco dias*.
 - Fábio Aguiar e Paulo Caroli — *Product Backlog Building: um guia prático para criação e refinamento de backlog para produtos de sucesso*.
 - Maurício Vianna et al. — *Design Thinking: inovação em negócios*.
-

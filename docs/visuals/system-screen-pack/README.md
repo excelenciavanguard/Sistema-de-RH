@@ -11,7 +11,7 @@ Inventário de mockups conceituais do sistema. As imagens representam o fluxo ap
 2. `02-lista-requisicoes.png` — lista de requisições de Operações.
 3. `03-nova-requisicao-operacoes.png` — criação da requisição por Operações.
 4. `04-aprovacao-diretoria.png` — decisão da Diretoria.
-5. `05-lista-vagas.png` — gestão das vagas aprovadas.
+5. `05-lista-vagas.png` — gestão das vagas criadas pelo RH após a aprovação da requisição.
 6. `06-criar-editar-vaga.png` — criação completa da vaga pelo RH.
 7. `06a-perguntas-da-vaga.png` — perguntas obrigatórias e alertas para revisão.
 8. `06b-gerador-descricao-vaga.png` — gerador de descrição com IA e histórico.
@@ -54,7 +54,7 @@ Inventário de mockups conceituais do sistema. As imagens representam o fluxo ap
 
 ## Observações
 
-- O fluxo confirmado é: Operações cria a requisição, Diretoria decide e RH cria a vaga após a aprovação.
+- O fluxo confirmado é: Operações cria a requisição, Diretoria aprova, rejeita ou solicita correção e, quando aprovada, o RH cria a vaga.
 - Weboper permanece somente leitura.
 - Estados não testados nas integrações aparecem como pendentes.
 - IA, mobilidade, filtros e avaliações apoiam o trabalho; decisões permanecem humanas.
