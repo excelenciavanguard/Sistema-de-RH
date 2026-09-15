@@ -12,10 +12,15 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 - Implement only frontend screens and navigation in this phase. Do not add login or change backend, database, Weboper, e-mail, WhatsApp, Maps, or AI integrations.
 - New flows use clearly illustrative data until the backend contracts are designed and approved.
-- Preserve the approved top navigation, white work surfaces, solid blue actions, subtle offset shadows, and the existing Kanban/candidate modal behavior.
-- The approved header follows the executive white direction selected from option 1: white application bar, Alpha RH wordmark, active “Hoje no RH” tab with a blue underline, restrained blue accents, search, notifications and profile. Preserve the grouped dropdown menus for Recrutamento, Talentos e Pessoas, Jornada, and Gestão. Do not add a second module bar or a global “Nova requisição” call to action.
-- The approved “Hoje no RH” composition follows the selected reference closely: slim blue greeting banner, five priority rows, timeline agenda, four process indicators and compact recent activity. Treat that image as the source of truth for hierarchy and proportions.
+- Preserve the approved top navigation, white work surfaces, solid forest-green actions, subtle offset shadows, and the existing Kanban/candidate modal behavior.
+- The approved header follows the executive white direction selected from option 1: white application bar, Alpha RH wordmark, active “Hoje no RH” tab with a forest-green underline, restrained green accents, search, notifications and profile. Preserve the grouped dropdown menus for Recrutamento, Talentos e Pessoas, Jornada, and Gestão. Do not add a second module bar or a global “Nova requisição” call to action.
+- The approved “Hoje no RH” composition follows the selected reference closely: slim forest-green greeting banner, five priority rows, timeline agenda, four process indicators and compact recent activity. Treat that image as the source of truth for hierarchy and proportions.
 - SLA indicators use low-saturation backgrounds and restrained text colors; reserve strong colors for actions and true critical alerts.
 - The connected sequence is: Operações creates a requisition, Diretoria approves it, RH creates the vacancy, and the vacancy opens its candidate Kanban.
 - The frontend now supports an incremental shadcn/Tailwind/TypeScript layer under `src/components/ui` while the existing JavaScript and CSS screens remain valid during migration.
 - The `header-3` navigation replaces the previous top bar, but it must use Alpha RH modules and Portuguese copy; marketing labels and login calls to action do not belong in the internal product.
+
+## Brand palette (user preference, 2026-09-15)
+
+- Apply #051F20, #0B2B26, #163832, #235347, #DFF3E4 and #EDF6EF consistently across the system and existing Alpha RH logo. This supersedes earlier blue color directions.
+- Use dark greens for text, navigation and actions, and pale greens for the canvas and selected states. Preserve white work surfaces and semantic warning/error colors.
