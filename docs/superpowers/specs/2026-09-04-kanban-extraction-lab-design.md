@@ -16,7 +16,7 @@ Criar a primeira aplicação executável do RH para validar o Kanban aprovado e 
 1. O RH abre a vaga “Auxiliar de Serviços Gerais · Leblon Power”.
 2. Pesquisa e filtra candidatos; pode personalizar filtros visíveis.
 3. Arrasta candidatos entre etapas e vê os contadores atualizados.
-4. Abre o candidato em um modal 360 com Resumo, Currículo, Evidências, Mobilidade e Histórico.
+4. Abre o candidato em um modal 360 com Resumo, Currículo, Evidências, Respostas, Mobilidade e Histórico.
 5. Visualiza uma prévia ilustrativa do currículo e o atalho de download permanece desabilitado quando não existe arquivo real.
 6. Abre “Testar extração”, escolhe PDF, DOC, DOCX ou TXT e seleciona OpenAI, Gemini ou Comparar ambos.
 7. Em modo demonstração, a interface apresenta resultados estruturados dos dois provedores e deixa explícito que nenhuma API real foi chamada.

@@ -19,6 +19,7 @@ Esse documento organiza a validação anterior a qualquer nova fase de programa�
 
 ## Especificações especializadas existentes
 
+- [`superpowers/specs/2026-09-14-whatsapp-questionarios-regras.md`](superpowers/specs/2026-09-14-whatsapp-questionarios-regras.md): regras propostas de questionários por WhatsApp, fontes consultadas, fila, limites, pausas e piloto; não implementado.
 - `superpowers/specs/2026-09-03-candidate-photos-job-description-generator-design.md`
 - `superpowers/specs/2026-09-04-kanban-extraction-lab-design.md`
 - `superpowers/specs/2026-09-04-extraction-backend-fastapi-mysql-design.md`

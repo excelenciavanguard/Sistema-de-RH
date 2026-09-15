@@ -260,6 +260,8 @@ Os diferenciais são:
 - **AUT-009 — Planejado:** tarefas terão responsável, prazo, situação e vínculo com candidato/vaga.
 - **AUT-010 — Pendente:** provedor de WhatsApp, custos, limites e autorização.
 
+Detalhamento documental de 14/09/2026: [regras de questionários por WhatsApp](2026-09-14-whatsapp-questionarios-regras.md). Registra requisitos externos consultados e parâmetros internos propostos (frequência, horários, piloto e pausas), ainda sujeitos à validação. Não altera a situação de implementação nem representa aprovação da Meta. O inventário de itens acima permanece o da consolidação original; as regras WA desta proposta não foram somadas a ele.
+
 ## 14. Avaliações e scorecards
 
 - **AVA-001 — Planejado:** RH e gestor usarão scorecards padronizados relacionados aos requisitos da vaga.
@@ -316,6 +318,7 @@ Os diferenciais são:
 - **SEG-018 — Confirmado:** a limitação pública do Jusbrasil impede tratá-lo como integração disponível para recrutamento trabalhista.
 - **SEG-019 — Confirmado:** padrões mínimos de acessibilidade pretendidos: WCAG 2.2 nível AA, sujeitos à validação formal.
 - **SEG-020 — Confirmado:** LGPD, retenção e solicitações não terão tela própria no frontend; seus controles permanecerão no backend e nos fluxos administrativos autorizados.
+- **SEG-021 — Confirmado:** a tela de login foi adiada na primeira rodada de implementação; até sua conclusão, o desenvolvimento será local e utilizará somente dados sintéticos. Autenticação e autorização continuam obrigatórias antes de currículos reais, dados pessoais ou acesso pela rede.
 
 ## 18. Interface e experiência
 
@@ -325,13 +328,18 @@ Os diferenciais são:
 - **UX-004 — Confirmado:** Caixa Financeiro e Central de Limpeza são referências de acabamento, não modelos para cópia literal.
 - **UX-005 — Confirmado:** Quickin é referência funcional; o Alpha RH não copiará sua identidade visual.
 - **UX-006 — Confirmado:** densidade será adequada ao trabalho diário do RH, sem excesso de informação em uma única tela.
-- **UX-007 — Confirmado:** o modal 360 terá abas Resumo, Currículo, Evidências, Mobilidade e Histórico, podendo crescer com avaliações e respostas.
+- **UX-007 — Confirmado:** o modal 360 terá abas Resumo, Currículo, Evidências, Respostas, Mobilidade e Histórico, podendo crescer futuramente com avaliações.
 - **UX-008 — Confirmado:** a aba de Mobilidade terá mapa amplo, ida, volta, escala, percurso, custos, fonte e pendências.
 - **UX-009 — Confirmado:** filtros terão chips removíveis, favoritos, “Mais filtros” e “Personalizar”.
 - **UX-010 — Confirmado:** ações perigosas terão confirmação e retorno claro.
 - **UX-011 — Planejado:** telas terão estados vazios, carregamento, erro, permissão insuficiente, integração indisponível e reprocessamento.
 - **UX-012 — Confirmado:** interface será responsiva; Kanban manterá rolagem horizontal em telas estreitas.
 - **UX-013 — Planejado:** atalhos de teclado e foco visível serão usados onde ajudarem a operação.
+- **UX-014 — Confirmado:** entrevistas serão preparadas e registradas dentro do modal do candidato aberto pelo Kanban, sem criar uma página independente para cada etapa.
+- **UX-015 — Confirmado:** a importação manual abrirá por `Adicionar candidato` e conduzirá Arquivo, Extração, Revisão e inclusão no Kanban no mesmo modal.
+- **UX-016 — Confirmado:** Agenda e Banco de Talentos permanecem telas globais por reunirem informações de várias vagas.
+- **UX-017 — Confirmado:** Entrega de documentos, Treinamento e Contratação continuam como colunas do Kanban; o conteúdo operacional de cada etapa abre no modal do candidato, sem criar três páginas independentes.
+- **UX-018 — Proposto para validação:** a confirmação da contratação exigirá conferência da data de início e autorização explícita do responsável, mantendo perfil, currículo e histórico após retirar a candidatura do Kanban ativo.
 
 ## 19. Telas previstas
 
