@@ -15,11 +15,10 @@ it("restores the personal greeting and browser-local date above the processes", 
   expect(screen.getByRole("heading", { name: "Hoje no RH" })).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "Olá, Simão Pedro!" })).toBeInTheDocument();
   expect(screen.getByText("Quarta-feira, 16 de setembro de 2026")).toBeInTheDocument();
-  expect(screen.getByText("Bom trabalho, Simão Pedro!")).toBeInTheDocument();
   expect(screen.queryByRole("heading", { name: "Próximo compromisso" })).not.toBeInTheDocument();
   const agendaButton = screen.getByRole("button", { name: "Agenda de hoje 3" });
   const greeting = screen.getByRole("heading", { name: "Olá, Simão Pedro!" });
-  expect(agendaButton.compareDocumentPosition(greeting) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(greeting.closest("header")).toContainElement(agendaButton);
 });
 
 it("opens the whole day and navigates to the complete agenda", () => {

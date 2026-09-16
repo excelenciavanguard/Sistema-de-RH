@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Briefcase, CalendarBlank, Clock, FileText, MapPin, X } from "@phosphor-icons/react";
 import { vacancies, recentActivity } from "../mockWorkspaceData.js";
 import { ROUTES } from "../navigation.js";
-import WelcomeBanner from "../components/ui/welcome-banner";
 import "./HomeScreen.css";
 
 const agenda = [
@@ -45,35 +44,30 @@ export function HomeScreen({ onNavigate, appointments = agenda, currentDate }) {
   }).format(today);
   const accessibleDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
   const displayDate = dateLabel.charAt(0).toUpperCase() + dateLabel.slice(1);
+  const activeVacancies = vacancies.filter((vacancy) => vacancy.status === "Ativa");
 
   return <main className="screen-workspace home-screen process-home">
     <span className="sr-only">Dados demonstrativos</span>
     <header className="restored-home-heading">
       <div>
         <h1>Hoje no RH</h1>
-        <p>Visão geral do que importa para você e para o time de RH.</p>
+        <h2 className="home-personal-greeting">Olá, Simão Pedro!</h2>
+        <p className="home-greeting-quote">Pessoas bem cuidadas constroem grandes resultados.</p>
       </div>
       <div className="restored-home-date">
         <time dateTime={accessibleDate}>{displayDate}</time>
-        <span>Bom trabalho, Simão Pedro!</span>
         <div className="today-agenda-access">
           <button className="today-agenda-button" type="button" onClick={openAgenda}><CalendarBlank size={17} />Agenda de hoje <span>{appointments.length}</span></button>
         </div>
       </div>
     </header>
-    <WelcomeBanner description="Acompanhe seus compromissos e o andamento dos processos de hoje." />
     <section className="processes-card" aria-labelledby="processes-title">
-      <header className="processes-card-header">
-        <span className="section-symbol"><Briefcase size={22} weight="duotone" /></span>
-        <div><h2 id="processes-title">Processos em andamento</h2><p>Acompanhe o andamento das vagas e o status de cada etapa.</p></div>
-        <button className="text-action" type="button" onClick={() => onNavigate(ROUTES.vacancies)}>Ver todas as vagas <ArrowRight size={17} /></button>
-      </header>
       <div className="processes-table" role="table" aria-label="Processos em andamento">
-        <div className="processes-table-head" role="row"><span>Vaga</span><span>Etapas do processo</span><span>Novos</span></div>
-        <div role="rowgroup">{vacancies.filter((vacancy) => vacancy.status === "Ativa").map((vacancy) => {
+        <div className="processes-table-head" role="row"><span>Vaga</span><span>Candidatos por etapa</span><span>Novos</span></div>
+        <div role="rowgroup">{activeVacancies.map((vacancy) => {
           const currentStage = stageIndex(vacancy.stage);
           const metrics = vacancyMetrics[vacancy.code] ?? { pipeline: [vacancy.candidates, 0, 0, 0, 0, 0, 0, 0, 0], newCandidates: vacancy.candidates };
-          return <button className="process-row" key={vacancy.code} type="button" onClick={() => openKanban(vacancy)} aria-label={`Abrir processo da vaga ${vacancy.role}`}>
+          return <button className="process-row" key={vacancy.code} type="button" onClick={() => openKanban(vacancy)} aria-label={`Abrir processo da vaga ${vacancy.role}`} aria-describedby={`process-summary-${vacancy.code}`}>
             <span className="process-vacancy">
               <span className="process-vacancy-copy">
                 <strong>{vacancy.role}</strong>
@@ -84,15 +78,20 @@ export function HomeScreen({ onNavigate, appointments = agenda, currentDate }) {
             <span className="stage-progress" aria-label={`Etapa atual: ${vacancy.stage}. ${pipelineStages.map((stage, index) => `${stage}: ${metrics.pipeline[index] ?? 0} candidatos`).join("; ")}`}>
               {pipelineStages.map((stage, index) => {
                 const count = metrics.pipeline[index] ?? 0;
-                const tooltip = `${stage} — ${count} ${count === 1 ? "candidato" : "candidatos"}`;
-                return <span className="process-stage" data-tooltip={tooltip} key={`${vacancy.code}-${stage}`}><i className={index <= currentStage ? "done" : ""} /><small>{stage}</small></span>;
+                return <span className={`process-stage ${index === currentStage ? "is-current" : ""}`} aria-label={`${stage}: ${count} ${count === 1 ? "candidato" : "candidatos"}`} aria-current={index === currentStage ? "step" : undefined} key={`${vacancy.code}-${stage}`}><small className="process-stage-name">{stage}</small><i className={index <= currentStage ? "done" : ""} /><small className="process-stage-count">{count}</small></span>;
               })}
             </span>
             <span className="process-new-badge">+{metrics.newCandidates} novos</span>
+            <span className="sr-only" id={`process-summary-${vacancy.code}`}>Etapa atual: {vacancy.stage}. {pipelineStages.map((stage, index) => `${stage}: ${metrics.pipeline[index] ?? 0} candidatos`).join("; ")}</span>
           </button>;
         })}</div>
       </div>
-      <p className="processes-hint">Clique em uma vaga para abrir seu processo.</p>
+      <div className="processes-hint"><span>Clique em uma vaga para abrir seu processo.</span><span className="processes-legend"><i aria-hidden="true" />Etapa atual</span></div>
+      <footer className="processes-card-header processes-card-footer">
+        <span className="section-symbol"><Briefcase size={22} weight="duotone" /></span>
+        <div className="processes-title-line"><h2 id="processes-title">Processos em andamento</h2><span className="processes-total">{activeVacancies.length} vagas ativas</span></div>
+        <button className="text-action" type="button" onClick={() => onNavigate(ROUTES.vacancies)}>Ver todas as vagas <ArrowRight size={17} /></button>
+      </footer>
     </section>
     <section className="activities-card" aria-labelledby="activities-title">
       <header className="activities-card-header"><span className="section-symbol"><Clock size={22} weight="duotone" /></span><div><h2 id="activities-title">Atividades recentes</h2><p>Últimas atualizações do sistema relacionadas ao recrutamento.</p></div><button className="text-action" type="button">Ver histórico completo <ArrowRight size={17} /></button></header>

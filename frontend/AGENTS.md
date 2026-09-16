@@ -10,6 +10,12 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Current frontend phase
 
+- Home detail placement: use the motivational phrase as the single supporting line directly beneath the personal greeting, with readable UI-size text, strong green contrast and a subtle green left accent. Place the Processes in progress title, active vacancy count and vacancies action below the click-a-vacancy hint, in the process card footer.
+
+- Home greeting direction supersedes earlier banner layouts: integrate the personal greeting into the page header, with a small Hoje no RH label above it, short supporting text, and date/agenda on the right. Use the light application canvas and a subtle bottom divider; no separate welcome banner or duplicate greeting. Stack the header on mobile.
+
+- Processes panel refinement (2026-09-16): preserve the single nine-stage pipeline with each stage name always visible above its bar and the candidate count shown below; do not use hover tooltips for these details. Keep rectangular bars using the approved vivid green palette (`#235347` for completed stages, `#0B2B26` for the current stage, and `#DFF3E4`/`#EDF6EF` for light states), aligned row spacing and responsive wrapping without horizontal scrolling; do not restore deadlines, overflow menus or a separate candidate-count column.
+
 - Latest Home top-area direction (2026-09-16): show Hoje no RH with the browser-local current weekday/date, Bom trabalho, Simão Pedro! and the compact Agenda de hoje action grouped in the upper-right area, all above the compact green-gradient Olá, Simão Pedro! banner. Preserve the current processes and recent-activity layout without restoring the previous sidebar, KPI cards, next-appointment strip, stale priority counts or dead welcome actions. Update the displayed date while the page stays open and reflow the heading/actions/banner on mobile.
 
 - Candidate cards must not display a CV shortcut/badge. Keep the résumé accessible inside the candidate modal; preserve card click, keyboard opening and drag behavior.
