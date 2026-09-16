@@ -109,7 +109,7 @@ describe("Alpha RH connected screens", () => {
   });
 
   it.each([
-    ["#/talentos", "Banco de talentos", "Candidatos preservados para futuras oportunidades"],
+    ["#/talentos", "Banco de talentos", "Encontre pessoas ou descubra talentos para uma vaga"],
     ["#/agenda", "Agenda", "Próximos compromissos"],
     ["#/admissao", "Documentos de admissão", "Checklist de documentos"],
     ["#/relatorios", "Relatórios de recrutamento", "Origem dos candidatos"],
@@ -126,10 +126,12 @@ describe("Alpha RH connected screens", () => {
   it("supports talent selection and view switching", () => {
     window.history.replaceState(null, "", "#/talentos");
     render(<App />);
-    expect(screen.getByText("1 selecionado")).toBeInTheDocument();
+    expect(screen.queryByText("1 selecionado")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("checkbox", { name: "Selecionar Mariana Lima" }));
-    expect(screen.getByText("2 selecionados")).toBeInTheDocument();
+    expect(screen.getByText("1 selecionado")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Associar à vaga" })).toBeEnabled();
+    fireEvent.click(screen.getByRole("tab", { name: "Encontrar para uma vaga" }));
+    expect(screen.getByText("Vaga selecionada")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("tab", { name: "Cards" }));
     expect(screen.getByTestId("talent-card-grid")).toBeInTheDocument();
   });
