@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Briefcase, CalendarBlank, Clock, DotsThreeVertical, FileText, MapPin, X } from "@phosphor-icons/react";
 import { vacancies, recentActivity } from "../mockWorkspaceData.js";
 import { ROUTES } from "../navigation.js";
+import WelcomeBanner from "../components/ui/welcome-banner";
 import "./HomeScreen.css";
 
 const agenda = [
@@ -17,6 +18,10 @@ const vacancyMetrics = {
   "2026-0154": { days: 14, pipeline: [108, 72, 17, 5, 1, 6, 1, 5], newCandidates: 99 },
 };
 
+export function findNextAppointment(appointments, currentTime) {
+  return [...appointments].filter((item) => item.time >= currentTime).sort((a, b) => a.time.localeCompare(b.time))[0] ?? null;
+}
+
 function stageIndex(stage) {
   if (stage === "Triagem" || stage === "Contato") return 0;
   if (stage.includes("Entrevista")) return 1;
@@ -24,19 +29,45 @@ function stageIndex(stage) {
   return 3;
 }
 
-export function HomeScreen({ onNavigate }) {
+export function HomeScreen({ onNavigate, appointments = agenda, currentTime = "10:00", currentDate }) {
+  const [today, setToday] = useState(() => new Date());
+  useEffect(() => {
+    if (currentDate) return;
+    const timer = window.setInterval(() => setToday(new Date()), 60000);
+    return () => window.clearInterval(timer);
+  }, [currentDate]);
   const [agendaOpen, setAgendaOpen] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
   const agendaDialog = useRef(null);
   useEffect(() => { if (agendaOpen) agendaDialog.current?.showModal(); }, [agendaOpen]);
+  const nextAppointment = findNextAppointment(appointments, currentTime);
+  const openAgenda = (appointment = null) => { setSelectedAppointment(appointment); setAgendaOpen(true); };
   const openKanban = (vacancy) => onNavigate(`/recrutamento/vagas/${vacancy.code}/kanban`);
+  const displayDate = currentDate ?? today;
+  const dateLabel = new Intl.DateTimeFormat("pt-BR", { weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(displayDate);
+  const dateValue = `${displayDate.getFullYear()}-${String(displayDate.getMonth() + 1).padStart(2, "0")}-${String(displayDate.getDate()).padStart(2, "0")}`;
 
   return <main className="screen-workspace home-screen process-home">
-    <span className="sr-only">Dados demonstrativos</span>
+    <header className="restored-home-heading">
+      <div><h1>Hoje no RH</h1><p>Visão geral do que importa para você e para o time de RH.</p></div>
+      <div className="restored-home-date"><time dateTime={dateValue}>{dateLabel.charAt(0).toUpperCase() + dateLabel.slice(1)}</time><span>Bom trabalho, Simão Pedro!</span></div>
+    </header>
+    <WelcomeBanner description="Acompanhe seus compromissos e o andamento dos processos de hoje." />
+    <section className="next-appointment" aria-labelledby="next-appointment-title">
+      <div className="next-appointment-time"><CalendarBlank size={18} weight="duotone" /><span>Hoje</span>{nextAppointment && <time dateTime={nextAppointment.time}>{nextAppointment.time}</time>}</div>
+      <div className="next-appointment-copy">
+        <div className="next-appointment-heading"><h2 id="next-appointment-title">{nextAppointment ? "Próximo compromisso" : appointments.length ? "Todos os compromissos de hoje já passaram" : "Nenhum compromisso agendado para hoje"}</h2><small>Dados demonstrativos</small></div>
+        {nextAppointment && <p><strong>{nextAppointment.title}</strong> · {nextAppointment.detail}</p>}
+      </div>
+      <div className="next-appointment-actions">
+        {nextAppointment && <button className="text-action" type="button" onClick={() => openAgenda(nextAppointment)}>Ver detalhes <ArrowRight size={16} /></button>}
+        <button className="next-agenda-button" type="button" onClick={() => openAgenda()}><CalendarBlank size={17} />Agenda de hoje <span className="next-agenda-count">{appointments.length}</span></button>
+      </div>
+    </section>
     <section className="processes-card" aria-labelledby="processes-title">
       <header className="processes-card-header">
         <span className="section-symbol"><Briefcase size={22} weight="duotone" /></span>
-        <div><h1 id="processes-title">Processos em andamento</h1><p>Acompanhe o andamento das vagas e o status de cada etapa.</p></div>
-        <button className="calendar-launcher" type="button" onClick={() => setAgendaOpen(true)} aria-label="Abrir agenda"><CalendarBlank size={21} weight="bold" /></button>
+        <div><h2 id="processes-title">Processos em andamento</h2><p>Acompanhe o andamento das vagas e o status de cada etapa.</p></div>
         <button className="text-action" type="button" onClick={() => onNavigate(ROUTES.vacancies)}>Ver todas as vagas <ArrowRight size={17} /></button>
       </header>
       <div className="processes-table" role="table" aria-label="Processos em andamento">
@@ -72,8 +103,8 @@ export function HomeScreen({ onNavigate }) {
       <div className="activities-grid">{recentActivity.map((activity) => <article key={activity.title}><span className={`activity-icon ${activity.tone}`}><FileText size={19} /></span><div><strong>{activity.title}</strong><small>{activity.detail}</small></div><time>{activity.time}</time></article>)}</div>
     </section>
     <dialog className="agenda-dialog" ref={agendaDialog} aria-labelledby="agenda-title" onClose={() => setAgendaOpen(false)}>
-      <header><div><span className="section-symbol"><CalendarBlank size={21} weight="duotone" /></span><div><h2 id="agenda-title">Agenda de hoje</h2><p>Entrevistas e compromissos do dia.</p></div></div><button type="button" aria-label="Fechar agenda" onClick={() => agendaDialog.current.close()}><X size={20} /></button></header>
-      <div className="agenda-dialog-list">{agenda.map((item) => <article key={`${item.time}-${item.title}`}><time>{item.time}</time><span><strong>{item.title}</strong><small>{item.detail}</small></span></article>)}</div>
+      <header><div><span className="section-symbol"><CalendarBlank size={21} weight="duotone" /></span><div><h2 id="agenda-title">{selectedAppointment ? "Detalhes do compromisso" : "Agenda de hoje"}</h2><p>Hoje · Dados demonstrativos</p></div></div><button type="button" aria-label="Fechar agenda" onClick={() => agendaDialog.current.close()}><X size={20} /></button></header>
+      <div className="agenda-dialog-list">{(selectedAppointment ? [selectedAppointment] : [...appointments].sort((a, b) => a.time.localeCompare(b.time))).map((item) => <article key={`${item.time}-${item.title}`}><time>{item.time}</time><span><strong>{item.title}</strong><small>{item.detail}</small></span></article>)}{appointments.length === 0 && <p>Nenhum compromisso agendado para hoje.</p>}</div>
       <footer><button className="primary-action" type="button" onClick={() => { agendaDialog.current.close(); onNavigate(ROUTES.agenda); }}>Ver agenda completa <ArrowRight size={17} /></button></footer>
     </dialog>
   </main>;

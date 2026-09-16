@@ -30,7 +30,7 @@ function renderKanban() {
 describe("Alpha RH connected screens", () => {
   it("opens on the operational home and navigates through the recruitment flow", async () => {
     render(<App />);
-    expect(screen.getByRole("heading", { name: "Hoje no RH" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Processos em andamento" })).toBeInTheDocument();
     expect(screen.queryByText("Saúde das entradas")).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Recrutamento" }));
@@ -63,11 +63,11 @@ describe("Alpha RH connected screens", () => {
     expect(screen.getAllByText("Dados demonstrativos").length).toBeGreaterThan(0);
   });
 
-  it("shows a compact operational welcome banner on the home screen", () => {
+  it("shows the next appointment above the latest processes home layout", () => {
     render(<App />);
-    expect(screen.getByRole("heading", { name: "Olá, Simão Pedro!" })).toBeInTheDocument();
-    expect(screen.getByText(/27 currículos para revisar/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Ver todas as ações" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Próximo compromisso" })).toBeInTheDocument();
+    expect(screen.getByText("Entrevista RH · Mariana Lima", { selector: ".next-appointment-copy strong" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Agenda de hoje 3" })).toBeInTheDocument();
   });
 
   it("lets Operations prepare and submit a new requisition", async () => {
