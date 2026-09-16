@@ -16,6 +16,20 @@ São duas consultas simples, sem subconsulta por cliente, sem escrita e com cach
 
 Esse é um indicador de atividade recente, não uma garantia de contrato vigente: um posto novo ainda sem escala fica de fora; um encerrado recentemente que continue ativo no cadastro pode permanecer até sair da janela. Em 16/09/2026, a leitura retornou 66 postos em cerca de 1,8 segundo.
 
+## Precisão da localização
+
+A Geoapify nem sempre acha o endereço exato. Quando a grafia do CEP difere da do mapa (por exemplo, "Goes" nos Correios e "Góis" no mapa), ela devolve o **centro do bairro** sem avisar. Uma distância medida a partir desse ponto pode errar vários quilômetros. Em 16/09/2026, um candidato que mora em frente a um posto apareceu a 1 km dele, e outro posto apareceu a 0 km.
+
+Por isso, cada localização guarda a precisão, tirada do `result_type` da Geoapify:
+
+| Precisão | Tipo | O que acontece |
+|---|---|---|
+| `endereco` | `building`, `amenity` | Usada normalmente |
+| `rua` | `street` | Usada, com aviso de que falta o número |
+| `bairro` | `suburb`, `postcode`, `city` e demais | **Candidato:** análise recusada, pedindo para conferir a grafia da rua. **Posto:** aparece como "Conferir", sem decisão por distância nem rota |
+
+A confiança sozinha não resolve: há centro de bairro com confiança de 100%. Localizações gravadas antes da precisão voltam a ser pendentes e são localizadas de novo.
+
 ## Acesso ao cadastro do candidato
 
 Na barra do laboratório, **Abrir tela do candidato** fica à esquerda de **Abrir o sistema**. O destino padrão usa o mesmo hostname, porta `5190` e caminho `/enviar-curriculo`, do projeto CarreirasExcelencia. O portal precisa estar rodando. `VITE_CANDIDATO_URL` permite configurar outro destino; veja `frontend/.env.example`. É somente um atalho: esta alteração não integra os dados dos dois sistemas.

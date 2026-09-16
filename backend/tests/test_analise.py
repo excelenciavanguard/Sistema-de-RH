@@ -136,3 +136,28 @@ def test_posto_com_localizacao_incerta_vai_para_conferir_sem_rota(cache):
     assert botafogo["classificacao"] == CONFERIR
     assert botafogo["rota_consultada"] is False
     assert "confiança" in botafogo["motivo"]
+
+
+def test_candidato_localizado_so_pelo_bairro_e_recusado(cache):
+    provedor = ProvedorFalso()
+    analise.geocodificar_pendentes(POSTOS, cache, provedor, limite=50)
+    centro_do_bairro = Local(-22.9519, -43.1808, "Botafogo, Rio de Janeiro", "Rio de Janeiro", "RJ", 0.25, "bairro")
+    provedor.geocodificar = lambda endereco: centro_do_bairro
+    with pytest.raises(analise.EnderecoInvalido, match="só o bairro"):
+        analise.analisar("Rua Com Grafia Diferente 88, Botafogo", POSTOS, cache, provedor)
+    assert provedor.rotas == 0
+
+
+def test_posto_localizado_so_pelo_bairro_vai_para_conferir_sem_rota(cache):
+    provedor = ProvedorFalso()
+    analise.geocodificar_pendentes(POSTOS, cache, provedor, limite=50)
+    bairro = COORDENADAS["Botafogo"]
+    cache.salvar_posto(1, POSTOS[0].endereco_busca, Local(bairro.latitude, bairro.longitude, "Botafogo, Rio de Janeiro", "Rio de Janeiro", "RJ", 1.0, "bairro"), None)
+    assert {p.posto.chave: p.situacao for p in analise.situacao_dos_postos(POSTOS, cache)}[1] == "impreciso"
+    provedor.rotas = 0
+    resultado = analise.analisar("Rua Barata Ribeiro 500, Copacabana", POSTOS, cache, provedor, top=5)
+    botafogo = next(r for r in resultado["resultados"] if r["posto"] == "Posto Botafogo")
+    assert botafogo["classificacao"] == CONFERIR
+    assert botafogo["rota_consultada"] is False
+    assert "só pelo bairro" in botafogo["motivo"]
+    assert resultado["resumo"]["postos_imprecisos"] == 1

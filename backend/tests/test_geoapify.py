@@ -85,3 +85,14 @@ def test_uf_pelo_cep_quando_a_geoapify_devolve_regiao():
     assert uf_do_resultado({"state_code": "rj"}) == "RJ"
     assert uf_do_resultado({"state": "Rio de Janeiro"}) == "RJ"
     assert uf_do_resultado({}) == ""
+
+
+@pytest.mark.parametrize("tipo, precisao", [
+    ("building", "endereco"), ("amenity", "endereco"), ("street", "rua"),
+    ("suburb", "bairro"), ("postcode", "bairro"), ("city", "bairro"), (None, "bairro"),
+])
+def test_precisao_pelo_tipo_do_resultado(monkeypatch, tipo, precisao):
+    # Caso real: grafia do CEP diferente do mapa devolveu result_type "suburb" (centro do bairro).
+    corpo = {"results": [{"lat": -22.95, "lon": -43.18, "city": "Rio de Janeiro", "state_code": "RJ", "result_type": tipo}]}
+    monkeypatch.setattr(httpx.Client, "get", lambda self, *a, **k: httpx.Response(200, json=corpo))
+    assert ProvedorGeoapify("x").geocodificar("Rua Qualquer, 1").precisao == precisao

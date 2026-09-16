@@ -114,7 +114,7 @@ export function MobilityTestScreen() {
             <small>Postos em operação</small>
             <strong>{posts ? `${counts.localizado ?? 0} de ${posts.total} localizados` : "Carregando…"}</strong>
             {posts?.dias_operacao && <p>Clientes ativos com escala nos últimos {posts.dias_operacao} dias.</p>}
-            {posts && <p>{counts.pendente ?? 0} pendentes · {counts.nao_localizado ?? 0} não localizados · {counts.fora_do_rj ?? 0} fora do RJ</p>}
+            {posts && <p>{counts.pendente ?? 0} pendentes · {counts.impreciso ?? 0} só com bairro · {counts.nao_localizado ?? 0} não localizados · {counts.fora_do_rj ?? 0} fora do RJ</p>}
           </div>
           <button className="secondary-action" type="button" onClick={geocode} disabled={geocoding || !counts.pendente}>
             <RefreshCw size={16} /> {geocoding ? "Localizando…" : "Localizar pendentes"}
@@ -162,6 +162,7 @@ export function MobilityTestScreen() {
               <p>
                 {analysis.resumo.dentro_da_meta} postos dentro da meta · {analysis.resumo.rotas_consultadas} rotas consultadas ·
                 {" "}{analysis.resumo.creditos_estimados} créditos nesta análise
+                {analysis.candidato.precisao === "rua" && " · localizado pela rua, sem o número exato"}
               </p>
             </div>
             <div className="mobility-test-filters" role="group" aria-label="Filtrar resultado">

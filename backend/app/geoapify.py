@@ -25,6 +25,10 @@ from app import config
 from app.geo import normalizar
 from app.modelos import EnderecoNaoLocalizado, ErroProvedor, Local, Rota, Trecho
 
+# result_type da Geoapify -> precisão. Todo o resto (suburb, district, postcode, city...) é "bairro".
+# Visto em 16/09/2026: grafia do CEP diferente do mapa ("Goes" x "Góis") devolve o centro do bairro.
+_PRECISAO = {"building": "endereco", "amenity": "endereco", "street": "rua"}
+
 URL_GEOCODE = "https://api.geoapify.com/v1/geocode/search"
 URL_ROTA = "https://api.geoapify.com/v1/routing"
 
@@ -113,6 +117,7 @@ class ProvedorGeoapify:
             municipio=municipio,
             uf=uf,
             confianca=float((r.get("rank") or {}).get("confidence") or 0.0),
+            precisao=_PRECISAO.get(r.get("result_type") or "", "bairro"),
         )
 
     def rota(self, origem: Local, destino: Local) -> Rota:

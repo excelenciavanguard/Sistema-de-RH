@@ -19,6 +19,9 @@ class Local:
     municipio: str
     uf: str
     confianca: float = 0.0
+    # endereco (prédio/número) | rua (sem número) | bairro (centro do bairro, CEP ou cidade).
+    # "bairro" não serve para medir distância: pode errar vários quilômetros.
+    precisao: str = "endereco"
 
 
 @dataclass(frozen=True)

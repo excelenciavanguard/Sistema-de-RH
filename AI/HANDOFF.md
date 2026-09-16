@@ -28,15 +28,24 @@ Pedido atual: finalizar apenas o filtro de postos em operação e o atalho para 
 - `VT_MAX_CONDUCOES_JAE=3` no padrão, no `.env.example` e no `.env` local. Backend: 62 testes.
 - Conferido ao vivo, com a API reiniciada: a resposta traz `max_conducoes_jae: 3`, 66 postos em operação e 65 localizados.
 
-### Problemas da equipe na `main` (não causados pelo laboratório)
+### Precisão da localização (Claude, 16/09/2026)
 
-Depois do commit `fc48c65` (gabriel-vanguard, 15h46: painel inicial e identidade visual), a `main` ficou assim:
+Problema relatado pelo Nathan ao testar um endereço real: o candidato apareceu a 1 km de um posto em frente à casa dele, a 0 km de outro a 2 km e a 2,1 km de um terceiro a 3 km.
 
-- `npm run typecheck`: `src/components/Logo.tsx` importa `./Logo.css` sem declaração de tipos (TS2882).
-- `src/App.test.jsx`: dois testes procuram o título "Hoje no RH" e o banner "Olá, Simão Pedro!", que saíram da tela inicial nova.
-- `src/typography.test.js`: o CSS novo tem fonte de 8,5 px, proibida pelo próprio teste.
+- **Causa:** a grafia dos Correios ("Goes") difere da do mapa ("Góis"). A Geoapify devolveu o centro do bairro (`result_type: suburb`, confiança 25%), e o sistema mediu a partir dali. Quatro postos também estavam só com o bairro, um deles com confiança de 100%.
+- **Correção:** `Local.precisao` (endereco, rua ou bairro) vem do `result_type` e fica gravada no cache. Candidato localizado só pelo bairro é recusado com orientação. Posto só com o bairro fica como "Conferir", sem rota.
+- **Resultado com a grafia do mapa:** 0,2 km do posto em frente, 2,6 km do posto a 3 km a pé, e o posto impreciso foi para conferir. Com a grafia do CEP, a API responde 422 com a orientação.
+- **Postos com endereço a corrigir no WebOper:** 4, listados na tela do laboratório.
+- **Limitação que continua:** a linha de ônibus sugerida vem das rotas aproximadas do OpenStreetMap e pode não ser a que o Google recomenda. A classificação (1 ônibus, R$ 5) é uma estimativa.
+- **Testes:** backend com 73.
 
-Os arquivos são da equipe e não foram alterados. O sino que abre o laboratório e o usuário Simão Pedro no cabeçalho continuam no `header-3.tsx`.
+### Testes da equipe na `main` (não causados pelo laboratório)
+
+Depois do commit `fc48c65` (painel inicial e identidade visual), a `main` teve erro de tipagem no `Logo.tsx` e dois testes da tela inicial falhando. O commit `fb7342e` (Lucas, 16h38) corrigiu esses três. Em 16/09, às 16h40, falta só um:
+
+- `src/typography.test.js`: o CSS novo tem uma fonte de 8,5 px, que o próprio teste proíbe.
+
+Os arquivos são da equipe e não foram alterados. O sino que abre o laboratório e o usuário Simão Pedro continuam no `header-3.tsx`.
 
 ---
 

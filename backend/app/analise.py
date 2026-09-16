@@ -27,7 +27,7 @@ class EnderecoInvalido(ValueError):
 class PostoLocalizado:
     posto: PostoWebOper
     local: Local | None
-    situacao: str  # localizado | pendente | nao_localizado | fora_do_rj
+    situacao: str  # localizado | impreciso | pendente | nao_localizado | fora_do_rj
     erro: str | None = None
 
 
@@ -43,6 +43,8 @@ def situacao_dos_postos(postos: list[PostoWebOper], cache: Cache) -> list[PostoL
             resultado.append(PostoLocalizado(posto, None, "nao_localizado", erro))
         elif local.uf != "RJ":
             resultado.append(PostoLocalizado(posto, local, "fora_do_rj", f"Geocodificado em {local.uf or 'UF desconhecida'}."))
+        elif local.precisao == "bairro":
+            resultado.append(PostoLocalizado(posto, local, "impreciso", f"Localizado só pelo bairro: {local.endereco_formatado}."))
         else:
             resultado.append(PostoLocalizado(posto, local, "localizado"))
     return resultado
@@ -85,16 +87,27 @@ def analisar(endereco: str, postos: list[PostoWebOper], cache: Cache, provedor, 
         cache.registrar_consumo("geocodificar_candidato", CREDITOS_GEOCODE)
     if candidato.uf != "RJ":
         raise EnderecoInvalido(f"O endereço foi localizado em {candidato.uf or 'outro estado'}; os postos são do RJ.")
+    if candidato.precisao == "bairro":
+        # Medir a partir do centro do bairro dá distâncias e rotas erradas: melhor parar e pedir correção.
+        raise EnderecoInvalido(
+            "O mapa não encontrou a rua, só o bairro, e as distâncias sairiam erradas. Confira o nome da rua e o "
+            "número: o mapa às vezes escreve diferente do CEP (por exemplo, \"Góis\" em vez de \"Goes\")."
+        )
 
-    localizados = [p for p in situacao_dos_postos(postos, cache) if p.situacao == "localizado"]
+    situacoes = situacao_dos_postos(postos, cache)
+    localizados = [p for p in situacoes if p.situacao == "localizado"]
+    # Posto localizado só pelo bairro aparece para o RH, mas sem decisão pela distância.
+    imprecisos = [p for p in situacoes if p.situacao == "impreciso"]
     por_distancia = sorted(
-        ((p, distancia_km(candidato.latitude, candidato.longitude, p.local.latitude, p.local.longitude)) for p in localizados),
+        ((p, distancia_km(candidato.latitude, candidato.longitude, p.local.latitude, p.local.longitude)) for p in localizados + imprecisos),
         key=lambda par: par[1],
     )
 
     resultados, rotas = [], 0
     for item, km in por_distancia:
-        if item.local.confianca < config.CONFIANCA_MINIMA_POSTO:
+        if item.situacao == "impreciso":
+            estimativa = Estimativa(CONFERIR, "Posto localizado só pelo bairro: a distância é aproximada. Confira o endereço no WebOper.")
+        elif item.local.confianca < config.CONFIANCA_MINIMA_POSTO:
             # Coordenada incerta: a distância pode estar errada, então nem "a pé" nem rota valem.
             estimativa = Estimativa(
                 CONFERIR,
@@ -118,10 +131,11 @@ def analisar(endereco: str, postos: list[PostoWebOper], cache: Cache, provedor, 
 
     resultados.sort(key=lambda r: (ORDEM[r["classificacao"]], r["distancia_km"]))
     return {
-        "candidato": {"endereco": candidato.endereco_formatado, "municipio": candidato.municipio, "uf": candidato.uf, "confianca": candidato.confianca},
+        "candidato": {"endereco": candidato.endereco_formatado, "municipio": candidato.municipio, "uf": candidato.uf, "confianca": candidato.confianca, "precisao": candidato.precisao},
         "resumo": {
             "postos_ativos": len(postos),
             "postos_localizados": len(localizados),
+            "postos_imprecisos": len(imprecisos),
             "rotas_consultadas": rotas,
             "creditos_estimados": CREDITOS_GEOCODE + rotas * CREDITOS_ROTA,
             "dentro_da_meta": sum(1 for r in resultados if r["classificacao"] == DENTRO),

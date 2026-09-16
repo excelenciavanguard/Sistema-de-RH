@@ -70,6 +70,7 @@ def listar_postos(postos=Depends(obter_postos), cache: Cache = Depends(obter_cac
                 "situacao": i.situacao,
                 "municipio": i.local.municipio if i.local else i.posto.municipio,
                 "confianca": i.local.confianca if i.local else None,
+                "precisao": i.local.precisao if i.local else None,
                 "erro": i.erro,
             }
             for i in itens
