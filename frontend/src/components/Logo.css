@@ -1,0 +1,27 @@
+.alpha-logo-lockup {
+  width: 160px;
+  height: 43px;
+  display: block;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.alpha-logo-image {
+  width: 113.28%;
+  height: auto;
+  display: block;
+  max-width: none;
+  transform: translate(-5.74%, -29.33%);
+}
+
+@media (max-width: 639px) {
+  .alpha-logo-lockup {
+    width: 120px;
+    height: 32px;
+  }
+
+  .alpha-logo-image {
+    width: 113.28%;
+    height: auto;
+  }
+}

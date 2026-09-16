@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import { DropdownNavigation, type DropdownNavigationItem } from '@/components/ui/dropdown-navigation';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { cn } from '@/lib/utils';
+import Logo from '@/components/Logo';
 
 type HeaderProps = { route: string };
 
@@ -40,12 +41,8 @@ export function Header({ route }: HeaderProps) {
     <header className={cn('alpha-app-header sticky top-0 z-50 w-full', scrolled && 'is-scrolled')}>
       <div className="alpha-header-bar">
         <div className="mx-auto flex h-[68px] w-full max-w-[1820px] items-stretch gap-5 px-5 lg:px-8">
-          <a href="#/inicio" className="alpha-wordmark group flex shrink-0 items-center gap-3 outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/35" aria-label="Ir para o Início">
-            <AlphaMark className="h-10 w-9" />
-            <span className="hidden min-w-max flex-col sm:flex">
-              <strong>Alpha RH</strong>
-              <small>Pessoas impulsionam resultados</small>
-            </span>
+          <a href="#/inicio" className="alpha-wordmark group flex shrink-0 items-center outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/35" aria-label="Alpha RH — ir para o Início">
+            <Logo />
           </a>
 
           <a href="#/inicio" className={cn('alpha-home-link hidden items-center gap-2 px-4 text-[13px] font-extrabold outline-none lg:flex', route === '/inicio' && 'is-active')} aria-label="Hoje no RH" aria-current={route === '/inicio' ? 'page' : undefined}>
@@ -203,10 +200,3 @@ function useScroll(threshold: number) {
   return scrolled;
 }
 
-const AlphaMark = (props: React.ComponentProps<'svg'>) => (
-  <svg viewBox="0 0 42 46" fill="none" aria-hidden="true" {...props}>
-    <path d="M21 2 40 43H29.8L20.7 22.6 11.5 43H1L21 2Z" fill="#163832" />
-    <path d="M21 2 40 43 24.7 29.4 20.7 22.6 11.5 43H1L21 2Z" fill="#235347" opacity=".78" />
-    <path d="m9.4 31.7 11.3-9.1 5.1 11.5-16.4-2.4Z" fill="white" />
-  </svg>
-);

@@ -591,8 +591,14 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
 }
 
 /* Faithful executive dashboard composition */
-.alpha-wordmark strong { color: #051f20; font-size: var(--font-section); line-height: 1.05; letter-spacing: -.025em; }
-.alpha-wordmark small { margin-top: 4px; color: #667970; font-size: var(--font-meta); font-weight: var(--weight-heading); }
+.alpha-logo-lockup { width: 125px; display: flex; flex-direction: column; align-items: stretch; }
+.alpha-logo-svg { width: 90%; height: auto; display: block; }
+.alpha-logo-subtitle { margin: -7px 0 0 54px; color: #6b7d79; font-size: 8.5px; font-weight: var(--weight-ui); line-height: 1.1; letter-spacing: .12px; white-space: nowrap; }
+@media (max-width: 639px) {
+  .alpha-logo-lockup { width: 50px; }
+  .alpha-logo-svg { width: 45px; height: 43px; object-fit: cover; object-position: left; }
+  .alpha-logo-subtitle { display: none; }
+}
 .alpha-home-link { position: relative; color: #163832; }
 .alpha-home-link::after { content: ""; position: absolute; right: 0; bottom: 0; left: 0; height: 2px; background: transparent; }
 .alpha-home-link:hover { color: #235347; background: #edf6ef; }
