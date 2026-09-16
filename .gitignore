@@ -16,6 +16,7 @@ venv/
 # Node / frontend
 node_modules/
 dist/
+.vite/
 coverage/
 *.log
 

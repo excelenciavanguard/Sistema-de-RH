@@ -1,6 +1,6 @@
 # Alpha RH — ordem de implementação
 
-**Base existente:** React/Vite em `prototype/`, FastAPI/SQLAlchemy/Alembic em `backend/`, banco próprio MySQL, laboratório OpenAI/Gemini, importação manual e Kanban inicial.
+**Base existente:** React/Vite em `frontend/`, FastAPI/SQLAlchemy/Alembic em `backend/`, banco próprio MySQL, laboratório OpenAI/Gemini, importação manual e Kanban inicial.
 
 **Referência funcional:** `docs/superpowers/specs/2026-09-08-alpha-rh-master-spec.md`.
 

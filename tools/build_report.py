@@ -13,7 +13,7 @@ from docx.shared import Inches, Pt, RGBColor
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "Relatorio_Alinhamento_Sistema_RH.docx"
+OUTPUT = ROOT / "docs" / "reports" / "Relatorio_Alinhamento_Sistema_RH.docx"
 
 PAGE_WIDTH_DXA = 12240
 PAGE_HEIGHT_DXA = 15840

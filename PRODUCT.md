@@ -120,7 +120,7 @@ O produto combina vagas vinculadas a postos, pré-triagem de mobilidade por tran
 
 ## Evidências disponíveis
 
-- Relatório de alinhamento: `Relatorio_Alinhamento_Sistema_RH.docx` e `Relatorio_Alinhamento_Sistema_RH.pdf`.
+- Relatório de alinhamento: `docs/reports/Relatorio_Alinhamento_Sistema_RH.docx` e `docs/reports/Relatorio_Alinhamento_Sistema_RH.pdf`.
 - Estrutura do Weboper verificada: 300 registros em `CAD_CLIENTE`, sendo 134 ativos, 165 inativos e 1 sem situação.
 - Campos necessários identificados: `CHAVE`, `RAZAO_SOCIAL`, `NOME_FANTASIA`, `SITUACAO`, `ENDERECO`, `BAIRRO`, `MUNICIPIO`, `UF` e `CEP`.
 - Existe aplicação local com frontend React, backend FastAPI, MySQL próprio, laboratório de extração, persistência de candidatos/candidaturas e Kanban de nove etapas. Cadastro real de vagas, aprovação, integrações externas, autenticação e infraestrutura de produção ainda não foram implementados.
