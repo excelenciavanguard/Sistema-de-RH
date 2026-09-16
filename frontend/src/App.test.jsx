@@ -63,11 +63,13 @@ describe("Alpha RH connected screens", () => {
     expect(screen.getAllByText("Dados demonstrativos").length).toBeGreaterThan(0);
   });
 
-  it("shows only the compact today agenda access above the processes", () => {
+  it("shows the greeting, current date area and compact today agenda access", () => {
     render(<App />);
     expect(screen.getByRole("button", { name: "Agenda de hoje 3" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Próximo compromisso" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("heading", { name: "Olá, Simão Pedro!" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Hoje no RH" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Olá, Simão Pedro!" })).toBeInTheDocument();
+    expect(screen.getByText("Bom trabalho, Simão Pedro!")).toBeInTheDocument();
   });
 
   it("lets Operations prepare and submit a new requisition", async () => {

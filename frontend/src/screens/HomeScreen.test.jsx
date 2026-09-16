@@ -9,12 +9,17 @@ beforeEach(() => {
 });
 afterEach(cleanup);
 
-it("keeps only the compact today agenda access above the processes", () => {
-  render(<HomeScreen onNavigate={vi.fn()} />);
+it("restores the personal greeting and browser-local date above the processes", () => {
+  render(<HomeScreen onNavigate={vi.fn()} currentDate={new Date(2026, 8, 16)} />);
   expect(screen.getByRole("button", { name: "Agenda de hoje 3" })).toBeInTheDocument();
-  expect(screen.queryByRole("heading", { name: "Hoje no RH" })).not.toBeInTheDocument();
-  expect(screen.queryByRole("heading", { name: "Olá, Simão Pedro!" })).not.toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "Hoje no RH" })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "Olá, Simão Pedro!" })).toBeInTheDocument();
+  expect(screen.getByText("Quarta-feira, 16 de setembro de 2026")).toBeInTheDocument();
+  expect(screen.getByText("Bom trabalho, Simão Pedro!")).toBeInTheDocument();
   expect(screen.queryByRole("heading", { name: "Próximo compromisso" })).not.toBeInTheDocument();
+  const agendaButton = screen.getByRole("button", { name: "Agenda de hoje 3" });
+  const greeting = screen.getByRole("heading", { name: "Olá, Simão Pedro!" });
+  expect(agendaButton.compareDocumentPosition(greeting) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 });
 
 it("opens the whole day and navigates to the complete agenda", () => {

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Briefcase, CalendarBlank, Clock, FileText, MapPin, X } from "@phosphor-icons/react";
 import { vacancies, recentActivity } from "../mockWorkspaceData.js";
 import { ROUTES } from "../navigation.js";
+import WelcomeBanner from "../components/ui/welcome-banner";
 import "./HomeScreen.css";
 
 const agenda = [
@@ -21,18 +22,46 @@ function stageIndex(stage) {
   return index >= 0 ? index : 0;
 }
 
-export function HomeScreen({ onNavigate, appointments = agenda }) {
+export function HomeScreen({ onNavigate, appointments = agenda, currentDate }) {
   const [agendaOpen, setAgendaOpen] = useState(false);
+  const [today, setToday] = useState(() => currentDate ?? new Date());
   const agendaDialog = useRef(null);
   useEffect(() => { if (agendaOpen) agendaDialog.current?.showModal(); }, [agendaOpen]);
+  useEffect(() => {
+    if (currentDate) {
+      setToday(currentDate);
+      return undefined;
+    }
+    const timer = window.setInterval(() => setToday(new Date()), 60_000);
+    return () => window.clearInterval(timer);
+  }, [currentDate]);
   const openAgenda = () => setAgendaOpen(true);
   const openKanban = (vacancy) => onNavigate(`/recrutamento/vagas/${vacancy.code}/kanban`);
+  const dateLabel = new Intl.DateTimeFormat("pt-BR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(today);
+  const accessibleDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  const displayDate = dateLabel.charAt(0).toUpperCase() + dateLabel.slice(1);
 
   return <main className="screen-workspace home-screen process-home">
     <span className="sr-only">Dados demonstrativos</span>
-    <div className="today-agenda-access">
-      <button className="today-agenda-button" type="button" onClick={openAgenda}><CalendarBlank size={17} />Agenda de hoje <span>{appointments.length}</span></button>
-    </div>
+    <header className="restored-home-heading">
+      <div>
+        <h1>Hoje no RH</h1>
+        <p>Visão geral do que importa para você e para o time de RH.</p>
+      </div>
+      <div className="restored-home-date">
+        <time dateTime={accessibleDate}>{displayDate}</time>
+        <span>Bom trabalho, Simão Pedro!</span>
+        <div className="today-agenda-access">
+          <button className="today-agenda-button" type="button" onClick={openAgenda}><CalendarBlank size={17} />Agenda de hoje <span>{appointments.length}</span></button>
+        </div>
+      </div>
+    </header>
+    <WelcomeBanner description="Acompanhe seus compromissos e o andamento dos processos de hoje." />
     <section className="processes-card" aria-labelledby="processes-title">
       <header className="processes-card-header">
         <span className="section-symbol"><Briefcase size={22} weight="duotone" /></span>
