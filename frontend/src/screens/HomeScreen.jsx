@@ -49,7 +49,7 @@ export function HomeScreen({ onNavigate }) {
       <span className="sr-only">Dados demonstrativos</span>
       <header className="home-page-heading">
         <div><h1>Hoje no RH</h1><p>Visão geral do que importa para você e para o time de RH.</p></div>
-        <div><strong>Segunda-feira, 14 de setembro de 2026</strong><small>Bom trabalho, Lucas!</small></div>
+        <div><strong>Segunda-feira, 14 de setembro de 2026</strong><small>Bom trabalho, Simão Pedro!</small></div>
       </header>
 
       <WelcomeBanner onShowActions={() => document.getElementById("proximas-acoes")?.scrollIntoView({ behavior: "smooth", block: "start" })} />

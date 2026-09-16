@@ -65,7 +65,7 @@ describe("Alpha RH connected screens", () => {
 
   it("shows a compact operational welcome banner on the home screen", () => {
     render(<App />);
-    expect(screen.getByRole("heading", { name: "Olá, Lucas!" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Olá, Simão Pedro!" })).toBeInTheDocument();
     expect(screen.getByText(/27 currículos para revisar/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Ver todas as ações" })).toBeInTheDocument();
   });

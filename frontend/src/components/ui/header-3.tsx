@@ -62,14 +62,14 @@ export function Header({ route }: HeaderProps) {
               <kbd className="rounded border border-[#cfdfd3] bg-white px-1.5 py-0.5 text-[12px] font-semibold text-[#667970]">⌘ K</kbd>
             </label>
 
-            <button type="button" className="alpha-utility-action relative" aria-label="Abrir notificações">
+            <a href="/mobilidade.html" className="alpha-utility-action relative" aria-label="Abrir laboratório de mobilidade" title="Laboratório de mobilidade">
               <Bell className="size-[18px]" />
               <span className="absolute right-[8px] top-[7px] size-2 rounded-full bg-[#f4a51c] ring-2 ring-white" aria-hidden="true" />
-            </button>
+            </a>
             <span className="hidden h-8 w-px bg-[#d7e5db] xl:block" aria-hidden="true" />
-            <button className="alpha-profile-button ml-0.5 flex h-12 items-center gap-2.5 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30" type="button" aria-label="Abrir perfil de Lucas">
-              <span className="grid size-9 place-items-center rounded-full bg-[#163832] text-[13px] font-extrabold text-white">LS</span>
-              <span className="hidden flex-col 2xl:flex"><strong>Lucas</strong><small>RH Global</small></span>
+            <button className="alpha-profile-button ml-0.5 flex h-12 items-center gap-2.5 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30" type="button" aria-label="Abrir perfil de Simão Pedro">
+              <span className="grid size-9 place-items-center rounded-full bg-[#163832] text-[13px] font-extrabold text-white">SP</span>
+              <span className="hidden flex-col 2xl:flex"><strong>Simão Pedro</strong><small>RH Global</small></span>
               <ChevronDown className="hidden size-3.5 text-[#5f716a] 2xl:block" />
             </button>
             <Button size="icon" variant="outline" onClick={() => setMobileOpen((current) => !current)} className="alpha-mobile-toggle size-10 rounded-xl border-[#cfdfd3] bg-white text-[#235347] hover:bg-[#edf6ef]" aria-expanded={mobileOpen} aria-controls="mobile-navigation" aria-label="Alternar menu">
