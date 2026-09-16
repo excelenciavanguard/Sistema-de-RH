@@ -110,8 +110,8 @@ describe("Alpha RH connected screens", () => {
 
   it.each([
     ["#/talentos", "Banco de talentos", "Encontre pessoas ou descubra talentos para uma vaga"],
-    ["#/agenda", "Agenda", "Próximos compromissos"],
-    ["#/admissao", "Documentos de admissão", "Checklist de documentos"],
+    ["#/agenda", "Agenda", "Lista de compromissos"],
+    ["#/admissao", "Documentos de admissão", "Selecione um candidato para conferir"],
     ["#/relatorios", "Relatórios de recrutamento", "Origem dos candidatos"],
     ["#/integracoes", "Integrações", "Configure fontes de dados"],
     ["#/administracao", "Usuários e permissões", "Controle quem pode acessar"],
@@ -136,11 +136,29 @@ describe("Alpha RH connected screens", () => {
     expect(screen.getByTestId("talent-card-grid")).toBeInTheDocument();
   });
 
-  it("changes the agenda display and keeps calendar context visible", () => {
+  it("opens the agenda in month view and lets the user inspect a day", () => {
     window.history.replaceState(null, "", "#/agenda");
     render(<App />);
-    expect(screen.getByText("Calendários")).toBeInTheDocument();
-    expect(screen.getByText("Próximos compromissos")).toBeInTheDocument();
+    expect(screen.getByTestId("agenda-month-view")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Calendários" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Tipos" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Lista de compromissos" })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /Abrir terça-feira, 22 de abril/i }));
+    const drawer = screen.getByRole("dialog", { name: "Terça-feira, 22 de abril" });
+    expect(within(drawer).getByText("3 compromissos neste dia")).toBeInTheDocument();
+    expect(within(drawer).getByRole("button", { name: "Novo compromisso" })).toBeInTheDocument();
+    fireEvent.click(within(drawer).getByRole("button", { name: "Fechar detalhes do dia" }));
+    expect(screen.queryByRole("dialog", { name: "Terça-feira, 22 de abril" })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Semana" }));
+    expect(screen.getByTestId("agenda-week-view")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Entrevista RH, Paulo Henrique, 10:00" }));
+    const thursday = screen.getByRole("dialog", { name: "Quinta-feira, 24 de abril" });
+    expect(within(thursday).getAllByRole("button", { name: "Editar" })).toHaveLength(3);
+    expect(within(thursday).getAllByRole("button", { name: "Abrir candidato" })).toHaveLength(2);
+    fireEvent.click(within(thursday).getByRole("button", { name: "Fechar detalhes do dia" }));
+
     fireEvent.click(screen.getByRole("button", { name: "Dia" }));
     expect(screen.getByTestId("agenda-day-view")).toBeInTheDocument();
   });
@@ -148,7 +166,9 @@ describe("Alpha RH connected screens", () => {
   it("shows admission details and switches admission workspaces", () => {
     window.history.replaceState(null, "", "#/admissao");
     render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "Abrir documentos de Mariana Lima" }));
     expect(screen.getByRole("heading", { name: "Checklist de documentos" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Fechar modal de documentos" }));
     fireEvent.click(screen.getByRole("tab", { name: "Treinamentos" }));
     expect(screen.getByRole("heading", { name: "Treinamentos de admissão" })).toBeInTheDocument();
     fireEvent.click(screen.getByRole("tab", { name: "Contratação" }));

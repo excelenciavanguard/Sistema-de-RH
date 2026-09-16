@@ -4,6 +4,7 @@ import { ScreenHeader } from "../components/ScreenHeader.jsx";
 import { StatusPill } from "../components/StatusPill.jsx";
 import { WorkspaceTabs } from "../components/WorkspaceTabs.jsx";
 import { admissionCandidates, documentChecklist, trainingClasses } from "../moduleWorkspaceData.js";
+import { AdmissionDocuments } from "./AdmissionDocuments.jsx";
 
 const moduleTabs = [
   { id: "documents", label: "Documentos" },
@@ -18,7 +19,7 @@ export function AdmissionScreen() {
   return (
     <main className="screen-workspace miro-screen admission-reference-screen">
       <WorkspaceTabs items={moduleTabs} active={active} onChange={setActive} ariaLabel="Áreas de admissão" />
-      {active === "documents" && <DocumentsView selected={selected} onSelect={setCandidateId} />}
+      {active === "documents" && <AdmissionDocuments onSelect={setCandidateId} />}
       {active === "training" && <TrainingView />}
       {active === "hiring" && <HiringView selected={selected} onSelect={setCandidateId} />}
     </main>
