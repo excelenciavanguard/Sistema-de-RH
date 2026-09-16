@@ -101,7 +101,7 @@ export function MobilityTestScreen() {
             <h1>Mobilidade até os postos</h1>
             <span className="demo-label real-data-label">Dados reais</span>
           </div>
-          <p>Postos ativos do WebOper (somente leitura), localização e rotas pela Geoapify e a regra de vale-transporte da empresa.</p>
+          <p>Postos em operação no WebOper (somente leitura), localização e rotas pela Geoapify e a regra de vale-transporte da empresa.</p>
         </div>
       </header>
 
@@ -111,8 +111,9 @@ export function MobilityTestScreen() {
         <article className="surface-panel">
           <span className="mobility-test-card-icon"><MapPinned size={20} /></span>
           <div>
-            <small>Postos do WebOper</small>
+            <small>Postos em operação</small>
             <strong>{posts ? `${counts.localizado ?? 0} de ${posts.total} localizados` : "Carregando…"}</strong>
+            {posts?.dias_operacao && <p>Clientes ativos com escala nos últimos {posts.dias_operacao} dias.</p>}
             {posts && <p>{counts.pendente ?? 0} pendentes · {counts.nao_localizado ?? 0} não localizados · {counts.fora_do_rj ?? 0} fora do RJ</p>}
           </div>
           <button className="secondary-action" type="button" onClick={geocode} disabled={geocoding || !counts.pendente}>

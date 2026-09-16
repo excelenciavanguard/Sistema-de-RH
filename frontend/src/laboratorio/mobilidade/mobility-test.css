@@ -3,7 +3,10 @@
 .lab-bar { display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 32px; border-bottom: 1px solid var(--line); background: var(--surface); font-size: var(--font-ui); }
 .lab-bar strong { color: var(--ink); }
 .lab-bar span { color: var(--muted); }
-.lab-bar a { margin-left: auto; color: var(--blue); font-weight: var(--weight-heading); text-decoration: none; }
+.lab-bar-links { display: flex; align-items: center; gap: 24px; margin-left: auto; }
+.lab-bar a { color: var(--blue); font-weight: var(--weight-heading); text-decoration: none; white-space: nowrap; }
+.lab-bar a:hover { text-decoration: underline; }
+.lab-bar a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
 
 .demo-label.real-data-label { color: #147044; background: #dcf7e7; }
 
@@ -54,4 +57,10 @@
   .mobility-test-cards { grid-template-columns: 1fr; }
   .mobility-test-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mobility-test-form .field-control small { position: static; margin-top: 0; }
+}
+
+@media (max-width: 640px) {
+  .lab-bar { height: auto; min-height: 52px; flex-wrap: wrap; padding: 14px 18px; gap: 10px 12px; }
+  .lab-bar > span { font-size: var(--font-support); }
+  .lab-bar-links { width: 100%; justify-content: space-between; gap: 12px; margin-left: 0; }
 }

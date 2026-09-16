@@ -2,11 +2,23 @@
 
 API pequena para testar, com dados reais, o cruzamento entre o endereço de um candidato e os postos da empresa.
 
-- **Postos:** clientes ativos de `CAD_CLIENTE` no WebOper, **somente leitura**.
+- **Postos:** clientes ativos de `CAD_CLIENTE` com escala recente em `FOLHA_ESCALA`, **somente leitura**.
 - **Localização e rotas:** Geoapify (plano gratuito, 3.000 créditos/dia).
 - **Regra de vale-transporte:** estimativa de custo por posto.
 
 A tela que usa esta API é uma página separada do app da equipe: `frontend/mobilidade.html` (em desenvolvimento, `http://localhost:5185/mobilidade.html`).
+
+## Postos em operação
+
+O cadastro `Ativo` sozinho não basta. O laboratório cruza os clientes ativos com os códigos distintos de `FOLHA_ESCALA.CODIGO_CLIENTE` no intervalo entre a data de hoje menos `WEBOPER_DIAS_OPERACAO` (30 por padrão) e o fim do dia atual. Escalas futuras não entram. A data de corte usa o relógio do WebOper.
+
+São duas consultas simples, sem subconsulta por cliente, sem escrita e com cache de cinco minutos. A lista filtrada é compartilhada por listagem, geocodificação e análise de rotas; coordenadas antigas no cache local não recolocam clientes excluídos no ranking. Se a consulta à escala falhar, a API avisa o erro, sem liberar todos os clientes como alternativa.
+
+Esse é um indicador de atividade recente, não uma garantia de contrato vigente: um posto novo ainda sem escala fica de fora; um encerrado recentemente que continue ativo no cadastro pode permanecer até sair da janela. Em 16/09/2026, a leitura retornou 66 postos em cerca de 1,8 segundo.
+
+## Acesso ao cadastro do candidato
+
+Na barra do laboratório, **Abrir tela do candidato** fica à esquerda de **Abrir o sistema**. O destino padrão usa o mesmo hostname, porta `5190` e caminho `/enviar-curriculo`, do projeto CarreirasExcelencia. O portal precisa estar rodando. `VITE_CANDIDATO_URL` permite configurar outro destino; veja `frontend/.env.example`. É somente um atalho: esta alteração não integra os dados dos dois sistemas.
 
 ## WebOper é somente leitura
 
@@ -64,4 +76,4 @@ As coordenadas dos postos ficam em cache local (`backend/var/mobilidade.sqlite3`
 ./.venv/Scripts/python.exe -m pytest -q
 ```
 
-48 testes, sem rede e sem WebOper. `tests/fixtures/geoapify` tem respostas reais gravadas no Rio em 16/09/2026, sem a chave.
+Os testes não usam rede nem WebOper. `tests/fixtures/geoapify` tem respostas gravadas no Rio em 16/09/2026, sem a chave. A seleção dos postos é coberta por cenários com e sem escala, códigos duplicados, cache, expiração e falha de consulta.

@@ -6,15 +6,12 @@ import { createRoot } from "react-dom/client";
 import "../../styles.css";
 import "../../typography.css";
 import { MobilityTestScreen } from "./MobilityTestScreen.jsx";
+import { LabHeader } from "./LabHeader.jsx";
 
 function LabPage() {
   return (
     <>
-      <header className="lab-bar">
-        <strong>Alpha RH</strong>
-        <span>Laboratório · testes com dados reais</span>
-        <a href="/">Abrir o sistema</a>
-      </header>
+      <LabHeader />
       <MobilityTestScreen />
     </>
   );

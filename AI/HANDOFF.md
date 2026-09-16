@@ -1,5 +1,35 @@
 # HANDOFF — Laboratório de mobilidade (Sistema-de-RH)
 
+## Retomada pelo Codex — 16/09/2026
+
+Pedido atual: finalizar apenas o filtro de postos em operação e o atalho para a tela do candidato que ficaram pendentes no Claude. O script `postos_em_operacao.py` estava no scratchpad, mas não tinha sido executado; a cópia local estava limpa no commit `0d6ee1b`, igual à `origin/main` após fetch.
+
+### Entregue localmente
+
+- `backend/app/weboper.py`: cruza clientes ativos com `SELECT DISTINCT CODIGO_CLIENTE FROM FOLHA_ESCALA` na janela recente. Duas consultas simples, sem subconsulta correlacionada por cliente. Todas passam pelas barreiras existentes de somente leitura. Cache de cinco minutos; nenhuma liberação de todos os clientes se a consulta da escala falhar.
+- `backend/app/config.py`: `WEBOPER_DIAS_OPERACAO`, padrão 30, limitado entre 1 e 90 dias. Consulta inclui a data de corte e o dia atual inteiro, e exclui datas futuras. O critério é indicador de operação recente, não prova de contrato vigente.
+- `backend/app/main.py`: listagem informa `dias_operacao`; listagem, geocodificação e análise continuam consumindo a mesma seleção de postos. Não foram alteradas as regras de VT nem as chamadas da Geoapify.
+- `frontend/src/laboratorio/mobilidade/LabHeader.jsx`: **Abrir tela do candidato** à esquerda de **Abrir o sistema**, destino padrão no mesmo hostname, porta 5190, `/enviar-curriculo`. `VITE_CANDIDATO_URL` permite outro endereço. Link simples, sem integração de dados entre projetos.
+- Tela informa **Postos em operação** e o critério da escala. Estilos e alterações limitados ao laboratório; nenhum componente do cabeçalho principal, tela da equipe ou teste existente da equipe foi alterado.
+
+### Verificação
+
+- Os cinco testes novos de seleção falharam antes da correção porque retornavam todo o cadastro. Passaram depois, cobrindo interseção, escala vazia, cache, expiração, duplicidade e indisponibilidade da escala.
+- Os testes do novo atalho falharam por ausência do link e passaram após inclusão. Teste da mensagem de operação também percorreu falha e sucesso.
+- Backend: **53 passed**, dois avisos de depreciação em dependências do TestClient.
+- Frontend: **43 passed** (40 existentes + 3 novos); `npm run typecheck` e `npm run build` concluídos. Build mantém o aviso de bundle acima de 500 kB. Como antes, o build da equipe não inclui `mobilidade.html`; laboratório é de desenvolvimento.
+- Leitura real do WebOper: **66 postos**, cerca de **1,8 s**, sem gravar nada no banco. API local reiniciada em 127.0.0.1:8020; endpoint retornou 65 localizados e 1 fora do RJ. Não foram feitas novas chamadas à Geoapify nessa retomada.
+- Navegador: tela em localhost:5185/mobilidade.html mostra contagem e critério; clique no novo atalho abriu localhost:5190/enviar-curriculo com CPF e endereço completo.
+- Nenhum segredo, nome/endereço de cliente real ou cache foi adicionado ao Git. As alterações ainda **não foram commitadas nem enviadas**.
+
+### Atenção para a próxima etapa
+
+O código anterior ainda permite até 2 conduções Jaé por padrão, conforme a pendência original abaixo. Isso não foi alterado neste fechamento de escopo. A confirmação de que o limite deve ser estritamente 1 precisa ser aplicada em uma mudança específica, incluindo a configuração local. As demais limitações da estimativa permanecem.
+
+---
+
+## Registro anterior do Claude (histórico)
+
 Data: 16 de setembro de 2026
 Agente: Claude Code, a pedido do Nathan
 

@@ -1,6 +1,6 @@
 import pytest
 
-from app.weboper import SQL_POSTOS_ATIVOS, WebOperIndisponivel, executar_select
+from app.weboper import SQL_POSTOS_ATIVOS, SQL_CLIENTES_COM_ESCALA, WebOperIndisponivel, executar_select
 from app.weboper_seguranca import garantir_sql_somente_leitura
 
 
@@ -22,6 +22,7 @@ def test_escrita_e_bloqueada(sql):
 
 def test_consulta_de_postos_passa_na_barreira():
     garantir_sql_somente_leitura(SQL_POSTOS_ATIVOS)
+    garantir_sql_somente_leitura(SQL_CLIENTES_COM_ESCALA)
 
 
 def test_escrita_e_barrada_antes_de_tentar_conectar():

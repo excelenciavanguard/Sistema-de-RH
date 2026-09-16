@@ -60,6 +60,7 @@ def listar_postos(postos=Depends(obter_postos), cache: Cache = Depends(obter_cac
         contagem[item.situacao] = contagem.get(item.situacao, 0) + 1
     return {
         "total": len(itens),
+        "dias_operacao": config.WEBOPER_DIAS_OPERACAO,
         "por_situacao": contagem,
         "postos": [
             {

@@ -1,6 +1,9 @@
 """Leitura dos postos no WebOper. SOMENTE LEITURA.
 
-Posto em operação = cliente ativo em CAD_CLIENTE. CAD_POSTO não serve de
+Posto em operação = cliente ativo em CAD_CLIENTE com escala em FOLHA_ESCALA
+nos últimos WEBOPER_DIAS_OPERACAO dias. É um critério operacional aproximado:
+estar ativo no cadastro sozinho não confirma operação recente.
+CAD_POSTO não serve de
 fonte: há local em operação com cliente Ativo e posto homônimo Inativo
 (ver SistemaLancamentoExtras/docs/INTEGRACOES_WEBOPER_OMIE.md).
 """
@@ -52,6 +55,17 @@ SQL_POSTOS_ATIVOS = """
 """
 
 
+# Consulta única da escala; evita subconsulta correlacionada para cada cliente.
+# Limite superior exclusivo inclui o dia atual inteiro, inclusive se DATA for DATETIME.
+SQL_CLIENTES_COM_ESCALA = """
+    SELECT DISTINCT CODIGO_CLIENTE
+    FROM FOLHA_ESCALA
+    WHERE DATA >= CURDATE() - INTERVAL %(dias)s DAY
+      AND DATA < CURDATE() + INTERVAL 1 DAY
+      AND CODIGO_CLIENTE IS NOT NULL
+"""
+
+
 def executar_select(sql: str, parametros: dict | None = None) -> list[tuple]:
     garantir_sql_somente_leitura(sql)
     if not config.WEBOPER_CONFIGURADO:
@@ -70,6 +84,8 @@ def executar_select(sql: str, parametros: dict | None = None) -> list[tuple]:
         with conexao.cursor() as cursor:
             cursor.execute(sql, parametros)
             return list(cursor.fetchall())
+    except pymysql.MySQLError as erro:
+        raise WebOperIndisponivel(f"Não foi possível consultar o WebOper ({type(erro).__name__}).") from erro
     finally:
         conexao.close()
 
@@ -78,6 +94,7 @@ _cache: tuple[float, list[PostoWebOper]] | None = None
 
 
 def listar_postos_ativos() -> list[PostoWebOper]:
+    """Interseção do cadastro ativo com a escala recente, cacheada por 5 minutos."""
     global _cache
     agora = time.monotonic()
     if _cache and agora - _cache[0] < config.WEBOPER_CACHE_SEGUNDOS:
@@ -86,5 +103,11 @@ def listar_postos_ativos() -> list[PostoWebOper]:
         PostoWebOper(int(chave), nome or f"Cliente {chave}", endereco, bairro, municipio, uf, cep)
         for chave, nome, endereco, bairro, municipio, uf, cep in executar_select(SQL_POSTOS_ATIVOS)
     ]
+    com_escala = {
+        int(linha[0])
+        for linha in executar_select(SQL_CLIENTES_COM_ESCALA, {"dias": config.WEBOPER_DIAS_OPERACAO})
+    }
+    postos = [posto for posto in postos if posto.chave in com_escala]
+    # Só atualiza o cache se ambas as leituras terminarem: falha não libera todo o cadastro.
     _cache = (agora, postos)
     return postos

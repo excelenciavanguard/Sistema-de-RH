@@ -31,6 +31,10 @@ WEBOPER = {
 WEBOPER_CONFIGURADO = all(WEBOPER[chave] for chave in ("host", "user", "database"))
 # Evita consultar o WebOper a cada clique: a lista de postos muda pouco.
 WEBOPER_CACHE_SEGUNDOS = int(_texto("WEBOPER_CACHE_SEGUNDOS", "300"))
+# Cliente ativo no cadastro precisa ter escala recente para entrar no laboratório.
+WEBOPER_DIAS_OPERACAO = int(_texto("WEBOPER_DIAS_OPERACAO", "30"))
+if not 1 <= WEBOPER_DIAS_OPERACAO <= 90:
+    raise ValueError("WEBOPER_DIAS_OPERACAO deve estar entre 1 e 90.")
 
 # --- Geoapify ------------------------------------------------------------
 GEOAPIFY_API_KEY = _texto("GEOAPIFY_API_KEY")
