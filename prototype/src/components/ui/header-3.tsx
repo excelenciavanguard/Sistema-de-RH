@@ -48,7 +48,7 @@ export function Header({ route }: HeaderProps) {
             </span>
           </a>
 
-          <a href="#/inicio" className={cn('alpha-home-link hidden items-center gap-2 px-4 text-[12px] font-extrabold outline-none lg:flex', route === '/inicio' && 'is-active')} aria-label="Hoje no RH" aria-current={route === '/inicio' ? 'page' : undefined}>
+          <a href="#/inicio" className={cn('alpha-home-link hidden items-center gap-2 px-4 text-[13px] font-extrabold outline-none lg:flex', route === '/inicio' && 'is-active')} aria-label="Hoje no RH" aria-current={route === '/inicio' ? 'page' : undefined}>
             <Home className="size-[17px]" />
             <span>Hoje no RH</span>
           </a>
@@ -58,8 +58,8 @@ export function Header({ route }: HeaderProps) {
           <div className="ml-auto flex shrink-0 items-center gap-1.5">
             <label className="alpha-header-search h-10 w-[320px] items-center gap-2 rounded-lg border border-[#d7e1ec] bg-white px-3 text-[#61758c] transition-colors focus-within:border-[#83b5e7] focus-within:ring-2 focus-within:ring-[#1677e8]/10">
               <Search className="size-4 shrink-0" />
-              <input type="search" aria-label="Buscar no Alpha RH" placeholder="Buscar pessoas, vagas ou menus" className="min-w-0 flex-1 bg-transparent text-[11px] text-[#213d5c] outline-none placeholder:text-[#8b9bad]" />
-              <kbd className="rounded border border-[#d8e2ed] bg-white px-1.5 py-0.5 text-[9px] font-semibold text-[#74869b]">⌘ K</kbd>
+              <input type="search" aria-label="Buscar no Alpha RH" placeholder="Buscar pessoas, vagas ou menus" className="min-w-0 flex-1 bg-transparent text-[13px] text-[#213d5c] outline-none placeholder:text-[#8b9bad]" />
+              <kbd className="rounded border border-[#d8e2ed] bg-white px-1.5 py-0.5 text-[12px] font-semibold text-[#74869b]">⌘ K</kbd>
             </label>
 
             <button type="button" className="alpha-utility-action relative" aria-label="Abrir notificações">
@@ -68,7 +68,7 @@ export function Header({ route }: HeaderProps) {
             </button>
             <span className="hidden h-8 w-px bg-[#dce5ef] xl:block" aria-hidden="true" />
             <button className="alpha-profile-button ml-0.5 flex h-12 items-center gap-2.5 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#1677e8]/30" type="button" aria-label="Abrir perfil de Lucas">
-              <span className="grid size-9 place-items-center rounded-full bg-[#0c2e61] text-[11px] font-extrabold text-white">LS</span>
+              <span className="grid size-9 place-items-center rounded-full bg-[#0c2e61] text-[13px] font-extrabold text-white">LS</span>
               <span className="hidden flex-col 2xl:flex"><strong>Lucas</strong><small>RH Global</small></span>
               <ChevronDown className="hidden size-3.5 text-[#526984] 2xl:block" />
             </button>
@@ -99,7 +99,7 @@ function MobileMenu({ open, route }: { open: boolean; route: string }) {
           <section key={group.label} className="rounded-2xl border border-[#e1e8f0] bg-white p-3 shadow-[0_8px_24px_rgba(20,54,84,.06)]">
             <div className="px-1 pb-2">
               <h2 className="mt-1 text-sm font-extrabold text-[#173754]">{group.label}</h2>
-              <p className="mt-1 text-[9px] leading-4 text-[#718197]">{group.description}</p>
+              <p className="mt-1 text-[12px] leading-4 text-[#718197]">{group.description}</p>
             </div>
             <div className="grid gap-1">
               {group.subMenus.flatMap((subMenu) => subMenu.items).map((item) => {

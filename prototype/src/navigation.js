@@ -16,13 +16,21 @@ export const ROUTES = {
 
 const knownRoutes = new Set(Object.values(ROUTES));
 
+export function kanbanCodeFromRoute(route) {
+  return route.match(/^\/recrutamento\/vagas\/(2026-015[4-7])\/kanban$/)?.[1] ?? null;
+}
+
+function isKnownRoute(route) {
+  return knownRoutes.has(route) || Boolean(kanbanCodeFromRoute(route));
+}
+
 export function routeFromHash(hash = window.location.hash) {
   const route = hash.replace(/^#/, "").split("?")[0];
-  return knownRoutes.has(route) ? route : ROUTES.home;
+  return isKnownRoute(route) ? route : ROUTES.home;
 }
 
 export function navigateTo(route) {
-  if (!knownRoutes.has(route)) return;
+  if (!isKnownRoute(route)) return;
   window.history.pushState(null, "", `#${route}`);
   window.dispatchEvent(new HashChangeEvent("hashchange"));
 }

@@ -14,7 +14,7 @@ import { AdmissionScreen } from "./screens/AdmissionScreen.jsx";
 import { ReportsScreen } from "./screens/ReportsScreen.jsx";
 import { IntegrationsScreen } from "./screens/IntegrationsScreen.jsx";
 import { AdministrationScreen } from "./screens/AdministrationScreen.jsx";
-import { navigateTo, routeFromHash, ROUTES } from "./navigation.js";
+import { kanbanCodeFromRoute, navigateTo, routeFromHash, ROUTES } from "./navigation.js";
 
 const moduleTitles = {
   [ROUTES.talents]: "Banco de talentos",
@@ -44,7 +44,7 @@ export function App() {
   else if (route === ROUTES.approvals) content = <ApprovalsScreen onNavigate={go} />;
   else if (route === ROUTES.vacancies) content = <VacanciesScreen onNavigate={go} />;
   else if (route === ROUTES.vacancyCreate) content = <VacancyCreateScreen onNavigate={go} />;
-  else if (route === ROUTES.kanban) content = <KanbanScreen />;
+  else if (kanbanCodeFromRoute(route)) content = <KanbanScreen key={route} vacancyCode={kanbanCodeFromRoute(route)} />;
   else if (route === ROUTES.talents) content = <TalentsScreen onNavigate={go} />;
   else if (route === ROUTES.agenda) content = <AgendaScreen />;
   else if (route === ROUTES.admission) content = <AdmissionScreen />;

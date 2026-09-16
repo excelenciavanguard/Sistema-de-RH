@@ -35,7 +35,7 @@ export function SmartFilters({ search, onSearch, open, onToggle }) {
         </div>
         <label className="candidate-search">
           <MagnifyingGlass size={16} />
-          <input value={search} onChange={(event) => onSearch(event.target.value)} placeholder="Buscar candidatos" />
+          <input aria-label="Buscar candidatos" value={search} onChange={(event) => onSearch(event.target.value)} placeholder="Buscar candidatos" />
         </label>
         <button className="filter-button" type="button"><Star size={16} weight="fill" /> Triagem inicial <CaretDown size={13} /></button>
         <button className="filter-button" type="button"><ShieldCheck size={17} /> Evidências <CaretDown size={13} /></button>

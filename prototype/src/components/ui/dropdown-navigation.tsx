@@ -66,7 +66,7 @@ export function DropdownNavigation({ navItems, route, className }: DropdownNavig
                 <button
                   type="button"
                   className={cn(
-                    'alpha-dropdown-trigger relative flex h-full cursor-pointer items-center justify-center gap-1.5 overflow-hidden border-x-0 border-t-0 border-b-2 border-transparent px-3 text-[12px] font-bold text-[#263f5d] outline-none transition-colors hover:bg-[#f5f8fc] hover:text-[#1268bf] focus-visible:ring-2 focus-visible:ring-[#1677e8]/30',
+                    'alpha-dropdown-trigger relative flex h-full cursor-pointer items-center justify-center gap-1.5 overflow-hidden border-x-0 border-t-0 border-b-2 border-transparent px-3 text-[13px] font-bold text-[#263f5d] outline-none transition-colors hover:bg-[#f5f8fc] hover:text-[#1268bf] focus-visible:ring-2 focus-visible:ring-[#1677e8]/30',
                     active && !open && 'bg-[#eaf3ff] text-[#1268bf]',
                     open && 'is-open border-[#d5e2ef] bg-white text-[#1268bf] shadow-[0_7px_18px_rgba(25,62,96,.10)]',
                   )}
@@ -97,12 +97,12 @@ export function DropdownNavigation({ navItems, route, className }: DropdownNavig
                       >
                         <div className="mb-2 rounded-xl bg-[#f2f7fc] px-4 py-3">
                           <h2 className="m-0 text-[15px] font-extrabold tracking-[-0.025em]">{navItem.label}</h2>
-                          <p className="mt-1 max-w-[520px] text-[10px] leading-4 text-[#63768b]">{navItem.description}</p>
+                          <p className="mt-1 max-w-[520px] text-[12px] leading-4 text-[#63768b]">{navItem.description}</p>
                         </div>
                         <div className="flex gap-2">
                           {navItem.subMenus.map((subMenu) => (
                             <section key={subMenu.title} className="min-w-[250px] flex-1 px-1 py-2">
-                              <h3 className="mb-2 px-2 text-[9px] font-extrabold uppercase tracking-[0.12em] text-[#718398]">{subMenu.title}</h3>
+                              <h3 className="mb-2 px-2 text-[13px] font-extrabold uppercase tracking-[0.12em] text-[#718398]">{subMenu.title}</h3>
                               <ul className="m-0 grid list-none gap-1 p-0">
                                 {subMenu.items.map((item) => {
                                   const Icon = item.icon;
@@ -114,8 +114,8 @@ export function DropdownNavigation({ navItems, route, className }: DropdownNavig
                                           <Icon className="size-[17px]" />
                                         </span>
                                         <span className="flex min-w-0 flex-col">
-                                          <strong className="text-[11px] font-extrabold text-[#173754]">{item.label}</strong>
-                                          <small className="mt-0.5 text-[9px] leading-4 text-[#708197]">{item.description}</small>
+                                          <strong className="text-[13px] font-extrabold text-[#173754]">{item.label}</strong>
+                                          <small className="mt-0.5 text-[12px] leading-4 text-[#708197]">{item.description}</small>
                                         </span>
                                       </a>
                                     </li>

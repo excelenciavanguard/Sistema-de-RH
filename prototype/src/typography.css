@@ -1,0 +1,45 @@
+/* Inter 4.1, self-hosted under the bundled SIL Open Font License. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter/InterVariable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter/InterVariable-Italic.woff2") format("woff2");
+}
+
+:root {
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --weight-text: 400;
+  --weight-ui: 500;
+  --weight-heading: 600;
+  --weight-data: 500;
+  font-optical-sizing: auto;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+body { font-weight: var(--weight-text); }
+.app-shell :is(h1, h2, h3, h4, strong, b),
+.candidate-modal :is(h1, h2, h3, h4, strong, b),
+.extraction-lab :is(h1, h2, h3, h4, strong, b),
+#mobile-navigation :is(h2, h3, strong) { font-weight: var(--weight-heading); }
+.app-shell button, .app-shell select,
+.candidate-modal button, .extraction-lab button,
+#mobile-navigation :is(a, button),
+.app-shell :is(.primary-action, .secondary-action, .alpha-home-link, .alpha-dropdown-trigger) { font-weight: var(--weight-ui); }
+.app-shell .vacancies-title-link { font-weight: var(--weight-heading); }
+
+/* Keep dates, phones, codes and values aligned without applying monospace. */
+input, textarea, select { font-variant-numeric: lining-nums tabular-nums; }
+.app-shell :is(.vacancies-number, .number-cell) { font-weight: var(--weight-data); }
+.app-shell :is(time, .vacancies-number, .number-cell, .vacancies-footer, .card-fact),
+.candidate-modal :is(time, dd), .extraction-lab dd {
+  font-variant-numeric: lining-nums tabular-nums;
+}
