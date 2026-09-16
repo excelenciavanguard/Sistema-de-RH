@@ -37,7 +37,8 @@ Meta: **R$ 5 por sentido, R$ 10 por dia** (regra do Nathan, 16/09/2026).
 | Trajeto por sentido | Resultado |
 |---|---|
 | Até 2 km em linha reta | Dentro da meta, a pé |
-| 1 ônibus do Rio (ou ônibus/BRT/VLT integrados até `VT_MAX_CONDUCOES_JAE`) | Dentro, R$ 5 no Jaé |
+| 1, 2 ou 3 ônibus do Rio (`VT_MAX_CONDUCOES_JAE=3`) | Dentro, estimativa de R$ 5 no Jaé |
+| 4 ou mais ônibus, BRT ou VLT (sozinhos ou combinados) | Fora |
 | 1 metrô, sozinho | Dentro, R$ 5 no bilhete único via Riocard |
 | Metrô com outra condução | Fora |
 | Trem ou barca | Fora |
@@ -45,6 +46,8 @@ Meta: **R$ 5 por sentido, R$ 10 por dia** (regra do Nathan, 16/09/2026).
 | Sem rota, condução não identificada ou posto com localização incerta | Conferir |
 
 É **estimativa**: a Geoapify devolve a rota mais rápida, não a mais barata, e a volta é tratada como igual à ida. Tempo de viagem não entra na regra.
+
+O limite de três ônibus e a exclusão de BRT/VLT são a regra de simulação confirmada pelo Nathan, não uma validação oficial de integração tarifária. Em instalações que já tenham `.env`, atualizar `VT_MAX_CONDUCOES_JAE=3` e reiniciar a API; o ambiente prevalece sobre o valor padrão.
 
 ## Como rodar
 

@@ -133,7 +133,7 @@ export function MobilityTestScreen() {
           <div>
             <small>Regra de vale-transporte</small>
             <strong>R$ 5 por sentido · R$ 10 por dia</strong>
-            <p>1 ônibus (Jaé) ou 1 metrô (Riocard) por sentido. Trem, metrô com outra condução ou outro município: fora.</p>
+            <p>Até 3 ônibus (Jaé) ou 1 metrô (Riocard) por sentido. BRT, VLT, trem, barca, metrô com outra condução ou outro município: fora.</p>
           </div>
         </article>
       </section>

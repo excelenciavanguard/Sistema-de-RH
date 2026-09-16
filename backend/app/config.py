@@ -46,8 +46,8 @@ GEOAPIFY_TIMEOUT_SEGUNDOS = float(_texto("GEOAPIFY_TIMEOUT_SEGUNDOS", "20"))
 
 # --- Regra de vale-transporte --------------------------------------------
 VT_TARIFA_SENTIDO = Decimal(_texto("VT_TARIFA_SENTIDO", "5.00"))
-# Quantas conduções de ônibus/BRT/VLT o Jaé integra numa tarifa (2 ou 3, a confirmar).
-VT_MAX_CONDUCOES_JAE = int(_texto("VT_MAX_CONDUCOES_JAE", "2"))
+# Estimativa definida pelo RH: até 3 ônibus por sentido; não inclui BRT ou VLT.
+VT_MAX_CONDUCOES_JAE = int(_texto("VT_MAX_CONDUCOES_JAE", "3"))
 VT_RAIO_CAMINHAVEL_KM = float(_texto("VT_RAIO_CAMINHAVEL_KM", "2.0"))
 ANALISE_TOP_POSTOS = int(_texto("ANALISE_TOP_POSTOS", "5"))
 # Abaixo disso a coordenada do posto não é confiável (endereço bagunçado no WebOper).

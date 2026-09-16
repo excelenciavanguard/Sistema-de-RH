@@ -2,8 +2,8 @@
 
 Regra definida pelo Nathan em 16/09/2026. Meta: R$ 5 por sentido, R$ 10 por dia.
 
-- 1 ônibus do Rio por sentido: R$ 5, pago no Jaé. Ônibus, BRT e VLT integram
-  no Jaé até VT_MAX_CONDUCOES_JAE conduções na mesma tarifa.
+- Até 3 ônibus do Rio por sentido: estimativa de R$ 5, pago no Jaé.
+  O limite é VT_MAX_CONDUCOES_JAE; BRT e VLT não entram nesta regra.
 - 1 metrô por sentido, sozinho: R$ 5 no bilhete único, pago via Riocard.
 - Metrô com outra condução: passa da meta.
 - Trem ou barca: passa da meta.
@@ -24,7 +24,7 @@ DENTRO = "dentro_da_meta"
 FORA = "fora_da_meta"
 CONFERIR = "conferir"
 
-JAE = {"onibus", "brt", "vlt"}
+JAE = {"onibus"}
 NOME_VEICULO = {"onibus": "Ônibus", "brt": "BRT", "vlt": "VLT", "metro": "Metrô", "trem": "Trem", "barca": "Barca"}
 
 
@@ -78,12 +78,15 @@ def estimar(rota: Rota) -> Estimativa:
             return Estimativa(DENTRO, "Um metrô por sentido, no bilhete único.", tarifa, tarifa * 2, "Riocard (bilhete único)", nomes)
         return Estimativa(FORA, "Metrô com outra condução: passa da meta.", conducoes=nomes)
 
+    if "brt" in veiculos or "vlt" in veiculos:
+        return Estimativa(FORA, "BRT ou VLT no trajeto: a regra Jaé desta estimativa aceita somente ônibus.", conducoes=nomes)
+
     if all(v in JAE for v in veiculos):
         if len(conducoes) <= config.VT_MAX_CONDUCOES_JAE:
-            descricao = "Um ônibus" if len(conducoes) == 1 else f"{len(conducoes)} conduções integradas"
+            descricao = "Um ônibus" if len(conducoes) == 1 else f"{len(conducoes)} ônibus integrados"
             return Estimativa(DENTRO, f"{descricao} por sentido, no Jaé.", tarifa, tarifa * 2, "Jaé", nomes)
         return Estimativa(
-            FORA, f"{len(conducoes)} conduções por sentido: o Jaé integra até {config.VT_MAX_CONDUCOES_JAE}.", conducoes=nomes
+            FORA, f"{len(conducoes)} ônibus por sentido: a estimativa Jaé permite até {config.VT_MAX_CONDUCOES_JAE}.", conducoes=nomes
         )
 
     return Estimativa(CONFERIR, "Combinação de conduções fora das regras conhecidas.", conducoes=nomes)

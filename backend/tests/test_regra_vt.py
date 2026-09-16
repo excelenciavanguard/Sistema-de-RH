@@ -1,6 +1,7 @@
 from decimal import Decimal
 
-from app import config
+import pytest
+
 from app.modelos import Rota, Trecho
 from app.regra_vt import CONFERIR, DENTRO, FORA, decidir_sem_rota, estimar
 
@@ -11,8 +12,9 @@ def _rota(*veiculos):
     return Rota(encontrada=True, duracao_segundos=1800, trechos=trechos)
 
 
-def test_um_onibus_fica_dentro_pagando_no_jae():
-    e = estimar(_rota("onibus"))
+@pytest.mark.parametrize("quantidade", [1, 2, 3])
+def test_ate_tres_onibus_ficam_dentro_pagando_uma_tarifa_no_jae(quantidade):
+    e = estimar(_rota(*(["onibus"] * quantidade)))
     assert e.classificacao == DENTRO
     assert e.custo_sentido == Decimal("5.00") and e.custo_dia == Decimal("10.00")
     assert e.pagamento == "Jaé"
@@ -37,10 +39,20 @@ def test_barca_fica_fora():
     assert estimar(_rota("barca")).classificacao == FORA
 
 
-def test_onibus_e_brt_integram_no_jae_ate_o_limite():
-    assert estimar(_rota("onibus", "brt")).classificacao == DENTRO
-    demais = ["onibus"] * (config.VT_MAX_CONDUCOES_JAE + 1)
-    assert estimar(_rota(*demais)).classificacao == FORA
+def test_quatro_onibus_ficam_fora_do_limite_jae():
+    e = estimar(_rota("onibus", "onibus", "onibus", "onibus"))
+    assert e.classificacao == FORA
+    assert e.pagamento is None and e.custo_sentido is None
+
+
+@pytest.mark.parametrize("veiculos", [
+    ("brt",), ("vlt",), ("onibus", "brt"), ("onibus", "vlt"),
+    ("onibus", "brt", "onibus"), ("onibus", "vlt", "onibus"),
+])
+def test_jae_nao_aceita_brt_ou_vlt_mesmo_abaixo_do_limite(veiculos):
+    e = estimar(_rota(*veiculos))
+    assert e.classificacao == FORA
+    assert e.pagamento is None and e.custo_sentido is None
 
 
 def test_conducao_sem_tipo_vai_para_conferir():

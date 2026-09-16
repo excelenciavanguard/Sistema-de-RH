@@ -73,7 +73,7 @@ def test_analise_classifica_e_ordena(cache):
     assert por_posto["Posto Botafogo"]["classificacao"] == DENTRO            # ônibus
     assert por_posto["Posto Tijuca"]["classificacao"] == DENTRO              # 1 metrô
     assert por_posto["Posto Tijuca"]["pagamento"] == "Riocard (bilhete único)"
-    assert por_posto["Posto Barra"]["classificacao"] == FORA                 # 3 conduções
+    assert por_posto["Posto Barra"]["classificacao"] == FORA                 # inclui BRT
     assert por_posto["Posto Niterói"]["classificacao"] == FORA               # intermunicipal
     assert por_posto["Posto Niterói"]["rota_consultada"] is False            # decidido sem crédito
     assert "Posto São Paulo" not in por_posto                                # fora do RJ não entra
@@ -88,6 +88,18 @@ def test_top_limita_rotas_consultadas(cache):
     resultado = analise.analisar("Rua Barata Ribeiro 500, Copacabana", POSTOS, cache, provedor, top=1)
     assert provedor.rotas == 1
     assert any(r["classificacao"] is None and not r["rota_consultada"] for r in resultado["resultados"])
+
+
+def test_analise_aceita_tres_onibus_no_jae(cache, monkeypatch):
+    monkeypatch.setitem(VEICULOS_POR_DESTINO, "Barra", ["onibus", "onibus", "onibus"])
+    provedor = ProvedorFalso()
+    analise.geocodificar_pendentes(POSTOS, cache, provedor, limite=50)
+    resultado = analise.analisar("Rua Barata Ribeiro 500, Copacabana", POSTOS, cache, provedor, top=5)
+    barra = next(r for r in resultado["resultados"] if r["posto"] == "Posto Barra")
+    assert barra["classificacao"] == DENTRO
+    assert barra["pagamento"] == "Jaé"
+    assert barra["custo_sentido"] == 5.0 and barra["custo_dia"] == 10.0
+    assert resultado["regra"]["max_conducoes_jae"] == 3
 
 
 def test_candidato_fora_do_rj_e_recusado(cache):
