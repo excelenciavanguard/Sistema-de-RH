@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AppShell } from "./components/AppShell.jsx";
+import { WelcomeIntro } from "./components/WelcomeIntro.jsx";
 import { HomeScreen } from "./screens/HomeScreen.jsx";
 import { RequisitionsScreen } from "./screens/RequisitionsScreen.jsx";
 import { RequisitionCreateScreen } from "./screens/RequisitionCreateScreen.jsx";
@@ -26,6 +27,7 @@ const moduleTitles = {
 };
 
 export function App() {
+  const currentUser = { name: "Simão Pedro" };
   const previewCandidate = new URLSearchParams(window.location.search).has("candidate");
   const [route, setRoute] = useState(() => previewCandidate ? ROUTES.kanban : routeFromHash());
 
@@ -53,5 +55,8 @@ export function App() {
   else if (route === ROUTES.administration) content = <AdministrationScreen />;
   else content = <ModulePreviewScreen title={moduleTitles[route] ?? "Módulo"} onNavigate={go} />;
 
-  return <AppShell route={route} onNavigate={go}>{content}</AppShell>;
+  return <>
+    <WelcomeIntro userName={currentUser.name} />
+    <AppShell route={route} onNavigate={go}>{content}</AppShell>
+  </>;
 }

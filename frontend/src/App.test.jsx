@@ -63,11 +63,11 @@ describe("Alpha RH connected screens", () => {
     expect(screen.getAllByText("Dados demonstrativos").length).toBeGreaterThan(0);
   });
 
-  it("shows the next appointment above the latest processes home layout", () => {
+  it("shows only the compact today agenda access above the processes", () => {
     render(<App />);
-    expect(screen.getByRole("heading", { name: "Próximo compromisso" })).toBeInTheDocument();
-    expect(screen.getByText("Entrevista RH · Mariana Lima", { selector: ".next-appointment-copy strong" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Agenda de hoje 3" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Próximo compromisso" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Olá, Simão Pedro!" })).not.toBeInTheDocument();
   });
 
   it("lets Operations prepare and submit a new requisition", async () => {

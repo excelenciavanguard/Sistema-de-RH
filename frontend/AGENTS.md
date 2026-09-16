@@ -10,11 +10,15 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Current frontend phase
 
+- Home top-area direction superseded on 2026-09-16: remove the page greeting banner, local date heading and next-appointment strip. Keep only a compact "Agenda de hoje" access above the processes and recent activity sections.
+
 - Home greeting restored by user request on 2026-09-16: show Hoje no RH with the browser-local current weekday/date and Bom trabalho, Simão Pedro!, followed by the compact green-gradient Olá, Simão Pedro! banner. Keep the next-appointment strip, current processes and recent activity below it. Do not restore the previous sidebar, KPI cards, stale priority counts or dead welcome actions. Update the displayed date while the page stays open and reflow the heading/banner on mobile.
 
 - Home direction approved on 2026-09-16: preserve the latest processes/recent-activity layout without a fixed agenda sidebar. Show a compact next-appointment strip above processes with visible time/person/location, a details modal and an Agenda de hoje count/action. Keep the full-agenda navigation, empty-day/completed-day states, responsive actions and scrolling modal body. Home fixtures use an explicitly illustrative 10:00 reference time; real scheduling must later be connected to the approved backend contract.
 
 - Candidate cards must not display a CV shortcut/badge. Keep the résumé accessible inside the candidate modal; preserve card click, keyboard opening and drag behavior.
+
+- Entry welcome direction (2026-09-16): retain a full-screen typed personalized greeting; use a professional, restrained presentation with the actual Alpha RH logo, light background, green accents and subtle transitions.
 
 - Documents admission direction approved on 2026-09-16: use a full-width candidate list and a right modal drawer opened on candidate selection, not a permanent detail column. Distinguish received and validated documents, request only missing/correction items, require a correction reason, and block completion until all required documents are validated. Keep fixed drawer header/footer and a scrolling body. All actions remain illustrative in this frontend phase.
 

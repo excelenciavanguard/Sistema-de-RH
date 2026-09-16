@@ -4,48 +4,14 @@
   gap: 18px;
 }
 
-.restored-home-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.restored-home-heading h1 { margin: 0; color: #051f20; font-size: var(--font-page); line-height: 1.2; }
-.restored-home-heading p { margin: 6px 0 0; color: #496159; font-size: var(--font-ui); }
-.restored-home-date { display: flex; flex-direction: column; gap: 4px; text-align: right; font-size: var(--font-support); color: #496159; }
-.restored-home-date time { color: #163832; font-weight: var(--weight-heading); }
-.process-home .alpha-welcome-banner { margin: 0; border-radius: 12px; box-shadow: 0 8px 20px rgba(5,31,32,.12); }
-.process-home .alpha-welcome-content { min-height: 80px; padding: 14px 20px; grid-template-columns: 42px minmax(0,1fr) minmax(260px,.6fr); gap: 16px; }
-.process-home .alpha-welcome-symbol { width: 42px; height: 42px; border-radius: 10px; }
-.process-home .alpha-welcome-message { max-width: 36ch; color: #dff3e4; }
-.process-home .alpha-welcome-copy p { color: #dff3e4; }
-.restored-home-heading h1 { font-size: 1.5rem; letter-spacing: -.025em; }
-.restored-home-heading > div { min-width: 0; }
-.restored-home-date { flex-shrink: 0; }
-.process-home .alpha-welcome-copy { min-width: 0; overflow-wrap: anywhere; }
-@media (max-width: 800px) {
-  .restored-home-heading { align-items: flex-start; flex-direction: column; gap: 12px; }
-  .restored-home-date { text-align: left; flex-shrink: 1; }
-  .process-home .alpha-welcome-content { grid-template-columns: 42px minmax(0,1fr); gap: 12px; padding: 16px; }
-  .process-home .alpha-welcome-message { display: none; }
-  .process-home .alpha-welcome-copy h2 { font-size: 1rem; line-height: 1.4; }
-}
 .processes-card-header h2 { margin: 0; color: #051f20; font-size: 1rem; line-height: 1.3; }
 
-.next-appointment {
+.today-agenda-access {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px 20px;
-  border: 1px solid #d7e5db;
-  border-radius: 12px;
-  background: #fff;
+  justify-content: flex-end;
 }
-
-.next-appointment-copy { flex: 1; min-width: 0; }
-.next-appointment-heading { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
-.next-appointment-copy h2 { margin: 0; font-size: 16px; color: #051f20; }
-.next-appointment-copy p { margin: 6px 0 0; color: #496159; font-size: 13px; line-height: 1.5; }
-.next-appointment-copy small { color: #496159; font-size: 12px; }
-.next-appointment-time { min-width: 82px; display: grid; grid-template-columns: 18px auto; align-items: center; justify-content: center; gap: 4px 6px; padding: 10px 12px; border-radius: 8px; background: #edf6ef; color: #235347; font-size: 12px; }
-.next-appointment-time time { grid-column: 1 / -1; font-size: 20px; font-weight: 600; line-height: 1.2; font-variant-numeric: tabular-nums; }
-.next-appointment-actions { display: flex; align-items: center; gap: 8px; }
-.next-agenda-button {
+.today-agenda-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -60,27 +26,13 @@
   font-size: 13px;
   cursor: pointer;
 }
-.next-agenda-count { min-width: 22px; padding: 2px 6px; border-radius: 5px; background: #dff3e4; font-weight: 600; }
-.next-appointment-actions .text-action { min-height: 40px; border: 1px solid #235347; color: #fff; background: #235347; }
-.next-appointment-actions .text-action:hover { background: #163832; }
-.next-agenda-button:hover { background: #edf6ef; border-color: #235347; }
-.next-appointment button:focus-visible,
+.today-agenda-button > span { min-width: 22px; padding: 2px 6px; border-radius: 5px; background: #dff3e4; font-weight: var(--weight-heading); }
+.today-agenda-button:hover { background: #edf6ef; border-color: #235347; }
+.today-agenda-button:focus-visible,
 .agenda-dialog button:focus-visible { outline: 2px solid #235347; outline-offset: 3px; }
-.next-appointment-copy { overflow-wrap: anywhere; }
-.next-appointment ::selection { background: #dff3e4; color: #051f20; }
-
-@media (max-width: 1000px) {
-  .next-appointment { display: grid; grid-template-columns: auto minmax(0, 1fr); }
-  .next-appointment-actions { grid-column: 2; flex-wrap: wrap; }
-}
 
 @media (max-width: 520px) {
-  .next-appointment { gap: 12px; padding: 16px; }
-  .next-appointment-time { min-width: 72px; padding: 10px 8px; }
-  .next-appointment-heading { gap: 4px; }
-  .next-appointment-copy h2 { font-size: 15px; line-height: 1.4; }
-  .next-appointment-actions { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr; }
-  .next-appointment-actions button { min-height: 44px; width: 100%; }
+  .today-agenda-button { min-height: 44px; width: 100%; }
 }
 
 .processes-card,
@@ -167,16 +119,16 @@
 }
 
 .processes-table {
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 .process-home.process-home .processes-table-head,
 .process-home.process-home .process-row {
-  min-width: 1240px;
+  min-width: 0;
   display: grid;
-  grid-template-columns: minmax(280px, 1.05fr) minmax(340px, 1.35fr) minmax(480px, 1.9fr) 108px 28px;
+  grid-template-columns: minmax(210px, .9fr) minmax(0, 3.7fr) 100px;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
 }
 
 .processes-table-head {
@@ -261,45 +213,6 @@
   white-space: nowrap;
 }
 
-.candidate-stage-grid {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: repeat(7, minmax(48px, 1fr));
-  align-items: start;
-  gap: 8px;
-}
-
-.candidate-stage {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.candidate-stage b {
-  width: 100%;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #d9ebe0;
-  border-radius: 9px;
-  color: #166247;
-  background: #edf7f1;
-  font-size: .8rem;
-  font-variant-numeric: tabular-nums;
-}
-
-.candidate-stage small {
-  width: 100%;
-  overflow: hidden;
-  color: #667970;
-  font-size: .58rem;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .process-new-badge {
   min-height: 30px;
   display: inline-flex;
@@ -316,44 +229,68 @@
   justify-self: start;
 }
 
-.process-row-menu {
-  display: grid;
-  place-items: center;
-  color: #235347;
-  justify-self: end;
-}
-
 .process-home .stage-progress {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(9, minmax(0, 1fr));
   gap: 5px;
+  overflow: visible;
 }
 
 .stage-progress > span {
+  position: relative;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.stage-progress > span::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  z-index: 30;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  width: max-content;
+  max-width: 190px;
+  padding: 7px 9px;
+  border-radius: 7px;
+  color: #fff;
+  background: #163832;
+  box-shadow: 0 7px 18px rgba(5, 31, 32, .2);
+  font-size: var(--font-meta);
+  font-weight: var(--weight-ui);
+  line-height: 1.35;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 4px);
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.stage-progress > span:hover::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 .process-home .stage-progress i {
   display: block;
   height: 16px;
   border: 1px solid #d5ded9;
-  border-radius: 99px;
+  border-radius: 5px;
   background: linear-gradient(180deg, #edf1ef 0%, #d7dfdb 100%);
   box-shadow: inset 0 1px 2px rgba(5, 31, 32, 0.08), 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .process-home .stage-progress i.done {
-  border-color: #245e50;
-  background: linear-gradient(180deg, #347765 0%, #235347 100%);
+  border-color: #72ad91;
+  background: linear-gradient(180deg, #94c9ac 0%, #78b696 100%);
   box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.18), 0 1px 2px rgba(5, 31, 32, 0.16);
 }
 
 .stage-progress small {
   overflow: hidden;
   color: #596b63;
-  font-size: 0.65rem;
+  font-size: var(--font-meta);
+  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -548,8 +485,11 @@
 }
 
 .agenda-dialog {
+  position: fixed;
+  inset: 0;
   width: min(520px, calc(100vw - 28px));
   max-height: calc(100dvh - 32px);
+  margin: auto;
   padding: 0;
   overflow: hidden;
   border: 0;
