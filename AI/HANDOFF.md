@@ -22,9 +22,21 @@ Pedido atual: finalizar apenas o filtro de postos em operação e o atalho para 
 - Navegador: tela em localhost:5185/mobilidade.html mostra contagem e critério; clique no novo atalho abriu localhost:5190/enviar-curriculo com CPF e endereço completo.
 - Nenhum segredo, nome/endereço de cliente real ou cache foi adicionado ao Git. As alterações ainda **não foram commitadas nem enviadas**.
 
-### Atenção para a próxima etapa
+### Regra Jaé fechada (Claude, 16/09/2026, commit 75f04ef)
 
-O código anterior ainda permite até 2 conduções Jaé por padrão, conforme a pendência original abaixo. Isso não foi alterado neste fechamento de escopo. A confirmação de que o limite deve ser estritamente 1 precisa ser aplicada em uma mudança específica, incluindo a configuração local. As demais limitações da estimativa permanecem.
+- Nathan confirmou: **até 3 ônibus** por sentido ficam dentro da estimativa de R$ 5 no Jaé. BRT e VLT ficam fora, assim como 4 ônibus ou mais. Metrô sozinho continua dentro.
+- `VT_MAX_CONDUCOES_JAE=3` no padrão, no `.env.example` e no `.env` local. Backend: 62 testes.
+- Conferido ao vivo, com a API reiniciada: a resposta traz `max_conducoes_jae: 3`, 66 postos em operação e 65 localizados.
+
+### Problemas da equipe na `main` (não causados pelo laboratório)
+
+Depois do commit `fc48c65` (gabriel-vanguard, 15h46: painel inicial e identidade visual), a `main` ficou assim:
+
+- `npm run typecheck`: `src/components/Logo.tsx` importa `./Logo.css` sem declaração de tipos (TS2882).
+- `src/App.test.jsx`: dois testes procuram o título "Hoje no RH" e o banner "Olá, Simão Pedro!", que saíram da tela inicial nova.
+- `src/typography.test.js`: o CSS novo tem fonte de 8,5 px, proibida pelo próprio teste.
+
+Os arquivos são da equipe e não foram alterados. O sino que abre o laboratório e o usuário Simão Pedro no cabeçalho continuam no `header-3.tsx`.
 
 ---
 
