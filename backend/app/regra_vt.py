@@ -39,15 +39,23 @@ class Estimativa:
     intermunicipal: bool = False
 
 
+def _km(valor: float) -> str:
+    return f"{round(valor, 1):.1f}".replace(".", ",")
+
+
+def _reais(valor) -> str:
+    return f"R$ {valor:.2f}".replace(".", ",")
+
+
 def decidir_sem_rota(*, municipio_candidato: str, municipio_posto: str, distancia_reta_km: float) -> Estimativa | None:
     """Casos que não precisam gastar crédito com rota. None = precisa consultar."""
     if distancia_reta_km <= config.VT_RAIO_CAMINHAVEL_KM:
-        return Estimativa(DENTRO, f"Dá para ir a pé: {distancia_reta_km:.1f} km em linha reta.", Decimal("0.00"), Decimal("0.00"))
+        return Estimativa(DENTRO, f"Dá para ir a pé: {_km(distancia_reta_km)} km em linha reta.", Decimal("0.00"), Decimal("0.00"))
     if not mesmo_municipio(municipio_candidato, municipio_posto):
         return Estimativa(
             FORA,
             f"Outro município ({municipio_candidato} → {municipio_posto}): a passagem intermunicipal passa de "
-            f"R$ {config.VT_TARIFA_SENTIDO:.2f} e a empresa não paga o Bilhete Único Intermunicipal.",
+            f"{_reais(config.VT_TARIFA_SENTIDO)} e a empresa não paga o Bilhete Único Intermunicipal.",
             intermunicipal=True,
         )
     return None
@@ -71,7 +79,7 @@ def estimar(rota: Rota) -> Estimativa:
 
     if "trem" in veiculos or "barca" in veiculos:
         tipo = "Trem" if "trem" in veiculos else "Barca"
-        return Estimativa(FORA, f"{tipo} no trajeto: fica fora da meta de R$ {tarifa:.2f} por sentido.", conducoes=nomes)
+        return Estimativa(FORA, f"{tipo} no trajeto: fica fora da meta de {_reais(tarifa)} por sentido.", conducoes=nomes)
 
     if "metro" in veiculos:
         if len(conducoes) == 1:

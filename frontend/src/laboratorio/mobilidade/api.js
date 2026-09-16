@@ -15,7 +15,8 @@ async function request(path, options = {}) {
 
 export const listMobilityPosts = () => request("/mobilidade/postos");
 export const geocodePendingPosts = (limit = 200) => request(`/mobilidade/postos/geocodificar?limite=${limit}`, { method: "POST" });
-export const analyzeAddress = (endereco, top) => request("/mobilidade/analisar", { method: "POST", body: JSON.stringify({ endereco, top }) });
+// Rua e número vão separados para o backend corrigir a grafia quando o mapa só acha o bairro.
+export const analyzeAddress = (endereco, top, campos = {}) => request("/mobilidade/analisar", { method: "POST", body: JSON.stringify({ endereco, top, ...campos }) });
 export const getGeoapifyUsage = () => request("/mobilidade/consumo");
 
 // ViaCEP preenche rua, bairro e cidade. Não gasta crédito da Geoapify.

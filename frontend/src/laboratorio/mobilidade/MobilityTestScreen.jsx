@@ -74,7 +74,7 @@ export function MobilityTestScreen() {
     setAnalyzing(true);
     setAnalysisError("");
     try {
-      setAnalysis(await analyzeAddress(text, Number(top)));
+      setAnalysis(await analyzeAddress(text, Number(top), { rua: address.street, numero: address.number }));
       setFilter("todos");
       setUsage(await getGeoapifyUsage());
     } catch (error) {
@@ -163,6 +163,7 @@ export function MobilityTestScreen() {
                 {analysis.resumo.dentro_da_meta} postos dentro da meta · {analysis.resumo.rotas_consultadas} rotas consultadas ·
                 {" "}{analysis.resumo.creditos_estimados} créditos nesta análise
                 {analysis.candidato.precisao === "rua" && " · localizado pela rua, sem o número exato"}
+                {analysis.candidato.grafia_corrigida && ` · rua encontrada no mapa como “${analysis.candidato.grafia_corrigida}”`}
               </p>
             </div>
             <div className="mobility-test-filters" role="group" aria-label="Filtrar resultado">

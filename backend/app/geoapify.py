@@ -104,6 +104,19 @@ class ProvedorGeoapify:
 
     def geocodificar(self, endereco: str) -> Local:
         dados = self._get(URL_GEOCODE, {"text": endereco, "filter": "countrycode:br", "lang": "pt", "limit": 1, "format": "json"})
+        return self._local(dados, endereco)
+
+    def geocodificar_perto(self, endereco: str, perto: Local, raio_m: int) -> Local:
+        """Busca só dentro de um círculo: sem bairro e CEP no texto, o mapa aceita grafias parecidas."""
+        dados = self._get(URL_GEOCODE, {
+            "text": endereco,
+            "filter": f"circle:{perto.longitude},{perto.latitude},{raio_m}",
+            "bias": f"proximity:{perto.longitude},{perto.latitude}",
+            "lang": "pt", "limit": 1, "format": "json",
+        })
+        return self._local(dados, endereco)
+
+    def _local(self, dados: dict, endereco: str) -> Local:
         resultados = dados.get("results") or []
         if not resultados or resultados[0].get("lat") is None:
             raise EnderecoNaoLocalizado(endereco)
@@ -118,6 +131,8 @@ class ProvedorGeoapify:
             uf=uf,
             confianca=float((r.get("rank") or {}).get("confidence") or 0.0),
             precisao=_PRECISAO.get(r.get("result_type") or "", "bairro"),
+            rua=(r.get("street") or "").strip(),
+            cep=(r.get("postcode") or "").strip(),
         )
 
     def rota(self, origem: Local, destino: Local) -> Rota:

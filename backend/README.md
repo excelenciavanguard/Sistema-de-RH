@@ -28,6 +28,15 @@ Por isso, cada localização guarda a precisão, tirada do `result_type` da Geoa
 | `rua` | `street` | Usada, com aviso de que falta o número |
 | `bairro` | `suburb`, `postcode`, `city` e demais | **Candidato:** análise recusada, pedindo para conferir a grafia da rua. **Posto:** aparece como "Conferir", sem decisão por distância nem rota |
 
+### Correção automática da rua
+
+Antes de desistir de um resultado que só achou o bairro, o backend faz até duas tentativas, cada uma com mais 1 crédito:
+
+1. **Grafia atual do nome:** o mesmo endereço com a grafia atualizada ("goes" → "gois", ph → f, th → t, y → i, letras dobradas, Luiz → Luis, Souza → Sousa).
+2. **Busca por perto:** só rua e número, num raio de 5 km em volta do bairro encontrado. Resolve cadastros como "RUAASSUNCAO".
+
+Um resultado só é aceito se for endereço ou rua, com nome pelo menos 85% igual (sem acento e sem o tipo de via) e dentro do raio. Sem essa conferência, a busca aceitaria outra rua parecida: num teste real, apareceu a "General Polidoro" no lugar da rua pedida. Quando a correção é usada, a resposta traz `candidato.grafia_corrigida` e a tela avisa. Para isso a tela manda `rua` e `numero` separados.
+
 A confiança sozinha não resolve: há centro de bairro com confiança de 100%. Localizações gravadas antes da precisão voltam a ser pendentes e são localizadas de novo.
 
 ## Acesso ao cadastro do candidato

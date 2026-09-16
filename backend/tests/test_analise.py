@@ -39,6 +39,9 @@ class ProvedorFalso:
                 return local
         raise EnderecoNaoLocalizado(endereco)
 
+    def geocodificar_perto(self, endereco, perto, raio_m):
+        raise EnderecoNaoLocalizado(endereco)
+
     def rota(self, origem, destino):
         self.rotas += 1
         veiculos = VEICULOS_POR_DESTINO.get(destino.endereco_formatado, ["onibus"])
@@ -161,3 +164,66 @@ def test_posto_localizado_so_pelo_bairro_vai_para_conferir_sem_rota(cache):
     assert botafogo["rota_consultada"] is False
     assert "só pelo bairro" in botafogo["motivo"]
     assert resultado["resumo"]["postos_imprecisos"] == 1
+
+
+CENTRO_DO_BAIRRO = Local(-22.9519, -43.1808, "Botafogo, Rio de Janeiro", "Rio de Janeiro", "RJ", 0.25, "bairro")
+
+
+class ProvedorComGrafiaDoMapa(ProvedorFalso):
+    """O mapa só conhece "Góis"; com a grafia do CEP ("Goes") a busca cai no centro do bairro."""
+
+    def __init__(self, perto=None):
+        super().__init__()
+        self.buscas = []
+        self.perto = perto
+
+    def geocodificar(self, endereco):
+        self.buscas.append(endereco)
+        if "gois" in endereco.lower():
+            return Local(-22.9550, -43.1850, "Rua Coronel Góis Pereira 10, Botafogo", "Rio de Janeiro", "RJ", 1.0, "endereco", rua="Rua Coronel Góis Pereira")
+        if "goes" in endereco.lower():
+            return CENTRO_DO_BAIRRO
+        return super().geocodificar(endereco)
+
+    def geocodificar_perto(self, endereco, perto, raio_m):
+        self.buscas.append(f"perto:{endereco}")
+        if self.perto is None:
+            raise EnderecoNaoLocalizado(endereco)
+        return self.perto
+
+
+def test_candidato_com_grafia_do_cep_e_corrigido_sozinho(cache):
+    provedor = ProvedorComGrafiaDoMapa()
+    analise.geocodificar_pendentes(POSTOS, cache, provedor, limite=50)
+    resultado = analise.analisar(
+        "Rua Coronel Goes Pereira, 10, Botafogo, Rio de Janeiro, RJ", POSTOS, cache, provedor, rua="Rua Coronel Goes Pereira", numero="10"
+    )
+    assert resultado["candidato"]["precisao"] == "endereco"
+    assert resultado["candidato"]["grafia_corrigida"] == "Rua Coronel Góis Pereira"
+    assert resultado["resumo"]["creditos_estimados"] >= 2            # busca original + grafia atual
+
+
+def test_correcao_nao_aceita_outra_rua_parecida(cache):
+    outra_rua = Local(-22.9530, -43.1820, "Rua Coronel Polidoro 10", "Rio de Janeiro", "RJ", 1.0, "endereco", rua="Rua Coronel Polidoro")
+    provedor = ProvedorComGrafiaDoMapa(perto=outra_rua)
+    provedor.geocodificar = lambda endereco: CENTRO_DO_BAIRRO           # nem a grafia atual acha
+    with pytest.raises(analise.EnderecoInvalido, match="só o bairro"):
+        analise.analisar("Rua Coronel Goes Pereira, 10, Botafogo, Rio de Janeiro, RJ", POSTOS, cache, provedor)
+
+
+def test_posto_com_rua_grudada_no_weboper_e_corrigido_pela_busca_perto(cache):
+    posto = PostoWebOper(9, "Posto Grudado", "RUAASSUNCAO,260,BOTAFOGO", "BOTAFOGO", "RIO DE JANEIRO", "RJ", "22251-030")
+    certo = Local(-22.9500, -43.1830, "Rua Assunção 260, Botafogo", "Rio de Janeiro", "RJ", 1.0, "endereco", rua="Rua Assunção")
+    provedor = ProvedorComGrafiaDoMapa(perto=certo)
+    provedor.geocodificar = lambda endereco: CENTRO_DO_BAIRRO
+    resumo = analise.geocodificar_pendentes([posto], cache, provedor, limite=10)
+    assert resumo["localizados"] == 1 and resumo["rua_corrigida"] == 1
+    assert analise.situacao_dos_postos([posto], cache)[0].situacao == "localizado"
+    assert "perto:RUAASSUNCAO 260" in provedor.buscas
+
+
+def test_rua_e_numero_do_texto():
+    assert analise.rua_e_numero("RUAASSUNCAO,260,BOTAFOGO") == ("RUAASSUNCAO", "260")
+    assert analise.rua_e_numero("Rua A, S/N, Centro") == ("Rua A", "S/N")
+    assert analise.rua_e_numero("R DO OUVIDOR, 91 - SUPLEMENTAR, CENTRO") == ("R DO OUVIDOR", "")
+    assert analise.rua_e_numero("") == ("", "")

@@ -39,6 +39,16 @@ Problema relatado pelo Nathan ao testar um endereço real: o candidato apareceu 
 - **Limitação que continua:** a linha de ônibus sugerida vem das rotas aproximadas do OpenStreetMap e pode não ser a que o Google recomenda. A classificação (1 ônibus, R$ 5) é uma estimativa.
 - **Testes:** backend com 73.
 
+### Correção automática da grafia da rua (Claude, 16/09/2026)
+
+Pedido do Nathan: o sistema deve entender sozinho quando a grafia do CEP difere da do mapa, sem ele trocar "Goes" por "Góis" à mão.
+
+- `analise.localizar`: se a busca só acha o bairro, tenta (1) a grafia atual do nome e (2) rua e número num raio de 5 km. Aceita só endereço ou rua com nome pelo menos 85% igual e dentro do raio. Vale para candidatos e postos.
+- `geo.py`: `grafia_atual`, `nome_da_rua`, `semelhanca_de_rua`. `geoapify.py`: `geocodificar_perto` (filtro por círculo) e `Local.rua` e `Local.cep`.
+- Distâncias e valores nos motivos passaram a usar vírgula e o mesmo arredondamento da coluna, que antes mostrava "0,3 km" enquanto o motivo dizia "0.2 km".
+- **Resultado real:** o endereço com a grafia do CEP foi corrigido sozinho, com 1 crédito a mais. Dos 4 postos que estavam só com o bairro, 2 foram corrigidos; continuam para conferir os 2 com o nome errado ou bagunçado no WebOper.
+- **Testes:** backend com 81.
+
 ### Testes da equipe na `main` (não causados pelo laboratório)
 
 Depois do commit `fc48c65` (painel inicial e identidade visual), a `main` teve erro de tipagem no `Logo.tsx` e dois testes da tela inicial falhando. O commit `fb7342e` (Lucas, 16h38) corrigiu esses três. Em 16/09, às 16h40, falta só um:

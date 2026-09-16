@@ -45,6 +45,9 @@ def obter_postos() -> list[weboper.PostoWebOper]:
 class PedidoAnalise(BaseModel):
     endereco: str = Field(min_length=8, max_length=300)
     top: int = Field(default=config.ANALISE_TOP_POSTOS, ge=1, le=20)
+    # Separados do texto para corrigir a grafia da rua quando o mapa só acha o bairro.
+    rua: str | None = Field(default=None, max_length=150)
+    numero: str | None = Field(default=None, max_length=20)
 
 
 @app.get("/api/v1/health")
@@ -99,7 +102,7 @@ def analisar(
     provedor: ProvedorGeoapify = Depends(obter_provedor),
 ):
     try:
-        return analise.analisar(pedido.endereco, postos, cache, provedor, pedido.top)
+        return analise.analisar(pedido.endereco, postos, cache, provedor, pedido.top, rua=pedido.rua, numero=pedido.numero)
     except analise.EnderecoInvalido as erro:
         raise HTTPException(422, str(erro)) from erro
     except ErroProvedor as erro:

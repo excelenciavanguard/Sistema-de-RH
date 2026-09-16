@@ -96,3 +96,18 @@ def test_precisao_pelo_tipo_do_resultado(monkeypatch, tipo, precisao):
     corpo = {"results": [{"lat": -22.95, "lon": -43.18, "city": "Rio de Janeiro", "state_code": "RJ", "result_type": tipo}]}
     monkeypatch.setattr(httpx.Client, "get", lambda self, *a, **k: httpx.Response(200, json=corpo))
     assert ProvedorGeoapify("x").geocodificar("Rua Qualquer, 1").precisao == precisao
+
+
+def test_busca_perto_usa_circulo_e_devolve_rua(monkeypatch):
+    chamadas = []
+    corpo = {"results": [{"lat": -22.95, "lon": -43.18, "city": "Rio de Janeiro", "state_code": "RJ",
+                          "result_type": "building", "street": "Rua Assunção", "postcode": "22251-030"}]}
+
+    def falso(self, url, params=None, **kwargs):
+        chamadas.append(params)
+        return httpx.Response(200, json=corpo)
+
+    monkeypatch.setattr(httpx.Client, "get", falso)
+    local = ProvedorGeoapify("x").geocodificar_perto("RUAASSUNCAO 260", Local(-22.95, -43.18, "Botafogo", "Rio de Janeiro", "RJ"), 5000)
+    assert chamadas[0]["filter"] == "circle:-43.18,-22.95,5000"
+    assert (local.rua, local.cep, local.precisao) == ("Rua Assunção", "22251-030", "endereco")

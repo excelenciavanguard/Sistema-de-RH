@@ -22,6 +22,8 @@ class Local:
     # endereco (prédio/número) | rua (sem número) | bairro (centro do bairro, CEP ou cidade).
     # "bairro" não serve para medir distância: pode errar vários quilômetros.
     precisao: str = "endereco"
+    rua: str = ""  # nome da rua como está no mapa
+    cep: str = ""
 
 
 @dataclass(frozen=True)
