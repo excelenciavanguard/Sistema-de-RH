@@ -1,0 +1,57 @@
+/* Laboratório de mobilidade (frontend/mobilidade.html). Usa só os tokens globais do sistema. */
+
+.lab-bar { display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 32px; border-bottom: 1px solid var(--line); background: var(--surface); font-size: var(--font-ui); }
+.lab-bar strong { color: var(--ink); }
+.lab-bar span { color: var(--muted); }
+.lab-bar a { margin-left: auto; color: var(--blue); font-weight: var(--weight-heading); text-decoration: none; }
+
+.demo-label.real-data-label { color: #147044; background: #dcf7e7; }
+
+.mobility-test-alert { display: flex; align-items: center; gap: 8px; margin: 0 0 16px; padding: 10px 14px; border-radius: 8px; color: #b32936; background: #ffe3e6; font-size: var(--font-ui); }
+
+.mobility-test-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+.mobility-test-cards article { display: flex; align-items: flex-start; gap: 12px; padding: 16px 18px; }
+.mobility-test-cards article > div { flex: 1; min-width: 0; }
+.mobility-test-cards small { display: block; color: var(--muted); font-size: var(--font-meta); }
+.mobility-test-cards strong { display: block; margin-top: 4px; color: var(--ink); font-size: var(--font-body); }
+.mobility-test-cards p { margin: 6px 0 0; color: var(--muted); font-size: var(--font-support); line-height: 1.45; }
+.mobility-test-cards .secondary-action { flex-shrink: 0; align-self: center; }
+.mobility-test-card-icon { width: 36px; height: 36px; flex-shrink: 0; display: grid; place-items: center; border-radius: 9px; color: var(--blue); background: #e8f1ff; }
+
+.mobility-test-form-panel { margin-bottom: 16px; }
+.mobility-test-form { display: grid; grid-template-columns: 140px minmax(0, 2fr) 90px minmax(0, 1fr) minmax(0, 1fr) 190px auto; align-items: end; gap: 12px; padding: 16px 18px 18px; }
+.mobility-test-form .field-control input,
+.mobility-test-form .field-control select { height: 38px; padding: 0 10px; border: 1px solid var(--line); border-radius: 7px; background: white; font-size: var(--font-body); }
+.mobility-test-form .field-control small { position: absolute; margin-top: 64px; }
+.mobility-test-form .field-control { position: relative; }
+.mobility-test-form .primary-action:disabled, .mobility-test-cards .secondary-action:disabled { opacity: .55; cursor: default; }
+.mobility-test-form-panel .mobility-test-alert { margin: 0 18px 16px; }
+
+.mobility-test-results { margin-bottom: 16px; }
+.mobility-test-results .panel-heading h2 { display: flex; align-items: center; gap: 6px; }
+.mobility-test-filters { display: flex; gap: 4px; padding: 3px; border-radius: 8px; background: #edf2f7; }
+.mobility-test-filters button { border: 0; border-radius: 6px; padding: 6px 12px; background: transparent; color: #51647c !important; font-size: var(--font-ui); font-weight: var(--weight-heading); cursor: pointer; }
+.mobility-test-filters button.active { background: white; color: var(--ink) !important; box-shadow: 0 1px 3px rgba(19, 35, 58, .12); }
+
+.mobility-test-table-wrap { overflow-x: auto; }
+.mobility-test-table { width: 100%; border-collapse: collapse; font-size: var(--font-ui); }
+.mobility-test-table th { padding: 10px 18px; border-bottom: 1px solid #e4ebf4; color: var(--muted); font-size: var(--font-meta); font-weight: var(--weight-heading); text-align: left; white-space: nowrap; }
+.mobility-test-table td { padding: 12px 18px; border-bottom: 1px solid #eef2f7; vertical-align: top; color: var(--ink); }
+.mobility-test-table td small { display: block; margin-top: 3px; color: var(--muted); font-size: var(--font-meta); }
+.mobility-test-table .numeric { white-space: nowrap; font-variant-numeric: tabular-nums lining-nums; }
+.mobility-test-line { display: flex; align-items: center; gap: 5px; margin-bottom: 3px; }
+.mobility-test-reason { max-width: 380px; color: #43556c !important; line-height: 1.45; }
+.mobility-test-footnote { margin: 0; padding: 12px 18px 16px; color: var(--muted); font-size: var(--font-support); }
+
+.mobility-test-problems { padding: 14px 18px; }
+.mobility-test-problems summary { cursor: pointer; color: var(--ink); font-size: var(--font-ui); font-weight: var(--weight-heading); }
+.mobility-test-problems ul { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.mobility-test-problems li { display: grid; gap: 2px; font-size: var(--font-ui); }
+.mobility-test-problems li span { color: #43556c; }
+.mobility-test-problems li small { color: #966006; font-size: var(--font-meta); }
+
+@media (max-width: 1100px) {
+  .mobility-test-cards { grid-template-columns: 1fr; }
+  .mobility-test-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mobility-test-form .field-control small { position: static; margin-top: 0; }
+}

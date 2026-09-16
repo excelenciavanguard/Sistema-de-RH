@@ -1,0 +1,65 @@
+{
+  "results": [
+    {
+      "datasource": {
+        "sourcename": "openstreetmap",
+        "attribution": "© OpenStreetMap contributors",
+        "license": "Open Database License",
+        "url": "https://www.openstreetmap.org/copyright"
+      },
+      "name": "Rua Doutor Porciúncula",
+      "country": "Brasil",
+      "country_code": "br",
+      "region": "Região Sudeste",
+      "state": "Rio de Janeiro",
+      "city": "São Gonçalo",
+      "village": "Sete Pontes",
+      "postcode": "24425-560",
+      "suburb": "Venda da Cruz",
+      "quarter": "Galeria Cruzeiro",
+      "street": "Rua Doutor Porciúncula",
+      "iso3166_2": "BR-RJ",
+      "lon": -43.0837915,
+      "lat": -22.8579565,
+      "state_code": "RJ",
+      "result_type": "street",
+      "formatted": "Rua Doutor Porciúncula, Venda da Cruz, São Gonçalo - RJ, 24425-560, Brasil",
+      "address_line1": "Rua Doutor Porciúncula",
+      "address_line2": "Venda da Cruz, São Gonçalo - RJ, 24425-560, Brasil",
+      "timezone": {
+        "name": "America/Sao_Paulo",
+        "offset_STD": "-03:00",
+        "offset_DST": "-03:00",
+        "offset_STD_seconds": -10800,
+        "offset_DST_seconds": -10800
+      },
+      "plus_code": "589R4WR8+RF",
+      "plus_code_short": "4WR8+RF São Gonçalo, Rio de Janeiro, Brasil",
+      "rank": {
+        "importance": 0.05341485999847406,
+        "popularity": 5.850646958041546,
+        "confidence": 1,
+        "confidence_city_level": 1,
+        "confidence_street_level": 1,
+        "match_type": "full_match"
+      },
+      "place_id": "5165170caeb98a45c05900e48409a3db36c0f00102f901414deb0e00000000c0020492031752756120446f75746f7220506f726369c3ba6e63756c61",
+      "bbox": {
+        "lon1": -43.0871174,
+        "lat1": -22.8596818,
+        "lon2": -43.0816831,
+        "lat2": -22.8548803
+      }
+    }
+  ],
+  "query": {
+    "text": "Rua Doutor Porciúncula, Alcântara, São Gonçalo, RJ",
+    "parsed": {
+      "street": "rua doutor porciúncula",
+      "suburb": "alcântara",
+      "city": "são gonçalo",
+      "state": "rj",
+      "expected_type": "street"
+    }
+  }
+}

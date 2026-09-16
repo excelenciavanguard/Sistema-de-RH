@@ -1,0 +1,9 @@
+# O .gitignore da raiz não cobre Python. O repositório é público:
+# cache local com endereços de clientes e credenciais nunca podem subir.
+.env
+.venv/
+var/
+*.sqlite3
+__pycache__/
+*.py[cod]
+.pytest_cache/

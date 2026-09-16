@@ -1,0 +1,462 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "mode": "approximated_transit",
+        "waypoints": [
+          {
+            "location": [
+              -43.08379,
+              -22.857956
+            ],
+            "original_index": 0
+          },
+          {
+            "location": [
+              -43.124058,
+              -22.893963
+            ],
+            "original_index": 1
+          }
+        ],
+        "units": "metric",
+        "details": [
+          "instruction_details"
+        ],
+        "distance": 6400,
+        "distance_units": "meters",
+        "time": 2313,
+        "legs": [
+          {
+            "distance": 6400,
+            "time": 2313,
+            "steps": [
+              {
+                "from_index": 0,
+                "to_index": 16,
+                "distance": 403,
+                "time": 353,
+                "instruction": {
+                  "text": "Caminhe para oeste em Rua Doutor Porciúncula.",
+                  "type": "StartAt",
+                  "pre_transition_instruction": "Caminhe para oeste em Rua Doutor Porciúncula por 400 metros.",
+                  "streets": [
+                    "Rua Doutor Porciúncula"
+                  ]
+                }
+              },
+              {
+                "from_index": 16,
+                "to_index": 17,
+                "distance": 8,
+                "time": 7,
+                "instruction": {
+                  "text": "Vire à esquerda para Rua Coronel Amarante.",
+                  "type": "Left",
+                  "transition_instruction": "Vire à esquerda para Rua Coronel Amarante.",
+                  "post_transition_instruction": "Continue por menos que 10 metros.",
+                  "streets": [
+                    "Rua Coronel Amarante"
+                  ]
+                }
+              },
+              {
+                "from_index": 17,
+                "to_index": 35,
+                "distance": 4808,
+                "time": 911,
+                "instruction": {
+                  "text": "Apanhe 41JB em direção a Ônibus 41JB: Venda da Cruz → Centro. (3 paragens)",
+                  "type": "Transit",
+                  "pre_transition_instruction": "Apanhe 41JB em direção a Ônibus 41JB: Venda da Cruz → Centro.",
+                  "post_transition_instruction": "Viaje por 3 paragens."
+                }
+              },
+              {
+                "from_index": 35,
+                "to_index": 56,
+                "distance": 667,
+                "time": 587,
+                "instruction": {
+                  "text": "Caminhe para sudoeste em Avenida Visconde do Rio Branco.",
+                  "type": "PostTransitConnectionDestination",
+                  "pre_transition_instruction": "Caminhe para sudoeste em Avenida Visconde do Rio Branco.",
+                  "post_transition_instruction": "Continue por 700 metros.",
+                  "streets": [
+                    "Avenida Visconde do Rio Branco"
+                  ]
+                }
+              },
+              {
+                "from_index": 56,
+                "to_index": 68,
+                "distance": 119,
+                "time": 106,
+                "instruction": {
+                  "text": "Continue em a via pedonal.",
+                  "type": "Straight",
+                  "transition_instruction": "Continue em a via pedonal.",
+                  "pre_transition_instruction": "Continue em a via pedonal por 100 metros."
+                }
+              },
+              {
+                "from_index": 68,
+                "to_index": 75,
+                "distance": 167,
+                "time": 148,
+                "instruction": {
+                  "text": "Vire à esquerda para a via pedonal.",
+                  "type": "Left",
+                  "transition_instruction": "Vire à esquerda para a via pedonal.",
+                  "post_transition_instruction": "Continue por 200 metros."
+                }
+              },
+              {
+                "from_index": 75,
+                "to_index": 75,
+                "distance": 0,
+                "time": 0,
+                "instruction": {
+                  "text": "Chegou ao seu destino.",
+                  "type": "DestinationReached",
+                  "transition_instruction": "Vai chegar ao seu destino.",
+                  "pre_transition_instruction": "Chegou ao seu destino."
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -43.083767,
+              -22.857949
+            ],
+            [
+              -43.084305,
+              -22.858103
+            ],
+            [
+              -43.084466,
+              -22.858155
+            ],
+            [
+              -43.084656,
+              -22.858244
+            ],
+            [
+              -43.084858,
+              -22.858355
+            ],
+            [
+              -43.084965,
+              -22.858445
+            ],
+            [
+              -43.085236,
+              -22.858698
+            ],
+            [
+              -43.085476,
+              -22.858933
+            ],
+            [
+              -43.085587,
+              -22.859051
+            ],
+            [
+              -43.085743,
+              -22.859171
+            ],
+            [
+              -43.085972,
+              -22.859293
+            ],
+            [
+              -43.086194,
+              -22.859377
+            ],
+            [
+              -43.086415,
+              -22.859429
+            ],
+            [
+              -43.086636,
+              -22.859496
+            ],
+            [
+              -43.086918,
+              -22.859589
+            ],
+            [
+              -43.087082,
+              -22.859665
+            ],
+            [
+              -43.087117,
+              -22.859683
+            ],
+            [
+              -43.087098,
+              -22.859753
+            ],
+            [
+              -43.087094,
+              -22.859784
+            ],
+            [
+              -43.087052,
+              -22.860205
+            ],
+            [
+              -43.087052,
+              -22.860207
+            ],
+            [
+              -43.087132,
+              -22.860213
+            ],
+            [
+              -43.087132,
+              -22.860213
+            ],
+            [
+              -43.087132,
+              -22.860213
+            ],
+            [
+              -43.087132,
+              -22.860211
+            ],
+            [
+              -43.087029,
+              -22.862633
+            ],
+            [
+              -43.087029,
+              -22.86265
+            ],
+            [
+              -43.116398,
+              -22.88307
+            ],
+            [
+              -43.11641,
+              -22.88308
+            ],
+            [
+              -43.123459,
+              -22.885193
+            ],
+            [
+              -43.123482,
+              -22.885195
+            ],
+            [
+              -43.123482,
+              -22.885195
+            ],
+            [
+              -43.123456,
+              -22.885266
+            ],
+            [
+              -43.123589,
+              -22.885306
+            ],
+            [
+              -43.124829,
+              -22.885706
+            ],
+            [
+              -43.124913,
+              -22.885735
+            ],
+            [
+              -43.124989,
+              -22.885773
+            ],
+            [
+              -43.125058,
+              -22.885825
+            ],
+            [
+              -43.125126,
+              -22.885933
+            ],
+            [
+              -43.125165,
+              -22.886052
+            ],
+            [
+              -43.125157,
+              -22.88621
+            ],
+            [
+              -43.125115,
+              -22.88641
+            ],
+            [
+              -43.125077,
+              -22.886563
+            ],
+            [
+              -43.12497,
+              -22.886986
+            ],
+            [
+              -43.124829,
+              -22.887484
+            ],
+            [
+              -43.124787,
+              -22.887654
+            ],
+            [
+              -43.124764,
+              -22.887751
+            ],
+            [
+              -43.124543,
+              -22.888653
+            ],
+            [
+              -43.124348,
+              -22.889494
+            ],
+            [
+              -43.12428,
+              -22.889784
+            ],
+            [
+              -43.124222,
+              -22.890042
+            ],
+            [
+              -43.124108,
+              -22.89058
+            ],
+            [
+              -43.124012,
+              -22.891011
+            ],
+            [
+              -43.123982,
+              -22.891142
+            ],
+            [
+              -43.123963,
+              -22.891247
+            ],
+            [
+              -43.123936,
+              -22.891373
+            ],
+            [
+              -43.123913,
+              -22.891505
+            ],
+            [
+              -43.123944,
+              -22.891541
+            ],
+            [
+              -43.123967,
+              -22.891564
+            ],
+            [
+              -43.124005,
+              -22.891596
+            ],
+            [
+              -43.124001,
+              -22.891619
+            ],
+            [
+              -43.123993,
+              -22.891676
+            ],
+            [
+              -43.123986,
+              -22.891697
+            ],
+            [
+              -43.123974,
+              -22.89176
+            ],
+            [
+              -43.123932,
+              -22.892165
+            ],
+            [
+              -43.123936,
+              -22.892249
+            ],
+            [
+              -43.123974,
+              -22.892323
+            ],
+            [
+              -43.124058,
+              -22.892399
+            ],
+            [
+              -43.124062,
+              -22.892508
+            ],
+            [
+              -43.123959,
+              -22.892613
+            ],
+            [
+              -43.12394,
+              -22.89287
+            ],
+            [
+              -43.123967,
+              -22.892905
+            ],
+            [
+              -43.123982,
+              -22.893044
+            ],
+            [
+              -43.124001,
+              -22.893216
+            ],
+            [
+              -43.12407,
+              -22.893786
+            ],
+            [
+              -43.124089,
+              -22.89396
+            ]
+          ]
+        ]
+      }
+    }
+  ],
+  "properties": {
+    "mode": "approximated_transit",
+    "waypoints": [
+      {
+        "lat": -22.8579565,
+        "lon": -43.0837915
+      },
+      {
+        "lat": -22.8939631,
+        "lon": -43.1240591
+      }
+    ],
+    "units": "metric",
+    "details": [
+      "instruction_details"
+    ]
+  },
+  "type": "FeatureCollection"
+}

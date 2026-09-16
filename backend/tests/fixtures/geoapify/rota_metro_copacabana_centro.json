@@ -1,0 +1,587 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "mode": "approximated_transit",
+        "waypoints": [
+          {
+            "location": [
+              -43.187851,
+              -22.969999
+            ],
+            "original_index": 0
+          },
+          {
+            "location": [
+              -43.180206,
+              -22.897507
+            ],
+            "original_index": 1
+          }
+        ],
+        "units": "metric",
+        "details": [
+          "instruction_details"
+        ],
+        "distance": 9381,
+        "distance_units": "meters",
+        "time": 2518,
+        "legs": [
+          {
+            "distance": 9381,
+            "time": 2518,
+            "steps": [
+              {
+                "from_index": 0,
+                "to_index": 4,
+                "distance": 326,
+                "time": 287,
+                "instruction": {
+                  "text": "Caminhe para nordeste em Rua Barata Ribeiro.",
+                  "type": "StartAt",
+                  "pre_transition_instruction": "Caminhe para nordeste em Rua Barata Ribeiro por 300 metros.",
+                  "streets": [
+                    "Rua Barata Ribeiro"
+                  ]
+                }
+              },
+              {
+                "from_index": 4,
+                "to_index": 12,
+                "distance": 218,
+                "time": 192,
+                "instruction": {
+                  "text": "Vire à esquerda para Rua Siqueira Campos.",
+                  "type": "Left",
+                  "transition_instruction": "Vire à esquerda para Rua Siqueira Campos.",
+                  "post_transition_instruction": "Continue por 200 metros.",
+                  "streets": [
+                    "Rua Siqueira Campos"
+                  ]
+                }
+              },
+              {
+                "from_index": 12,
+                "to_index": 13,
+                "distance": 16,
+                "time": 14,
+                "instruction": {
+                  "text": "Mantenha-se à esquerda e permaneça em Rua Siqueira Campos.",
+                  "type": "SlightLeft",
+                  "transition_instruction": "Mantenha-se à esquerda e permaneça em Rua Siqueira Campos.",
+                  "post_transition_instruction": "Continue por 20 metros.",
+                  "streets": [
+                    "Rua Siqueira Campos"
+                  ]
+                }
+              },
+              {
+                "from_index": 13,
+                "to_index": 29,
+                "distance": 103,
+                "time": 91,
+                "instruction": {
+                  "text": "Entre na Paragem Siqueira Campos.",
+                  "type": "TransitConnectionStart",
+                  "pre_transition_instruction": "Entre na Paragem Siqueira Campos.",
+                  "post_transition_instruction": "Continue por 100 metros.",
+                  "streets": [
+                    "Rua Pompeu Loureiro",
+                    "Avenida Pompeu Loureiro"
+                  ]
+                }
+              },
+              {
+                "from_index": 29,
+                "to_index": 44,
+                "distance": 7822,
+                "time": 1131,
+                "instruction": {
+                  "text": "Apanhe 1 em direção a Metrô Rio Linha 1 (General Osório --> Uruguai). (9 paragens)",
+                  "type": "Transit",
+                  "pre_transition_instruction": "Apanhe 1 em direção a Metrô Rio Linha 1 (General Osório --> Uruguai).",
+                  "post_transition_instruction": "Viaje por 9 paragens."
+                }
+              },
+              {
+                "from_index": 44,
+                "to_index": 48,
+                "distance": 68,
+                "time": 59,
+                "instruction": {
+                  "text": "Saia da Paragem Uruguaiana.",
+                  "type": "TransitConnectionDestination",
+                  "pre_transition_instruction": "Saia da Paragem Uruguaiana.",
+                  "post_transition_instruction": "Continue por 70 metros."
+                }
+              },
+              {
+                "from_index": 48,
+                "to_index": 51,
+                "distance": 84,
+                "time": 74,
+                "instruction": {
+                  "text": "Caminhe para este em Avenida Presidente Vargas.",
+                  "type": "PostTransitConnectionDestination",
+                  "pre_transition_instruction": "Caminhe para este em Avenida Presidente Vargas.",
+                  "post_transition_instruction": "Continue por 80 metros.",
+                  "streets": [
+                    "Avenida Presidente Vargas"
+                  ]
+                }
+              },
+              {
+                "from_index": 51,
+                "to_index": 56,
+                "distance": 164,
+                "time": 153,
+                "instruction": {
+                  "text": "Vire à esquerda para Rua Uruguaiana.",
+                  "type": "Left",
+                  "transition_instruction": "Vire à esquerda para Rua Uruguaiana.",
+                  "post_transition_instruction": "Continue por 200 metros.",
+                  "streets": [
+                    "Rua Uruguaiana"
+                  ]
+                }
+              },
+              {
+                "from_index": 56,
+                "to_index": 65,
+                "distance": 366,
+                "time": 324,
+                "instruction": {
+                  "text": "Vire à direita para Rua Acre.",
+                  "type": "Right",
+                  "transition_instruction": "Vire à direita para Rua Acre.",
+                  "post_transition_instruction": "Continue por 400 metros.",
+                  "streets": [
+                    "Rua Acre"
+                  ]
+                }
+              },
+              {
+                "from_index": 65,
+                "to_index": 69,
+                "distance": 97,
+                "time": 91,
+                "instruction": {
+                  "text": "Vire à direita para Rua São Bento.",
+                  "type": "Right",
+                  "transition_instruction": "Vire à direita para Rua São Bento.",
+                  "post_transition_instruction": "Continue por 100 metros.",
+                  "streets": [
+                    "Rua São Bento"
+                  ]
+                }
+              },
+              {
+                "from_index": 69,
+                "to_index": 70,
+                "distance": 36,
+                "time": 31,
+                "instruction": {
+                  "text": "Vire à esquerda para a via pedonal.",
+                  "type": "Left",
+                  "transition_instruction": "Vire à esquerda para a via pedonal.",
+                  "post_transition_instruction": "Continue por 40 metros."
+                }
+              },
+              {
+                "from_index": 70,
+                "to_index": 71,
+                "distance": 18,
+                "time": 16,
+                "instruction": {
+                  "text": "Vire à direita para Rua Dom Gerardo.",
+                  "type": "Right",
+                  "transition_instruction": "Vire à direita para Rua Dom Gerardo.",
+                  "post_transition_instruction": "Continue por 20 metros.",
+                  "streets": [
+                    "Rua Dom Gerardo"
+                  ]
+                }
+              },
+              {
+                "from_index": 71,
+                "to_index": 72,
+                "distance": 12,
+                "time": 11,
+                "instruction": {
+                  "text": "Vire à esquerda.",
+                  "type": "Left",
+                  "transition_instruction": "Vire à esquerda.",
+                  "pre_transition_instruction": "Vire à esquerda. Depois, Vire à esquerda.",
+                  "post_transition_instruction": "Continue por 10 metros.",
+                  "contains_next_instruction": true
+                }
+              },
+              {
+                "from_index": 72,
+                "to_index": 77,
+                "distance": 51,
+                "time": 44,
+                "instruction": {
+                  "text": "Vire à esquerda.",
+                  "type": "Left",
+                  "transition_instruction": "Vire à esquerda.",
+                  "post_transition_instruction": "Continue por 50 metros."
+                }
+              },
+              {
+                "from_index": 77,
+                "to_index": 77,
+                "distance": 0,
+                "time": 0,
+                "instruction": {
+                  "text": "Chegou ao seu destino.",
+                  "type": "DestinationReached",
+                  "transition_instruction": "Vai chegar ao seu destino.",
+                  "pre_transition_instruction": "Chegou ao seu destino."
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -43.187855,
+              -22.969996
+            ],
+            [
+              -43.187523,
+              -22.969775
+            ],
+            [
+              -43.187333,
+              -22.969653
+            ],
+            [
+              -43.186791,
+              -22.969294
+            ],
+            [
+              -43.185246,
+              -22.968325
+            ],
+            [
+              -43.18549,
+              -22.968022
+            ],
+            [
+              -43.185811,
+              -22.967616
+            ],
+            [
+              -43.186192,
+              -22.967135
+            ],
+            [
+              -43.18628,
+              -22.967034
+            ],
+            [
+              -43.186425,
+              -22.966855
+            ],
+            [
+              -43.186455,
+              -22.966818
+            ],
+            [
+              -43.186478,
+              -22.966799
+            ],
+            [
+              -43.186532,
+              -22.966761
+            ],
+            [
+              -43.186684,
+              -22.966725
+            ],
+            [
+              -43.186718,
+              -22.966734
+            ],
+            [
+              -43.186734,
+              -22.96674
+            ],
+            [
+              -43.18676,
+              -22.966744
+            ],
+            [
+              -43.186825,
+              -22.966769
+            ],
+            [
+              -43.186913,
+              -22.966805
+            ],
+            [
+              -43.187001,
+              -22.966837
+            ],
+            [
+              -43.187096,
+              -22.966874
+            ],
+            [
+              -43.187203,
+              -22.966921
+            ],
+            [
+              -43.187268,
+              -22.966975
+            ],
+            [
+              -43.187317,
+              -22.967043
+            ],
+            [
+              -43.187371,
+              -22.96712
+            ],
+            [
+              -43.187432,
+              -22.967209
+            ],
+            [
+              -43.187436,
+              -22.967215
+            ],
+            [
+              -43.187413,
+              -22.967228
+            ],
+            [
+              -43.187413,
+              -22.967228
+            ],
+            [
+              -43.187413,
+              -22.967228
+            ],
+            [
+              -43.181599,
+              -22.963601
+            ],
+            [
+              -43.1843,
+              -22.950371
+            ],
+            [
+              -43.1843,
+              -22.950369
+            ],
+            [
+              -43.178612,
+              -22.937201
+            ],
+            [
+              -43.177769,
+              -22.931124
+            ],
+            [
+              -43.177769,
+              -22.93112
+            ],
+            [
+              -43.176629,
+              -22.92595
+            ],
+            [
+              -43.176789,
+              -22.92062
+            ],
+            [
+              -43.176789,
+              -22.920619
+            ],
+            [
+              -43.175732,
+              -22.910941
+            ],
+            [
+              -43.175732,
+              -22.910939
+            ],
+            [
+              -43.178097,
+              -22.907574
+            ],
+            [
+              -43.178101,
+              -22.90757
+            ],
+            [
+              -43.181839,
+              -22.902981
+            ],
+            [
+              -43.181839,
+              -22.902981
+            ],
+            [
+              -43.181839,
+              -22.902981
+            ],
+            [
+              -43.181839,
+              -22.902981
+            ],
+            [
+              -43.181889,
+              -22.903
+            ],
+            [
+              -43.182114,
+              -22.902489
+            ],
+            [
+              -43.181649,
+              -22.90234
+            ],
+            [
+              -43.181592,
+              -22.902319
+            ],
+            [
+              -43.181347,
+              -22.902239
+            ],
+            [
+              -43.181435,
+              -22.902096
+            ],
+            [
+              -43.181515,
+              -22.901972
+            ],
+            [
+              -43.181611,
+              -22.90182
+            ],
+            [
+              -43.181931,
+              -22.90127
+            ],
+            [
+              -43.18211,
+              -22.90095
+            ],
+            [
+              -43.182129,
+              -22.900912
+            ],
+            [
+              -43.182133,
+              -22.900891
+            ],
+            [
+              -43.182122,
+              -22.900837
+            ],
+            [
+              -43.182091,
+              -22.900767
+            ],
+            [
+              -43.181981,
+              -22.90054
+            ],
+            [
+              -43.181736,
+              -22.899952
+            ],
+            [
+              -43.181466,
+              -22.899291
+            ],
+            [
+              -43.181187,
+              -22.898625
+            ],
+            [
+              -43.180897,
+              -22.89787
+            ],
+            [
+              -43.18031,
+              -22.898106
+            ],
+            [
+              -43.180207,
+              -22.898156
+            ],
+            [
+              -43.180169,
+              -22.898177
+            ],
+            [
+              -43.180047,
+              -22.898243
+            ],
+            [
+              -43.179879,
+              -22.897959
+            ],
+            [
+              -43.179707,
+              -22.897963
+            ],
+            [
+              -43.179692,
+              -22.897854
+            ],
+            [
+              -43.179772,
+              -22.897826
+            ],
+            [
+              -43.179833,
+              -22.897797
+            ],
+            [
+              -43.179898,
+              -22.897761
+            ],
+            [
+              -43.179944,
+              -22.897694
+            ],
+            [
+              -43.180005,
+              -22.897536
+            ]
+          ]
+        ]
+      }
+    }
+  ],
+  "properties": {
+    "mode": "approximated_transit",
+    "waypoints": [
+      {
+        "lat": -22.969999,
+        "lon": -43.1878516
+      },
+      {
+        "lat": -22.8975076,
+        "lon": -43.180206
+      }
+    ],
+    "units": "metric",
+    "details": [
+      "instruction_details"
+    ]
+  },
+  "type": "FeatureCollection"
+}
