@@ -24,7 +24,7 @@
 .login-field + .login-field { margin-top: 26px; }
 .login-field > label { display: block; margin-bottom: 9px; font-size: 15px; font-weight: 600; }
 .login-input-wrap { display: flex; align-items: center; gap: 14px; min-height: 54px; border: 1px solid #cbd1da; border-radius: 9px; padding-left: 16px; color: #627081; }
-.login-input-wrap:focus-within { border-color: #235347; box-shadow: 0 0 0 3px rgba(35,83,71,.13); }
+.login-input-wrap:focus-within { border-color: #235347; }
 .login-input-wrap > svg { width: 21px; height: 21px; flex-shrink: 0; }
 .login-input-wrap input { width: 100%; min-width: 0; height: 52px; padding: 0 12px 0 0; outline: none; border: 0; background: transparent; color: #101820; font-size: 16px; caret-color: #235347; }
 .login-input-wrap input::placeholder { color: #627081; opacity: 1; }
@@ -44,7 +44,7 @@
 .login-panel .login-prototype-note { margin-top: 14px; text-align: center; color: #5d6877; font-size: 12px; line-height: 1.5; }
 .login-panel .login-error { margin-top: 16px; color: #ae2828; font-size: 13px; }
 .login-panel .login-help { margin-top: 16px; padding: 12px; border-radius: 8px; background: #edf6ef; color: #163832; font-size: 13px; }
-.login-screen :is(button, input):focus-visible { outline: 3px solid #235347; outline-offset: 3px; }
+.login-screen button:focus-visible { outline: 3px solid #235347; outline-offset: 3px; }
 /* The approved entry surface stays light even when the internal app is dark. */
 .login-screen { color-scheme: light; }
 .dark .login-screen .login-story h1 { color: #fff !important; }

@@ -71,6 +71,7 @@ export function InterviewMode({ interview, initialResult, onFinish, onExit, vaca
   const state = { ratings, notes, recommendation, reviewed };
   const steps = interviewSteps(state);
   const completed = steps.filter((step) => step.done).length;
+  const reminders = steps.filter((step) => !step.done);
 
   useEffect(() => {
     if (paused || confirmation) return undefined;

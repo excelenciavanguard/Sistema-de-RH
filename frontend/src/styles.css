@@ -1231,6 +1231,9 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
 .alpha-profile-theme-action > span:last-child { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .alpha-profile-theme-action strong { font-size: 13px; }
 .alpha-profile-theme-action small { color: #667970; font-size: 12px; }
+.alpha-profile-logout { color: #9b3535; text-decoration: none; }
+.alpha-profile-logout:hover { background: #fff1f1; }
+.alpha-profile-logout .alpha-profile-option-icon { color: #a84444; background: #fff7f7; border-color: #f1d2d2; }
 .alpha-mobile-toggle { display: none; }
 
 /* Compact desktop adaptation: common 18–20 inch monitor resolutions. */

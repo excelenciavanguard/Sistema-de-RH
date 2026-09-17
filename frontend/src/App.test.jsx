@@ -125,7 +125,7 @@ describe("Alpha RH connected screens", () => {
     expect(screen.queryByRole("button", { name: "Ativar modo escuro" })).not.toBeInTheDocument();
     const profileButton = screen.getByRole("button", { name: "Abrir perfil de Ramon" });
     expect(profileButton).toHaveTextContent("Ramon");
-    expect(profileButton.querySelector(".alpha-profile-initial")).toHaveTextContent("R");
+    expect(profileButton.querySelector(".alpha-profile-avatar")).toHaveAttribute("src", "/assets/simao-pedro-avatar.png");
     fireEvent.mouseEnter(profileButton.closest(".alpha-profile-menu"));
     const themeToggle = screen.getByRole("menuitem", { name: "Ativar modo escuro" });
     fireEvent.click(themeToggle);
@@ -135,6 +135,29 @@ describe("Alpha RH connected screens", () => {
     expect(screen.getByRole("menuitem", { name: "Ativar modo claro" })).toBeInTheDocument();
     fireEvent.mouseLeave(profileButton.closest(".alpha-profile-menu"));
     expect(screen.queryByRole("menuitem", { name: "Ativar modo claro" })).not.toBeInTheDocument();
+  });
+
+  it("sends the current user to login when signing out from the profile menu", async () => {
+    render(<App />);
+
+    const profileButton = screen.getByRole("button", { name: "Abrir perfil de Ramon" });
+    fireEvent.click(profileButton);
+    fireEvent.click(screen.getByRole("menuitem", { name: /Sair da conta/i }));
+
+    expect(await screen.findByRole("heading", { name: "Acesse sua conta" })).toBeInTheDocument();
+    expect(window.location.hash).toBe("#/login");
+  });
+
+  it("shows the welcome transition before rendering the home after login", () => {
+    window.history.replaceState(null, "", "#/login");
+    render(<App />);
+
+    fireEvent.change(screen.getByLabelText("Usuário"), { target: { value: "ramon" } });
+    fireEvent.change(screen.getByLabelText("Senha"), { target: { value: "senha-ilustrativa" } });
+    fireEvent.click(screen.getByRole("button", { name: "Entrar" }));
+
+    expect(screen.getByRole("status", { name: "Bem-vindo, Ramon" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Hoje no RH" })).not.toBeInTheDocument();
   });
 
   it("connects the Directorate decision to the RH vacancy builder", async () => {

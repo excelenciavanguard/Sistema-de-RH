@@ -35,6 +35,7 @@ export function App() {
   const previewCandidate = new URLSearchParams(window.location.search).has("candidate");
   const [route, setRoute] = useState(() => previewCandidate ? ROUTES.kanban : routeFromHash());
   const [interviewMode, setInterviewMode] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
     const updateRoute = () => setRoute(routeFromHash());
@@ -44,7 +45,8 @@ export function App() {
 
   const go = (nextRoute) => navigateTo(nextRoute);
 
-  if (route === ROUTES.login) return <LoginScreen onEnter={() => go(ROUTES.home)} />;
+  if (showWelcome) return <WelcomeIntro userName={currentUser.name} onComplete={() => { setShowWelcome(false); go(ROUTES.home); }} />;
+  if (route === ROUTES.login) return <LoginScreen onEnter={() => setShowWelcome(true)} />;
 
   let content;
   if (route === ROUTES.home) content = <HomeScreen onNavigate={go} />;
@@ -63,7 +65,6 @@ export function App() {
   else content = <ModulePreviewScreen title={moduleTitles[route] ?? "Módulo"} onNavigate={go} />;
 
   return <>
-    <WelcomeIntro userName={currentUser.name} />
     <AppShell route={route} onNavigate={go} hideHeader={interviewMode}>
       <Suspense fallback={<RouteFallback />}>{content}</Suspense>
     </AppShell>

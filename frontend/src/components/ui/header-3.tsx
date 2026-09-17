@@ -13,6 +13,7 @@ import {
   Home,
   LayoutDashboard,
   Link2,
+  LogOut,
   Moon,
   Plus,
   Search,
@@ -26,6 +27,7 @@ import { DropdownNavigation, type DropdownNavigationItem } from '@/components/ui
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { cn } from '@/lib/utils';
 import Logo from '@/components/Logo';
+import { navigateTo, ROUTES } from '../../navigation.js';
 
 type HeaderProps = { route: string };
 
@@ -110,7 +112,7 @@ export function Header({ route }: HeaderProps) {
               }}
             >
               <button className="alpha-profile-button ml-0.5 flex h-10 items-center gap-2 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30" type="button" aria-label="Abrir perfil de Ramon" aria-expanded={profileOpen} aria-controls="alpha-profile-options" onClick={() => setProfileOpen((current) => !current)}>
-                <img className="alpha-profile-avatar" src="/assets/simao-pedro-avatar.png" alt="" />
+                <img className="alpha-profile-avatar" src="/assets/simao-pedro-avatar.png" alt="Foto de perfil de Ramon" />
                 <span className="hidden flex-col 2xl:flex"><strong>Ramon</strong><small>RH Global</small></span>
                 <ChevronDown className={cn('hidden size-3.5 text-[#5f716a] transition-transform 2xl:block', profileOpen && 'rotate-180')} />
               </button>
@@ -120,6 +122,10 @@ export function Header({ route }: HeaderProps) {
                   <span className="alpha-profile-option-icon">{darkMode ? <Sun className="size-[17px]" /> : <Moon className="size-[17px]" />}</span>
                   <span><strong>{darkMode ? 'Modo claro' : 'Modo escuro'}</strong><small>{darkMode ? 'Usar aparência clara' : 'Usar aparência escura'}</small></span>
                 </button>
+                <a className="alpha-profile-theme-action alpha-profile-logout" role="menuitem" href="#/login" onClick={(event) => { event.preventDefault(); setProfileOpen(false); navigateTo(ROUTES.login); }}>
+                  <span className="alpha-profile-option-icon"><LogOut className="size-[17px]" /></span>
+                  <span><strong>Sair da conta</strong><small>Encerrar esta sessão</small></span>
+                </a>
               </div>}
             </div>
             <Button size="icon" variant="outline" onClick={() => setMobileOpen((current) => !current)} className="alpha-mobile-toggle size-10 rounded-xl border-[#cfdfd3] bg-white text-[#235347] hover:bg-[#edf6ef]" aria-expanded={mobileOpen} aria-controls="mobile-navigation" aria-label="Alternar menu">

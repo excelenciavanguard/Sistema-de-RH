@@ -67,6 +67,9 @@
 .dark .alpha-profile-theme-action { color: #e8f4ed; }
 .dark .alpha-profile-theme-action:hover { background: #263a32; }
 .dark .alpha-profile-option-icon { background: #0f1312; border-color: #3b4c45; color: #9ed3bc; }
+.dark .alpha-profile-logout { color: #ffb4b4; }
+.dark .alpha-profile-logout:hover { background: #422525; }
+.dark .alpha-profile-logout .alpha-profile-option-icon { color: #ffb4b4; background: #2a1818; border-color: #633a3a; }
 .dark .alpha-header-bar [class*="ring-white"] { --tw-ring-color: #171d1b !important; }
 .dark .alpha-wordmark strong { color: #edf8f1 !important; }
 .dark .alpha-wordmark small { color: #a8beb1 !important; }
