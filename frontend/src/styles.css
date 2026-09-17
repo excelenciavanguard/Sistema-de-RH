@@ -299,6 +299,17 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
 .paper-preview h4 { color: #163832; margin: 27px 0 8px; padding-bottom: 6px; border-bottom: 1px solid #d9e1ed; font-size: var(--font-ui); text-transform: uppercase; letter-spacing: .05em; }
 .paper-preview p { font-size: var(--font-support); line-height: 1.65; color: #5f716a; }
 .candidate-details { padding: 22px 24px; overflow: auto; }
+.candidate-tab-resumo, .candidate-tab-curriculo, .candidate-tab-historico { display: block; }
+.candidate-summary, .candidate-history { max-width: 920px; width: 100%; margin: 0 auto; }
+.candidate-resume-full { height: 100%; border-right: 0; }
+.candidate-resume-full .paper-preview { width: min(680px,94%); }
+.candidate-history-list { margin: 22px 0 0; padding: 0; list-style: none; }
+.candidate-history-list li { min-height: 70px; display: grid; grid-template-columns: 36px minmax(0,1fr); gap: 12px; position: relative; }
+.candidate-history-list li:not(:last-child)::after { content: ""; width: 1px; position: absolute; top: 34px; bottom: 0; left: 17px; background: var(--line); }
+.candidate-history-list li > span { width: 36px; height: 36px; z-index: 1; display: grid; place-items: center; border: 1px solid #cfe0d4; border-radius: 50%; color: #235347; background: #edf6ef; }
+.candidate-history-list li > div { min-width: 0; padding: 3px 0 16px; display: flex; flex-direction: column; gap: 4px; }
+.candidate-history-list strong { color: #163832; font-size: var(--font-ui); }
+.candidate-history-list small { color: #687995; font-size: var(--font-support); }
 .detail-heading { display: flex; align-items: flex-start; justify-content: space-between; padding-bottom: 17px; border-bottom: 1px solid var(--line); }
 .detail-heading > div { display: flex; gap: 9px; color: #235347; }
 .detail-heading span { display: flex; flex-direction: column; gap: 4px; }

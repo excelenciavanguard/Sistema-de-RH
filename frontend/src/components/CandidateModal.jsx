@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import {
   Briefcase,
-  CheckCircle,
+  Clock,
   DownloadSimple,
   DotsThreeVertical,
   FileText,
-  Info,
   WarningCircle,
   X,
 } from "@phosphor-icons/react";
 import { MobilityWorkspace } from "./MobilityWorkspace.jsx";
 
-const tabs = ["Resumo", "Currículo", "Evidências", "Mobilidade", "Histórico"];
+const tabs = ["Resumo", "Currículo", "Mobilidade", "Histórico"];
 const stageLabels = {
   application: "Candidatura",
   screening: "Triagem",
@@ -23,34 +22,11 @@ const stageLabels = {
   training: "Treinamento",
   hiring: "Contratação",
 };
-const demoEvidences = [
-  { valor: "Ensino médio completo", trecho: "Encontrado no currículo", pagina: 1 },
-  { valor: "Experiência em limpeza", trecho: "4 anos identificados", pagina: 1 },
-  { valor: "Disponibilidade de escala", trecho: "Informado pelo candidato · confirmar em contato", pagina: null },
-];
-
-function EvidenceList({ candidate }) {
-  const evidences = candidate.isDemo ? demoEvidences : (candidate.evidences || []);
-  if (!evidences.length) {
-    return <div className="evidence-empty"><Info size={19} /><span><strong>Nenhuma evidência estruturada</strong><small>Revise o currículo original antes de avançar.</small></span></div>;
-  }
-  return (
-    <ul className="evidence-list">
-      {evidences.map((evidence, index) => (
-        <li key={`${evidence.campo || "evidencia"}-${index}`}>
-          <CheckCircle size={18} weight="fill" />
-          <span><strong>{evidence.valor}</strong><small>{evidence.trecho}{evidence.pagina ? ` · página ${evidence.pagina}` : ""}</small></span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-export function CandidateModal({ candidate, initialTab = "Resumo", onClose }) {
-  const [activeTab, setActiveTab] = useState(initialTab);
+export function CandidateModal({ candidate, history = [], initialTab = "Resumo", onClose }) {
+  const [activeTab, setActiveTab] = useState(tabs.includes(initialTab) ? initialTab : "Resumo");
 
   useEffect(() => {
-    if (candidate) setActiveTab(initialTab);
+    if (candidate) setActiveTab(tabs.includes(initialTab) ? initialTab : "Resumo");
   }, [candidate?.id, initialTab]);
 
   useEffect(() => {
@@ -80,8 +56,8 @@ export function CandidateModal({ candidate, initialTab = "Resumo", onClose }) {
         </header>
         <nav className="modal-tabs" aria-label="Detalhes do candidato">{tabs.map((tab) => <button className={activeTab === tab ? "active" : ""} onClick={() => setActiveTab(tab)} key={tab} type="button">{tab}</button>)}</nav>
         {activeTab === "Mobilidade" ? <MobilityWorkspace candidate={candidate} /> : (
-        <div className="modal-body">
-          <aside className="resume-preview">
+        <div className={`modal-body candidate-tab-${activeTab.toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`}>
+          {activeTab === "Currículo" && <aside className="resume-preview candidate-resume-full">
             <div className="resume-toolbar"><span><FileText size={17} /> {candidate.resumeFileName || "Currículo anexado"}</span><small>{candidate.isDemo ? "Dados demonstrativos" : "Arquivo original preservado"}</small></div>
             <div className="paper-preview">
               <h3>{candidate.name}</h3><p>{candidate.location}</p>
@@ -90,16 +66,19 @@ export function CandidateModal({ candidate, initialTab = "Resumo", onClose }) {
               <h4>Escolaridade</h4><p>{candidate.education}</p>
               <h4>Disponibilidade</h4><p>{candidate.availability}</p>
             </div>
-          </aside>
-          <main className="candidate-details">
-              <>
-                <div className="detail-heading"><div><Briefcase size={19} /><span><strong>Resumo profissional</strong><small>Dados extraídos para revisão do RH</small></span></div><span className={`review-state ${candidate.reviewStatus === "pending" || pendingItems.length > 0 ? "pending" : ""}`}>{candidate.reviewStatus === "pending" || pendingItems.length > 0 ? "Revisão pendente" : "Revisado"}</span></div>
-                {pendingItems.length > 0 && <div className="candidate-pending-details"><WarningCircle size={18} weight="fill" /><span><strong>Pendências do candidato</strong><ul>{pendingItems.map((item) => <li key={item}>{item}</li>)}</ul></span></div>}
-                <dl className="detail-list"><div><dt>Vaga aplicada</dt><dd>{candidate.role}</dd></div><div><dt>Experiência</dt><dd>{candidate.experience}</dd></div><div><dt>Escolaridade</dt><dd>{candidate.education}</dd></div><div><dt>Disponibilidade</dt><dd>{candidate.availability}</dd></div></dl>
-                <h3 className="section-title">Evidências extraídas</h3>
-                <EvidenceList candidate={candidate} />
-              </>
-          </main>
+          </aside>}
+          {activeTab === "Resumo" && <main className="candidate-details candidate-summary">
+            <div className="detail-heading"><div><Briefcase size={19} /><span><strong>Resumo do candidato</strong><small>Informações principais para decisão do RH</small></span></div><span className={`review-state ${candidate.reviewStatus === "pending" || pendingItems.length > 0 ? "pending" : ""}`}>{candidate.reviewStatus === "pending" || pendingItems.length > 0 ? "Revisão pendente" : "Revisado"}</span></div>
+            {pendingItems.length > 0 && <div className="candidate-pending-details"><WarningCircle size={18} weight="fill" /><span><strong>Pendências do candidato</strong><ul>{pendingItems.map((item) => <li key={item}>{item}</li>)}</ul></span></div>}
+            <dl className="detail-list"><div><dt>Etapa atual</dt><dd>{stageLabels[candidate.stage] || "Revisão"}</dd></div><div><dt>Vaga aplicada</dt><dd>{candidate.role}</dd></div><div><dt>Origem</dt><dd>{candidate.source}</dd></div><div><dt>Responsável</dt><dd>{candidate.owner}</dd></div><div><dt>Disponibilidade</dt><dd>{candidate.availability}</dd></div><div><dt>Localização</dt><dd>{candidate.location}</dd></div></dl>
+          </main>}
+          {activeTab === "Histórico" && <main className="candidate-details candidate-history">
+            <div className="detail-heading"><div><Clock size={19} /><span><strong>Histórico do processo</strong><small>Movimentações e interações deste candidato</small></span></div></div>
+            <p className="candidate-history-note">Movimentações registradas nesta visita à vaga. O histórico permanente ainda não está disponível.</p>
+            {history.length ? <ol className="candidate-history-list">
+              {history.map((event) => <li key={event.id}><span><Clock size={16} /></span><div><strong>{stageLabels[event.from] || event.from} → {stageLabels[event.to] || event.to}</strong><small>{event.actor} · <time dateTime={event.at}>{new Date(event.at).toLocaleString("pt-BR")}</time></small></div></li>)}
+            </ol> : <p className="candidate-history-empty">Nenhuma movimentação registrada nesta visita.</p>}
+          </main>}
         </div>
         )}
       </section>

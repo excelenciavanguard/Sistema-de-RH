@@ -68,6 +68,7 @@ export function KanbanScreen({ vacancyCode = "2026-0157", onInterviewModeChange 
   const previewParams = useMemo(() => new URLSearchParams(window.location.search), []);
   const [candidates, setCandidates] = useState(demoCandidates);
   const [search, setSearch] = useState("");
+  const [candidateHistory, setCandidateHistory] = useState({});
   const [section, setSection] = useState("candidates");
   const [candidateView, setCandidateView] = useState("kanban");
   const [activeFilters, setActiveFilters] = useState({ triage: "all", evidence: "all", experience: "all", education: "all", mobility: "all" });
@@ -126,11 +127,16 @@ export function KanbanScreen({ vacancyCode = "2026-0157", onInterviewModeChange 
   async function moveCandidate(id, stage) {
     const previous = candidates.find((candidate) => candidate.id === id);
     if (!previous || previous.stage === stage) return;
+    const recordMovement = () => {
+      const event = { id: crypto.randomUUID(), from: previous.stage, to: stage, at: new Date().toISOString(), actor: "Ramon" };
+      setCandidateHistory((current) => ({ ...current, [id]: [event, ...(current[id] || [])] }));
+    };
     setCandidates((current) => current.map((candidate) => candidate.id === id ? { ...candidate, stage, stageTime: "Agora" } : candidate));
-    if (previous.isDemo) return;
+    if (previous.isDemo) { recordMovement(); return; }
     try {
       const saved = await moveCandidateStage(id, stage);
       setCandidates((current) => current.map((candidate) => candidate.id === id ? saved : candidate));
+      recordMovement();
     } catch {
       setCandidates((current) => current.map((candidate) => candidate.id === id ? previous : candidate));
     }
@@ -171,7 +177,7 @@ export function KanbanScreen({ vacancyCode = "2026-0157", onInterviewModeChange 
         </section> : null}
       </main>
       {replacementInterview ? <ReplacementConfirmation interview={replacementInterview} onCancel={() => setReplacementInterview(null)} onConfirm={() => { const interview = replacementInterview; setReplacementInterview(null); startInterview(interview, true); }} /> : null}
-      <CandidateModal candidate={selectedCandidate} initialTab={previewParams.get("tab") === "mobility" ? "Mobilidade" : "Resumo"} onClose={() => setSelectedCandidate(null)} />
+      <CandidateModal candidate={selectedCandidate} history={candidateHistory[selectedCandidate?.id] || []} initialTab={previewParams.get("tab") === "mobility" ? "Mobilidade" : "Resumo"} onClose={() => setSelectedCandidate(null)} />
     </>
   );
 }

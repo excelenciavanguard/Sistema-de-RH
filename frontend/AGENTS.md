@@ -10,6 +10,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Current frontend phase
 
+- Latest organization direction: place Criar vaga beside the bell and preserve the bell's existing mobility destination. Keep vacancy tabs separate from the candidate view/search/filter toolbar; use status tabs as the sole vacancy status filter. Keep the profile photo. Candidate résumé must remain visible at every breakpoint. History must show only recorded movements with date/actor, with an explicit session-only limitation until backend history is integrated; never infer past events from current state. Retain black/green mode with distinct canvas, panel and raised-card surfaces.
+
 - Login approved on 2026-09-17 supersedes the older no-login instruction: implement the frontend-only option 3 with full office photography, green left overlay, white right login form, Usuário (not email) and Senha. Remove wall lettering; preserve the approved marketing copy. Open the login at the root and #/login; existing internal routes remain usable for preview. Entry is explicitly demonstrative, never real authentication; do not store passwords or change backend integrations.
 
 - Displayed prototype user name is Ramon (approved on 2026-09-17), including the home greeting, entry welcome and header profile; use R for the profile avatar. This supersedes earlier references to Simão Pedro.

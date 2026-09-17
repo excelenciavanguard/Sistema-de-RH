@@ -17,7 +17,7 @@ export function KanbanBoard({ stages, candidates, onMove, onOpen }) {
 
   return (
     <section className="kanban-board" aria-label="Quadro de candidatos">
-      {stages.map((stage) => {
+      {stages.map((stage, index) => {
         const items = candidates.filter((candidate) => candidate.stage === stage.id);
         return (
           <div
@@ -28,7 +28,7 @@ export function KanbanBoard({ stages, candidates, onMove, onOpen }) {
             onDrop={(event) => handleDrop(event, stage.id)}
             style={{ "--stage-color": stage.color }}
           >
-            <header className="column-header"><strong>{stage.label}</strong><span>{items.length}</span></header>
+            <header className="column-header"><div><small className="stage-sequence">Etapa {index + 1} de {stages.length}</small><strong>{stage.label}</strong><small>SLA: {stage.sla}</small></div><span>{items.length}</span></header>
             <div className="column-cards">
               {items.map((candidate) => <CandidateCard key={candidate.id} candidate={candidate} color={stage.color} onOpen={onOpen} onDragStart={handleDragStart} />)}
               {items.length === 0 && <div className="empty-stage"><Plus size={18} /> Arraste um candidato para esta etapa</div>}

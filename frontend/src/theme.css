@@ -214,6 +214,10 @@
 .dark :is(.paper-preview, .resume-preview, .mobility-workspace, .mobility-footer, .pending-mobility-main, .pending-mobility-summary, .journey-card, .mobility-detail-card, .confirmation-card, .route-source) { background: #121615 !important; border-color: #29312e !important; color: #e8f4ed !important; }
 .dark :is(.paper-preview h3, .paper-preview h4, .detail-heading strong, .detail-list dd, .journey-heading, .journey-heading b, .journey-step strong, .mobility-detail-card dd, .pending-mobility-main h3, .pending-mobility-summary h3) { color: #edf8f1 !important; }
 .dark :is(.paper-preview p, .detail-list dt, .journey-heading span, .journey-step small, .mobility-detail-card dt, .mobility-detail-card dd small, .pending-mobility-main > p, .pending-mobility-summary dt) { color: #a8beb1 !important; }
+.dark .candidate-history-list li > span { border-color: #2f5d4d; color: #b9dfcd; background: #163832; }
+.dark .candidate-history-list li:not(:last-child)::after { background: #29312e; }
+.dark .candidate-history-list strong { color: #edf8f1; }
+.dark .candidate-history-list small { color: #a8beb1; }
 .dark :is(.resume-preview, .mobility-workspace) { background: #0f1312 !important; }
 .dark :is(.evidence-list li, .evidence-empty, .pending-mobility-steps span, .route-cost span, .pending-mobility-note, .map-demo-badge, .direction-switch, .map-controls label, .alternative-route) { background: #171d1b !important; border-color: #3b4c45 !important; color: #c9dfd3 !important; }
 
