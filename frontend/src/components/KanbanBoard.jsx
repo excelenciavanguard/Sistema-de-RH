@@ -1,4 +1,4 @@
-import { CaretDown, Plus } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react";
 import { CandidateCard } from "./CandidateCard.jsx";
 
 export function KanbanBoard({ stages, candidates, onMove, onOpen }) {
@@ -33,7 +33,6 @@ export function KanbanBoard({ stages, candidates, onMove, onOpen }) {
               {items.map((candidate) => <CandidateCard key={candidate.id} candidate={candidate} color={stage.color} onOpen={onOpen} onDragStart={handleDragStart} />)}
               {items.length === 0 && <div className="empty-stage"><Plus size={18} /> Arraste um candidato para esta etapa</div>}
             </div>
-            <button className="load-more" type="button">Carregar mais <CaretDown size={13} /></button>
           </div>
         );
       })}

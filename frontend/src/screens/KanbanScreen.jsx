@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Briefcase, CalendarBlank, Info, Megaphone, PencilSimple, UserCircle, UsersThree } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowRight, Briefcase, CalendarBlank, Info, Megaphone, PencilSimple, UserCircle, UsersThree } from "@phosphor-icons/react";
 import { CandidateModal } from "../components/CandidateModal.jsx";
 import { KanbanBoard } from "../components/KanbanBoard.jsx";
 import { CandidateWorkspaceControls, SmartFilters } from "../components/SmartFilters.jsx";
@@ -171,7 +171,17 @@ export function KanbanScreen({ vacancyCode = "2026-0157", onInterviewModeChange 
         {section === "about" ? <VacancyAbout vacancy={vacancy} /> : null}
         {section === "candidates" ? <section className="board-surface">
           {vacancyCode !== "2026-0157" && <p className="vacancies-demo-note">Dados demonstrativos: esta vaga ainda não tem candidatos de exemplo vinculados. A contagem da lista de vagas é ilustrativa.</p>}
-          {candidateView === "kanban" ? <div className="kanban-scroll" role="region" aria-label="Etapas do Kanban"><KanbanBoard stages={stages} candidates={visibleCandidates} onMove={moveCandidate} onOpen={setSelectedCandidate} /></div> : null}
+          {candidateView === "kanban" ? <div className="kanban-board-navigation">
+            <button type="button" className="kanban-nav-arrow kanban-nav-arrow-left" aria-label="Ver etapas anteriores" onClick={(event) => event.currentTarget.parentElement.querySelector(".kanban-scroll").scrollBy({ left: -480, behavior: "smooth" })}><ArrowLeft size={18} /></button>
+            <div className="kanban-scroll" role="region" aria-label="Etapas do Kanban" onMouseMove={(event) => {
+            const element = event.currentTarget;
+            const bounds = element.getBoundingClientRect();
+            const edge = 72;
+            if (event.clientX < bounds.left + edge) element.scrollLeft -= 9;
+            else if (event.clientX > bounds.right - edge) element.scrollLeft += 9;
+          }}><KanbanBoard stages={stages} candidates={visibleCandidates} onMove={moveCandidate} onOpen={setSelectedCandidate} /></div>
+            <button type="button" className="kanban-nav-arrow kanban-nav-arrow-right" aria-label="Ver próximas etapas" onClick={(event) => event.currentTarget.parentElement.querySelector(".kanban-scroll").scrollBy({ left: 480, behavior: "smooth" })}><ArrowRight size={18} /></button>
+          </div> : null}
           {candidateView === "list" ? <CandidateList candidates={visibleCandidates} onOpen={setSelectedCandidate} /> : null}
           {candidateView === "rejected" ? <RejectedCandidates /> : null}
         </section> : null}

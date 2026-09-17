@@ -394,6 +394,19 @@
 .processes-legend { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
 .processes-legend i { width: 14px; height: 8px; background: #235347; border-radius: 2px; }
 
+/* Mantém a leitura das etapas no modo escuro, inclusive quando há candidatos. */
+.dark .process-home .stage-progress i {
+  border-color: #345047 !important;
+  background: #26352f !important;
+}
+.dark .process-home .stage-progress i.has-candidates {
+  border-color: #75c49f !important;
+  background: #2f8064 !important;
+  box-shadow: 0 0 0 1px rgba(117, 196, 159, .18), 0 2px 6px rgba(0, 0, 0, .22) !important;
+}
+.dark .process-home .process-stage-name,
+.dark .process-home .process-stage-count { color: #dff3e4 !important; }
+
 @media (max-width: 1150px) {
   .process-home.process-home .processes-table-head { display: none; }
   .process-home.process-home .process-row { grid-template-columns: minmax(0, 1fr) auto; gap: 22px 16px; padding: 24px; }

@@ -274,6 +274,31 @@
 .recruitment-workspace .empty-stage { min-height: 100px; padding: 16px 10px; font-size: var(--font-support); }
 .recruitment-workspace .load-more { min-height: 38px; margin: auto -10px -10px; padding: 10px; border-top: 1px solid #dfeae2; background: #fff; font-size: var(--font-support); }
 
+/* Quadro compacto: mais candidatos visíveis e navegação pelas bordas do ponteiro. */
+.recruitment-workspace .kanban-board-navigation { position: relative; min-width: 0; padding-inline: 18px; }
+.recruitment-workspace .kanban-scroll { overflow-x: auto; scroll-behavior: smooth; cursor: default; scrollbar-width: none !important; padding-bottom: 0; }
+.recruitment-workspace .kanban-scroll::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; background: transparent; }
+.recruitment-workspace .kanban-nav-arrow { position: absolute; z-index: 2; top: calc(50% + 42px); width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid #bcd7c7; border-radius: 50%; color: #235347; background: rgba(255, 255, 255, .96); box-shadow: 0 3px 10px rgba(5, 31, 32, .14); cursor: pointer; transform: translateY(-50%); }
+.recruitment-workspace .kanban-nav-arrow:hover { color: #fff; background: #235347; }
+.recruitment-workspace .kanban-nav-arrow-left { left: -14px; }
+.recruitment-workspace .kanban-nav-arrow-right { right: -14px; }
+.recruitment-workspace .kanban-board { min-width: 0; grid-template-columns: repeat(9, minmax(190px, 1fr)); gap: 8px; }
+.recruitment-workspace .kanban-column { min-width: 190px; min-height: 0; padding: 0 6px 6px; border-radius: 8px; }
+.recruitment-workspace .column-header { min-height: 43px; margin: 0 -6px 6px; padding: 7px 8px; gap: 6px; border-radius: 8px 8px 0 0; }
+.recruitment-workspace .column-header strong { font-size: 13px; }
+.recruitment-workspace .column-header small { font-size: 11px; }
+.recruitment-workspace .column-header > span { width: 24px; height: 24px; flex-basis: 24px; font-size: 12px; }
+.recruitment-workspace .column-cards { gap: 6px; }
+.recruitment-workspace .candidate-card { padding: 7px 7px 6px 9px; border-radius: 7px; }
+.recruitment-workspace .candidate-card-top { grid-template-columns: 26px minmax(0, 1fr); gap: 3px 6px; }
+.recruitment-workspace .candidate-card-top img,
+.recruitment-workspace .avatar-fallback { width: 26px; height: 26px; font-size: 11px; }
+.recruitment-workspace .candidate-identity strong { font-size: 12px; }
+.recruitment-workspace .candidate-identity small { font-size: 11px; }
+.recruitment-workspace .candidate-pending-alert { min-height: 25px; margin-top: 5px; padding: 4px 6px; font-size: 11px; }
+.recruitment-workspace .card-footer { margin-top: 5px; padding-top: 5px; gap: 5px; font-size: 11px; }
+.recruitment-workspace .load-more { display: none; }
+
 /* Candidate list and rejection history */
 .recruitment-workspace :is(.candidate-list-view, .rejected-candidates-view) { padding: 20px; }
 .recruitment-workspace .vacancy-heading-with-icon { display: flex; align-items: center; gap: 11px; }
