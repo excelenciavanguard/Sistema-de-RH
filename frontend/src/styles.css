@@ -1028,7 +1028,8 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
 }
 .alpha-desktop-nav { display: flex; }
 .alpha-header-bar .alpha-dropdown-trigger.is-open { color: #163832; background: #edf6ef; }
-.alpha-dropdown-flyout { top: calc(100% + 14px); padding-top: 6px; }
+/* Padding keeps the visual gap inside the hover area, connecting trigger and panel. */
+.alpha-dropdown-flyout { top: 100%; padding-top: 20px; }
 .alpha-dropdown-panel {
   width: 340px;
   max-width: calc(100vw - 32px);
@@ -1186,7 +1187,7 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
 
 @media (max-height: 800px) and (min-width: 761px) {
   .alpha-header-shell { height: 60px !important; }
-  .alpha-dropdown-flyout { top: calc(100% + 10px); }
+  .alpha-dropdown-flyout { padding-top: 16px; }
   .alpha-dropdown-panel {
     max-height: calc(100dvh - 72px);
     overflow-y: auto;
