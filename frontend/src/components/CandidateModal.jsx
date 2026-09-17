@@ -24,9 +24,9 @@ const stageLabels = {
   hiring: "Contratação",
 };
 const demoEvidences = [
-  { valor: "Ensino médio completo", trecho: "Comprovado no currículo", pagina: 1 },
+  { valor: "Ensino médio completo", trecho: "Encontrado no currículo", pagina: 1 },
   { valor: "Experiência em limpeza", trecho: "4 anos identificados", pagina: 1 },
-  { valor: "Disponibilidade de escala", trecho: "Declarado pelo candidato · confirmar em contato", pagina: null },
+  { valor: "Disponibilidade de escala", trecho: "Informado pelo candidato · confirmar em contato", pagina: null },
 ];
 
 function EvidenceList({ candidate }) {

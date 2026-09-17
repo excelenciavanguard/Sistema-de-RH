@@ -4,10 +4,13 @@ import {
   CaretDown,
   Funnel,
   GraduationCap,
+  Kanban,
+  ListBullets,
   MagnifyingGlass,
   MapPin,
   ShieldCheck,
   Star,
+  UserMinus,
   X,
 } from "@phosphor-icons/react";
 
@@ -20,7 +23,7 @@ const filterDefinitions = {
   evidence: {
     label: "Evidências",
     icon: ShieldCheck,
-    options: [["all", "Todas as evidências"], ["confirmed", "Somente comprovados"], ["declared", "Dados declarados"]],
+    options: [["all", "Todas as evidências"], ["confirmed", "No currículo"], ["declared", "Dados informados"]],
   },
   experience: {
     label: "Experiência",
@@ -39,15 +42,19 @@ const filterDefinitions = {
   },
 };
 
-const viewOptions = [["list", "Lista"], ["kanban", "Kanban"], ["rejected", "Desclassificados"]];
+const viewOptions = [
+  { id: "list", label: "Lista", icon: ListBullets },
+  { id: "kanban", label: "Kanban", icon: Kanban },
+  { id: "rejected", label: "Desclassificados", icon: UserMinus },
+];
 
 export function CandidateWorkspaceControls({ candidateView, onViewChange }) {
   return (
     <div className="candidate-workspace-controls" aria-label="Visualização dos candidatos">
       <div className="view-switcher" role="tablist" aria-label="Visualização">
-        {viewOptions.map(([id, label]) => (
+        {viewOptions.map(({ id, label, icon: Icon }) => (
           <button key={id} type="button" role="tab" aria-selected={candidateView === id} className={candidateView === id ? "active" : ""} onClick={() => onViewChange(id)}>
-            {label}{id === "rejected" ? <span>12</span> : null}
+            <Icon size={15} aria-hidden="true" />{label}{id === "rejected" ? <span>12</span> : null}
           </button>
         ))}
       </div>

@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { Briefcase, PencilSimple, UserCircle, UsersThree } from "@phosphor-icons/react";
+import { Briefcase, CalendarBlank, Info, Megaphone, PencilSimple, UserCircle, UsersThree } from "@phosphor-icons/react";
 import { CandidateModal } from "../components/CandidateModal.jsx";
 import { KanbanBoard } from "../components/KanbanBoard.jsx";
 import { CandidateWorkspaceControls, SmartFilters } from "../components/SmartFilters.jsx";
-import { InterviewLoading, InterviewsWorkspace, PromotionWorkspace, ReplacementConfirmation, CandidateList, RejectedCandidates, VacancySummary } from "../components/VacancyWorkspaceViews.jsx";
+import { InterviewLoading, InterviewsWorkspace, PromotionWorkspace, ReplacementConfirmation, CandidateList, RejectedCandidates } from "../components/VacancyWorkspaceViews.jsx";
 import { InterviewMode, InterviewSummary, InterviewCompletion } from "../components/interview/InterviewWorkspace.jsx";
 import { initialCandidates, stages } from "../data.js";
 import { listCandidates, moveCandidateStage } from "../services/candidates.js";
@@ -54,6 +54,13 @@ function VacancyAbout({ vacancy }) {
     </section>
   );
 }
+
+const vacancySections = [
+  { id: "candidates", label: "Candidatos", icon: UsersThree },
+  { id: "interviews", label: "Entrevistas", icon: CalendarBlank },
+  { id: "promotion", label: "Divulgação", icon: Megaphone },
+  { id: "about", label: "Sobre", icon: Info },
+];
 
 export function KanbanScreen({ vacancyCode = "2026-0157", onInterviewModeChange }) {
   const vacancy = vacancies.find((item) => item.code === vacancyCode);
@@ -150,10 +157,9 @@ export function KanbanScreen({ vacancyCode = "2026-0157", onInterviewModeChange 
           <div className="vacancy-actions"><button className="primary-action" type="button"><PencilSimple size={18} /> Editar vaga</button></div>
         </section>
         <div className="vacancy-navigation-row">
-          <nav className="vacancy-tabs" role="tablist" aria-label="Seções da vaga">{[["summary", "Resumo"], ["candidates", "Candidatos"], ["interviews", "Entrevistas"], ["promotion", "Divulgação"], ["about", "Sobre"]].map(([id, label]) => <button className={section === id ? "active" : ""} key={id} type="button" role="tab" aria-selected={section === id} onClick={() => { setSection(id); if (id !== "interviews") setSummaryInterview(null); }}>{label}</button>)}</nav>
+          <nav className="vacancy-tabs" role="tablist" aria-label="Seções da vaga">{vacancySections.map(({ id, label, icon: Icon }) => <button className={section === id ? "active" : ""} key={id} type="button" role="tab" aria-selected={section === id} onClick={() => { setSection(id); if (id !== "interviews") setSummaryInterview(null); }}><Icon size={16} aria-hidden="true" />{label}</button>)}</nav>
           {section === "candidates" ? <div className="candidate-navigation-tools"><CandidateWorkspaceControls candidateView={candidateView} onViewChange={setCandidateView} /><SmartFilters activeFilters={activeFilters} onFiltersChange={setActiveFilters} onSearch={setSearch} search={search} /></div> : null}
         </div>
-        {section === "summary" ? <VacancySummary candidates={candidates} stages={stages} vacancy={vacancy} /> : null}
         {section === "interviews" ? (summaryInterview ? <InterviewSummary result={interviewResults[summaryInterview.name]} onBack={() => setSummaryInterview(null)} onStartReplacement={() => setReplacementInterview(summaryInterview)} /> : <InterviewsWorkspace results={interviewResults} onOpenSummary={setSummaryInterview} onRequestReplacement={setReplacementInterview} onStartInterview={startInterview} />) : null}
         {section === "promotion" ? <PromotionWorkspace publishedChannels={publishedChannels} onPublish={(channel) => setPublishedChannels((current) => ({ ...current, [channel]: true }))} onUnpublish={(channel) => setPublishedChannels((current) => ({ ...current, [channel]: false }))} /> : null}
         {section === "about" ? <VacancyAbout vacancy={vacancy} /> : null}

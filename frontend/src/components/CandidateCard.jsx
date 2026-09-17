@@ -5,6 +5,7 @@ import {
   UserCircle,
   WarningCircle,
 } from "@phosphor-icons/react";
+import { getEvidenceLabel } from "./evidenceLabels.js";
 
 export function CandidateCard({ candidate, color, onOpen, onDragStart }) {
   const stageTime = candidate.stageTime?.replace(/\s+na etapa$/i, "");
@@ -29,7 +30,7 @@ export function CandidateCard({ candidate, color, onOpen, onDragStart }) {
       <div className="candidate-card-top">
         {candidate.photo ? <img src={candidate.photo} alt="" onError={(event) => { event.currentTarget.style.display = "none"; }} /> : <span className="avatar-fallback">{candidate.initials}</span>}
         <div className="candidate-identity"><strong>{candidate.name}</strong><small>{candidate.source}</small></div>
-        <span className={`evidence-badge ${candidate.evidenceTone}`}>{candidate.evidence}</span>
+        <span className={`evidence-badge ${candidate.evidenceTone}`}>{getEvidenceLabel(candidate.evidence)}</span>
       </div>
       {candidate.requirements && <span className="sr-only">{candidate.requirements}</span>}
       {pendingLabel && <button className="candidate-pending-alert" type="button" onClick={(event) => { event.stopPropagation(); onOpen(candidate); }} aria-label={`Ver pendências de ${candidate.name}: ${pendingItems.join(", ")}`}><WarningCircle size={14} weight="fill" /><span>{pendingLabel}</span></button>}
