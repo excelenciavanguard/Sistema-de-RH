@@ -30,6 +30,18 @@
 .candidate-modal .candidate-summary, .candidate-modal .candidate-history { overflow: visible; }
 .candidate-modal .candidate-history-note { color: var(--muted); font-size: var(--font-support); line-height: 1.6; }
 .candidate-modal .candidate-history-empty { padding: 24px; border: 1px dashed var(--line); border-radius: 8px; color: var(--muted); text-align: center; }
+.candidate-modal .candidate-profile-split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); overflow: hidden; }
+.candidate-modal .candidate-resume-panel { display: block; min-width: 0; overflow-y: auto; }
+.candidate-modal .candidate-professional-summary, .candidate-modal .candidate-evidence-details { min-width: 0; overflow-y: auto; }
+.candidate-modal .candidate-evidence-details .evidence-list, .candidate-modal .candidate-evidence-details .evidence-empty { margin-top: 18px; }
+.candidate-modal .candidate-resume-panel .paper-preview { width: min(470px, 100%); padding: 32px; }
+.candidate-modal .resume-toolbar { flex-wrap: wrap; gap: 8px; }
+@media (max-width: 900px) {
+  .candidate-modal .candidate-profile-split { grid-template-columns: 1fr; overflow-y: auto; }
+  .candidate-modal .candidate-resume-panel, .candidate-modal .candidate-professional-summary, .candidate-modal .candidate-evidence-details { overflow: visible; }
+  .candidate-modal .candidate-resume-panel { border-right: 0; border-bottom: 1px solid var(--line); }
+  .candidate-modal .candidate-resume-panel .paper-preview { min-height: 0; padding: 24px; }
+}
 .dark {
   --surface-base: #0e1110;
   --surface-raised: #191e1b;

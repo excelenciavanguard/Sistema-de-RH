@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import {
   Briefcase,
+  CheckCircle,
   Clock,
   DownloadSimple,
   DotsThreeVertical,
   FileText,
+  Info,
   WarningCircle,
   X,
 } from "@phosphor-icons/react";
 import { MobilityWorkspace } from "./MobilityWorkspace.jsx";
 
-const tabs = ["Resumo", "Currículo", "Mobilidade", "Histórico"];
+const tabs = ["Resumo", "Currículo", "Evidências", "Mobilidade", "Histórico"];
 const stageLabels = {
   application: "Candidatura",
   screening: "Triagem",
@@ -22,6 +24,18 @@ const stageLabels = {
   training: "Treinamento",
   hiring: "Contratação",
 };
+
+function EvidenceList({ candidate }) {
+  const evidences = candidate.evidences?.length ? candidate.evidences : candidate.isDemo ? [
+    candidate.education && { valor: candidate.education, trecho: "Dado demonstrativo de escolaridade" },
+    candidate.experience && { valor: candidate.experience, trecho: "Dado demonstrativo de experiência" },
+    candidate.availability && { valor: candidate.availability, trecho: "Disponibilidade informada · confirmar em contato" },
+  ].filter(Boolean) : [];
+  if (!evidences.length) {
+    return <div className="evidence-empty"><Info size={19} /><span><strong>Nenhuma evidência estruturada</strong><small>Revise o currículo original antes de avançar.</small></span></div>;
+  }
+  return <ul className="evidence-list">{evidences.map((evidence, index) => <li key={`${evidence.campo || "evidencia"}-${index}`}><CheckCircle size={18} /><span><strong>{evidence.valor}</strong><small>{evidence.trecho}{evidence.pagina ? ` · página ${evidence.pagina}` : ""}</small></span></li>)}</ul>;
+}
 export function CandidateModal({ candidate, history = [], initialTab = "Resumo", onClose }) {
   const [activeTab, setActiveTab] = useState(tabs.includes(initialTab) ? initialTab : "Resumo");
 
@@ -56,9 +70,9 @@ export function CandidateModal({ candidate, history = [], initialTab = "Resumo",
         </header>
         <nav className="modal-tabs" aria-label="Detalhes do candidato">{tabs.map((tab) => <button className={activeTab === tab ? "active" : ""} onClick={() => setActiveTab(tab)} key={tab} type="button">{tab}</button>)}</nav>
         {activeTab === "Mobilidade" ? <MobilityWorkspace candidate={candidate} /> : (
-        <div className={`modal-body candidate-tab-${activeTab.toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`}>
-          {activeTab === "Currículo" && <aside className="resume-preview candidate-resume-full">
-            <div className="resume-toolbar"><span><FileText size={17} /> {candidate.resumeFileName || "Currículo anexado"}</span><small>{candidate.isDemo ? "Dados demonstrativos" : "Arquivo original preservado"}</small></div>
+        <div className={`modal-body ${activeTab === "Histórico" ? "candidate-tab-historico" : "candidate-profile-split"}`}>
+          {activeTab !== "Histórico" && <aside className="resume-preview candidate-resume-panel">
+            <div className="resume-toolbar"><span><FileText size={17} /> {candidate.resumeFileName || "Currículo do candidato"}</span><small>{candidate.isDemo ? "Dados demonstrativos" : "Resumo do perfil"}</small></div>
             <div className="paper-preview">
               <h3>{candidate.name}</h3><p>{candidate.location}</p>
               <h4>Vaga aplicada</h4><p>{candidate.role}</p>
@@ -67,10 +81,16 @@ export function CandidateModal({ candidate, history = [], initialTab = "Resumo",
               <h4>Disponibilidade</h4><p>{candidate.availability}</p>
             </div>
           </aside>}
-          {activeTab === "Resumo" && <main className="candidate-details candidate-summary">
-            <div className="detail-heading"><div><Briefcase size={19} /><span><strong>Resumo do candidato</strong><small>Informações principais para decisão do RH</small></span></div><span className={`review-state ${candidate.reviewStatus === "pending" || pendingItems.length > 0 ? "pending" : ""}`}>{candidate.reviewStatus === "pending" || pendingItems.length > 0 ? "Revisão pendente" : "Revisado"}</span></div>
+          {(activeTab === "Resumo" || activeTab === "Currículo") && <main className="candidate-details candidate-professional-summary">
+            <div className="detail-heading"><div><Briefcase size={19} /><span><strong>Resumo profissional</strong><small>Dados extraídos para revisão do RH</small></span></div><span className={`review-state ${candidate.reviewStatus === "pending" || pendingItems.length > 0 ? "pending" : ""}`}>{candidate.reviewStatus === "pending" || pendingItems.length > 0 ? "Revisão pendente" : "Revisado"}</span></div>
             {pendingItems.length > 0 && <div className="candidate-pending-details"><WarningCircle size={18} weight="fill" /><span><strong>Pendências do candidato</strong><ul>{pendingItems.map((item) => <li key={item}>{item}</li>)}</ul></span></div>}
-            <dl className="detail-list"><div><dt>Etapa atual</dt><dd>{stageLabels[candidate.stage] || "Revisão"}</dd></div><div><dt>Vaga aplicada</dt><dd>{candidate.role}</dd></div><div><dt>Origem</dt><dd>{candidate.source}</dd></div><div><dt>Responsável</dt><dd>{candidate.owner}</dd></div><div><dt>Disponibilidade</dt><dd>{candidate.availability}</dd></div><div><dt>Localização</dt><dd>{candidate.location}</dd></div></dl>
+            <dl className="detail-list"><div><dt>Vaga aplicada</dt><dd>{candidate.role}</dd></div><div><dt>Experiência</dt><dd>{candidate.experience || "Não informada"}</dd></div><div><dt>Escolaridade</dt><dd>{candidate.education || "Não informada"}</dd></div><div><dt>Disponibilidade</dt><dd>{candidate.availability || "A confirmar"}</dd></div></dl>
+            <h3 className="section-title">Evidências extraídas</h3>
+            <EvidenceList candidate={candidate} />
+          </main>}
+          {activeTab === "Evidências" && <main className="candidate-details candidate-evidence-details">
+            <div className="detail-heading"><div><FileText size={19} /><span><strong>Evidências extraídas</strong><small>Confira a origem das informações antes de avançar</small></span></div></div>
+            <EvidenceList candidate={candidate} />
           </main>}
           {activeTab === "Histórico" && <main className="candidate-details candidate-history">
             <div className="detail-heading"><div><Clock size={19} /><span><strong>Histórico do processo</strong><small>Movimentações e interações deste candidato</small></span></div></div>

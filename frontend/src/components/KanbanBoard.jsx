@@ -28,8 +28,8 @@ export function KanbanBoard({ stages, candidates, onMove, onOpen }) {
             onDrop={(event) => handleDrop(event, stage.id)}
             style={{ "--stage-color": stage.color }}
           >
-            <header className="column-header"><div><small className="stage-sequence">Etapa {index + 1} de {stages.length}</small><strong>{stage.label}</strong><small>SLA: {stage.sla}</small></div><span>{items.length}</span></header>
-            <div className="column-cards">
+            <header className="column-header"><div><small className="stage-sequence">Etapa {index + 1} de {stages.length}</small><strong>{stage.label}</strong></div><span>{items.length}</span></header>
+            <div className="column-cards" role="region" aria-label={`Candidatos em ${stage.label}`} tabIndex={0}>
               {items.map((candidate) => <CandidateCard key={candidate.id} candidate={candidate} color={stage.color} onOpen={onOpen} onDragStart={handleDragStart} />)}
               {items.length === 0 && <div className="empty-stage"><Plus size={18} /> Arraste um candidato para esta etapa</div>}
             </div>
