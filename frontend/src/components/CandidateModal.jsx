@@ -60,6 +60,13 @@ export function CandidateModal({ candidate, initialTab = "Resumo", onClose }) {
   }, [onClose]);
 
   if (!candidate) return null;
+  const pendingItems = [
+    candidate.duplicate && candidate.duplicate,
+    candidate.evidenceTone === "warning" && "Informações obrigatórias não encontradas",
+    candidate.requirements && !candidate.requirements.startsWith("3/3") && `Requisitos: ${candidate.requirements}`,
+    /pendente|conferir/i.test(candidate.route || "") && `Mobilidade: ${candidate.route}${candidate.fare ? ` · ${candidate.fare}` : ""}`,
+    ...(candidate.missingInfo || []),
+  ].filter(Boolean);
 
   return (
     <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
@@ -86,11 +93,11 @@ export function CandidateModal({ candidate, initialTab = "Resumo", onClose }) {
           </aside>
           <main className="candidate-details">
               <>
-                <div className="detail-heading"><div><Briefcase size={19} /><span><strong>Resumo profissional</strong><small>Dados extraídos para revisão do RH</small></span></div><span className={`review-state ${candidate.reviewStatus === "pending" ? "pending" : ""}`}>{candidate.reviewStatus === "pending" ? "Revisão pendente" : "Revisado"}</span></div>
+                <div className="detail-heading"><div><Briefcase size={19} /><span><strong>Resumo profissional</strong><small>Dados extraídos para revisão do RH</small></span></div><span className={`review-state ${candidate.reviewStatus === "pending" || pendingItems.length > 0 ? "pending" : ""}`}>{candidate.reviewStatus === "pending" || pendingItems.length > 0 ? "Revisão pendente" : "Revisado"}</span></div>
+                {pendingItems.length > 0 && <div className="candidate-pending-details"><WarningCircle size={18} weight="fill" /><span><strong>Pendências do candidato</strong><ul>{pendingItems.map((item) => <li key={item}>{item}</li>)}</ul></span></div>}
                 <dl className="detail-list"><div><dt>Vaga aplicada</dt><dd>{candidate.role}</dd></div><div><dt>Experiência</dt><dd>{candidate.experience}</dd></div><div><dt>Escolaridade</dt><dd>{candidate.education}</dd></div><div><dt>Disponibilidade</dt><dd>{candidate.availability}</dd></div></dl>
                 <h3 className="section-title">Evidências extraídas</h3>
                 <EvidenceList candidate={candidate} />
-                {!candidate.isDemo && candidate.missingInfo?.length > 0 && <div className="missing-information"><WarningCircle size={18} /><span><strong>Informações não encontradas</strong><small>{candidate.missingInfo.join(" · ")}</small></span></div>}
               </>
           </main>
         </div>

@@ -14,7 +14,7 @@ export function AdministrationScreen() {
 }
 
 const accessScreens = [
-  ["Hoje no RH", "Visão geral e prioridades"], ["Requisições", "Criação e aprovações"], ["Vagas", "Vagas e Kanban"], ["Candidatos", "Banco de talentos e currículos"], ["Agenda", "Entrevistas e compromissos"], ["Relatórios", "Indicadores demonstrativos"], ["Administração", "Usuários, estrutura e configurações"],
+  ["Hoje no RH", "Visão geral e prioridades"], ["Requisições", "Criação e aprovações"], ["Vagas", "Vagas e candidatos"], ["Candidatos", "Banco de talentos e currículos"], ["Agenda", "Entrevistas e compromissos"], ["Relatórios", "Indicadores demonstrativos"], ["Administração", "Usuários, estrutura e configurações"],
 ];
 
 function UsersView() {

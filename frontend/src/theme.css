@@ -59,8 +59,17 @@
 .dark .alpha-header-bar kbd { background: #0f1312 !important; border-color: #3b4c45 !important; color: #a8beb1 !important; }
 .dark .alpha-theme-toggle { background: #171d1b; border-color: #3b4c45; color: #d9eee2; }
 .dark .alpha-theme-toggle:hover { background: #263a32; color: #fff; }
+.dark .alpha-create-vacancy { background: #79b39d; border-color: #79b39d; color: #071713; }
+.dark .alpha-create-vacancy:hover { background: #b6ddc9; border-color: #b6ddc9; }
 .dark .alpha-profile-button { color: #e8f4ed; }
-.dark .alpha-profile-button > span:first-child { background: #79b39d; color: #071713; }
+.dark .alpha-profile-avatar { border-color: #171d1b; background: #203a30; box-shadow: 0 0 0 1px #547566; }
+.dark .alpha-profile-popover { background: #171d1b; border-color: #3b4c45; color: #e8f4ed; box-shadow: 0 18px 44px rgba(0,0,0,.38); }
+.dark .alpha-profile-popover > header { border-color: #35433d; }
+.dark .alpha-profile-popover > header small,
+.dark .alpha-profile-theme-action small { color: #a8beb1; }
+.dark .alpha-profile-theme-action { color: #e8f4ed; }
+.dark .alpha-profile-theme-action:hover { background: #263a32; }
+.dark .alpha-profile-option-icon { background: #0f1312; border-color: #3b4c45; color: #9ed3bc; }
 .dark .alpha-header-bar [class*="ring-white"] { --tw-ring-color: #171d1b !important; }
 .dark .alpha-wordmark strong { color: #edf8f1 !important; }
 .dark .alpha-wordmark small { color: #a8beb1 !important; }

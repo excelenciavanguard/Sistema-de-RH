@@ -34,7 +34,7 @@ export function VacancyCreateScreen({ onNavigate }) {
       <div className="source-approval"><CheckCircle size={19} weight="fill" /><div><strong>REQ-2026-041 aprovada pela Diretoria</strong><span>Auxiliar de Serviços Gerais · Leblon Power · 4 vagas</span></div><button type="button">Ver requisição</button></div>
 
       {published ? (
-        <div className="workflow-success" role="status"><span><Check size={20} weight="bold" /></span><div><strong>Vaga publicada no protótipo</strong><p>O fluxo visual foi concluído. Nenhuma publicação externa ou gravação real foi executada.</p></div><button type="button" onClick={() => onNavigate(ROUTES.kanban)}>Abrir Kanban <ArrowRight size={17} /></button></div>
+        <div className="workflow-success" role="status"><span><Check size={20} weight="bold" /></span><div><strong>Vaga publicada no protótipo</strong><p>O fluxo visual foi concluído. Nenhuma publicação externa ou gravação real foi executada.</p></div><button type="button" onClick={() => onNavigate(ROUTES.kanban)}>Visualizar vaga <ArrowRight size={17} /></button></div>
       ) : null}
 
       <section className="surface-panel vacancy-builder">

@@ -57,7 +57,7 @@ export function HomeScreen({ onNavigate, appointments = agenda, currentDate }) {
       <div className="restored-home-date">
         <time dateTime={accessibleDate}>{displayDate}</time>
         <div className="today-agenda-access">
-          <button className="today-agenda-button" type="button" onClick={openAgenda}><CalendarBlank size={17} />Agenda de hoje <span>{appointments.length}</span></button>
+          <button className="today-agenda-button" type="button" onClick={openAgenda} aria-label={`Agenda de hoje ${appointments.length}`} title="Abrir agenda de hoje"><CalendarBlank size={17} /><span>{appointments.length}</span></button>
         </div>
       </div>
     </header>

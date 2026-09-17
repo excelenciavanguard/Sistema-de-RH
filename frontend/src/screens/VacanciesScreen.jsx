@@ -41,7 +41,7 @@ export function VacanciesScreen({ onNavigate }) {
   return (
     <main className="screen-workspace vacancies-workspace">
       <div className="vacancies-breadcrumb">Recrutamento <span>/</span> Vagas</div>
-      <ScreenHeader title="Vagas" description="Encontre a vaga e acompanhe os candidatos no Kanban." actions={<button className="primary-action" type="button" onClick={() => onNavigate(ROUTES.vacancyCreate)}><Plus size={18} /> Criar vaga</button>} />
+      <ScreenHeader title="Vagas" description="Encontre uma vaga e acompanhe seus candidatos." actions={<button className="primary-action" type="button" onClick={() => onNavigate(ROUTES.vacancyCreate)}><Plus size={18} /> Criar vaga</button>} />
       <nav className="vacancies-status-tabs" aria-label="Situação das vagas">
         {statuses.map((item) => <button key={item.value} type="button" aria-label={`${item.label} ${vacancies.filter((vacancy) => vacancy.status === item.value).length}`} aria-pressed={status === item.value} onClick={() => setStatus(item.value)}>{item.label}<span>{vacancies.filter((vacancy) => vacancy.status === item.value).length}</span></button>)}
       </nav>
@@ -63,7 +63,7 @@ export function VacanciesScreen({ onNavigate }) {
               <td className="vacancies-number" data-label="Candidatos">{vacancy.candidates}</td>
               <td data-label="Situação"><span className={`vacancies-status-pill ${vacancy.status === "Ativa" ? "active" : "draft"}`}>{vacancy.status}</span></td>
               <td data-label="Responsável"><div className="vacancies-owner"><span aria-hidden="true" className="vacancies-avatar">{initials(vacancy.owner)}</span><span>{vacancy.owner}</span></div></td>
-              <td><div className="vacancies-row-actions"><button className="vacancies-open" type="button" onClick={() => openKanban(vacancy)}>Abrir Kanban <ArrowRight size={17} /></button><button className="vacancies-details-button" type="button" aria-label={`Ver detalhes de ${vacancy.role}`} title="Ver detalhes da vaga" onClick={() => setDetails(vacancy)}><DotsThree size={22} weight="bold" /></button></div></td>
+              <td><div className="vacancies-row-actions"><button className="vacancies-open" type="button" onClick={() => openKanban(vacancy)}>Visualizar vaga <ArrowRight size={17} /></button><button className="vacancies-details-button" type="button" aria-label={`Ver detalhes de ${vacancy.role}`} title="Ver detalhes da vaga" onClick={() => setDetails(vacancy)}><DotsThree size={22} weight="bold" /></button></div></td>
             </tr>)}</tbody>
           </table>
         </div>
@@ -71,7 +71,7 @@ export function VacanciesScreen({ onNavigate }) {
         <footer className="vacancies-footer">Exibindo {visible.length} de {vacancies.filter((vacancy) => !status || vacancy.status === status).length} vagas</footer>
       </section>
       <dialog className="vacancies-details-dialog" ref={dialog} aria-labelledby="vacancies-details-title" onClose={() => setDetails(null)}>
-        {details && <><header><div><h2 id="vacancies-details-title">{details.role}</h2><p>{details.post} · {details.code}</p></div><button className="vacancies-details-button" type="button" aria-label="Fechar detalhes da vaga" onClick={() => dialog.current.close()}><X size={20} /></button></header><dl><div><dt>Situação</dt><dd>{details.status}</dd></div><div><dt>Responsável</dt><dd>{details.owner}</dd></div><div><dt>Etapa em destaque</dt><dd>{details.stage}</dd></div><div><dt>Prazo do demonstrativo</dt><dd>{details.sla}</dd></div></dl><p className="vacancies-demo-note">Informações demonstrativas. Edição, duplicação e encerramento serão conectados ao fluxo de vagas em uma etapa posterior.</p><footer><button type="button" className="vacancies-open" onClick={() => { dialog.current.close(); openKanban(details); }}>Abrir Kanban <ArrowRight size={17} /></button></footer></>}
+        {details && <><header><div><h2 id="vacancies-details-title">{details.role}</h2><p>{details.post} · {details.code}</p></div><button className="vacancies-details-button" type="button" aria-label="Fechar detalhes da vaga" onClick={() => dialog.current.close()}><X size={20} /></button></header><dl><div><dt>Situação</dt><dd>{details.status}</dd></div><div><dt>Responsável</dt><dd>{details.owner}</dd></div><div><dt>Etapa em destaque</dt><dd>{details.stage}</dd></div><div><dt>Prazo do demonstrativo</dt><dd>{details.sla}</dd></div></dl><p className="vacancies-demo-note">Informações demonstrativas. Edição, duplicação e encerramento serão conectados ao fluxo de vagas em uma etapa posterior.</p><footer><button type="button" className="vacancies-open" onClick={() => { dialog.current.close(); openKanban(details); }}>Visualizar vaga <ArrowRight size={17} /></button></footer></>}
       </dialog>
     </main>
   );

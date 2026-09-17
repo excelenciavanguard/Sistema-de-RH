@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   Link2,
   Moon,
+  Plus,
   Search,
   Settings2,
   Sun,
@@ -30,7 +31,9 @@ type HeaderProps = { route: string };
 
 export function Header({ route }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [profileOpen, setProfileOpen] = React.useState(false);
   const [darkMode, setDarkMode] = React.useState(() => window.localStorage.getItem('alpha-rh-theme') === 'dark');
+  const profileMenuRef = React.useRef<HTMLDivElement>(null);
   const scrolled = useScroll(8);
 
   React.useEffect(() => {
@@ -43,7 +46,26 @@ export function Header({ route }: HeaderProps) {
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
-  React.useEffect(() => setMobileOpen(false), [route]);
+  React.useEffect(() => {
+    setMobileOpen(false);
+    setProfileOpen(false);
+  }, [route]);
+
+  React.useEffect(() => {
+    if (!profileOpen) return undefined;
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!profileMenuRef.current?.contains(event.target as Node)) setProfileOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setProfileOpen(false);
+    };
+    document.addEventListener('pointerdown', closeOnOutsideClick);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsideClick);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [profileOpen]);
 
   return (
     <header className={cn('alpha-app-header sticky top-0 z-50 w-full', scrolled && 'is-scrolled')}>
@@ -67,26 +89,38 @@ export function Header({ route }: HeaderProps) {
               <kbd className="rounded border border-[#cfdfd3] bg-white px-1.5 py-0.5 text-[12px] font-semibold text-[#667970]">⌘ K</kbd>
             </label>
 
+            <a href="#/recrutamento/vagas/nova" className="alpha-create-vacancy" aria-label="Criar vaga">
+              <Plus className="size-[17px]" />
+              <span>Criar vaga</span>
+            </a>
             <a href="/mobilidade.html" className="alpha-utility-action relative" aria-label="Abrir laboratório de mobilidade" title="Laboratório de mobilidade">
               <Bell className="size-[18px]" />
               <span className="absolute right-[8px] top-[7px] size-2 rounded-full bg-[#f4a51c] ring-2 ring-white" aria-hidden="true" />
             </a>
-            <button
-              type="button"
-              className="alpha-theme-toggle"
-              aria-label={darkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
-              aria-pressed={darkMode}
-              onClick={() => setDarkMode((current) => !current)}
-            >
-              {darkMode ? <Sun className="size-[17px]" /> : <Moon className="size-[17px]" />}
-              <span className="hidden xl:inline">{darkMode ? 'Claro' : 'Escuro'}</span>
-            </button>
             <span className="hidden h-6 w-px bg-[#d7e5db] xl:block" aria-hidden="true" />
-            <button className="alpha-profile-button ml-0.5 flex h-10 items-center gap-2 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30" type="button" aria-label="Abrir perfil de Ramon">
-              <span className="grid size-8 place-items-center rounded-full bg-[#163832] text-[12px] font-extrabold text-white">R</span>
-              <span className="hidden flex-col 2xl:flex"><strong>Ramon</strong><small>RH Global</small></span>
-              <ChevronDown className="hidden size-3.5 text-[#5f716a] 2xl:block" />
-            </button>
+            <div
+              className="alpha-profile-menu"
+              ref={profileMenuRef}
+              onMouseEnter={() => setProfileOpen(true)}
+              onMouseLeave={() => setProfileOpen(false)}
+              onFocusCapture={() => setProfileOpen(true)}
+              onBlurCapture={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setProfileOpen(false);
+              }}
+            >
+              <button className="alpha-profile-button ml-0.5 flex h-10 items-center gap-2 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30" type="button" aria-label="Abrir perfil de Simão Pedro" aria-expanded={profileOpen} aria-controls="alpha-profile-options" onClick={() => setProfileOpen((current) => !current)}>
+                <img className="alpha-profile-avatar" src="/assets/simao-pedro-avatar.png" alt="" />
+                <span className="hidden flex-col 2xl:flex"><strong>Simão Pedro</strong><small>RH Global</small></span>
+                <ChevronDown className={cn('hidden size-3.5 text-[#5f716a] transition-transform 2xl:block', profileOpen && 'rotate-180')} />
+              </button>
+              {profileOpen && <div className="alpha-profile-popover" id="alpha-profile-options" role="menu" aria-label="Opções do usuário">
+                <header><strong>Simão Pedro</strong><small>RH Global</small></header>
+                <button type="button" className="alpha-profile-theme-action" role="menuitem" aria-label={darkMode ? 'Ativar modo claro' : 'Ativar modo escuro'} aria-pressed={darkMode} onClick={() => setDarkMode((current) => !current)}>
+                  <span className="alpha-profile-option-icon">{darkMode ? <Sun className="size-[17px]" /> : <Moon className="size-[17px]" />}</span>
+                  <span><strong>{darkMode ? 'Modo claro' : 'Modo escuro'}</strong><small>{darkMode ? 'Usar aparência clara' : 'Usar aparência escura'}</small></span>
+                </button>
+              </div>}
+            </div>
             <Button size="icon" variant="outline" onClick={() => setMobileOpen((current) => !current)} className="alpha-mobile-toggle size-10 rounded-xl border-[#cfdfd3] bg-white text-[#235347] hover:bg-[#edf6ef]" aria-expanded={mobileOpen} aria-controls="mobile-navigation" aria-label="Alternar menu">
               <MenuToggleIcon open={mobileOpen} className="size-5" />
             </Button>
@@ -149,7 +183,7 @@ const menuGroups: DropdownNavigationItem[] = [
       {
         title: 'Seleção',
         items: [
-          { label: 'Vagas e Kanban', href: '#/recrutamento/vagas', description: 'RH cria vagas e conduz os candidatos', icon: BriefcaseBusiness, active: (route) => route.startsWith('/recrutamento/vagas') && !route.endsWith('/kanban') },
+          { label: 'Vagas', href: '#/recrutamento/vagas', description: 'Visualize vagas e acompanhe os candidatos', icon: BriefcaseBusiness, active: (route) => route.startsWith('/recrutamento/vagas') && !route.endsWith('/kanban') },
           { label: 'Processos seletivos', href: '#/recrutamento/vagas/2026-0157/kanban', description: 'Acompanhe os processos em andamento', icon: LayoutDashboard, active: (route) => route.endsWith('/kanban') },
         ],
       },

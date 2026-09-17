@@ -18,6 +18,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 - Recruitment Kanban responsiveness (2026-09-17): show all nine stages side by side on desktop without horizontal page or board scrolling, using compact cards that retain every candidate detail. On tablet and mobile, wrap the stages into a readable responsive grid while preserving pipeline order.
 - Recruitment Kanban filters (2026-09-17): keep the board toolbar compact with candidate search and one Filters trigger. Place all filter categories and active-filter management inside that single popover; do not restore separate filter buttons, view switches, personalization controls or a persistent chip row.
+- Recruitment candidate-card direction (2026-09-17): keep Kanban cards focused on identity, evidence status and compact activity metadata. Hide routine requirements, route and fare detail from the card; when a candidate has duplicated files, missing requirements, missing information or mobility review, show one concise warning that opens the candidate detail with the complete pending-items list.
+- Vacancy detail direction (2026-09-17): replace the vacancy History tab with About. About presents the vacancy's requester, work location, compensation, schedule, positions, description, requirements and benefits in compact responsive sections; candidate search and filters remain visible only in the Candidates tab.
 
 - Global header refinement (2026-09-17): keep the existing white Alpha RH header, logo, green palette, grouped menus and utilities. Use a restrained 56px desktop height with proportionally smaller logo, controls and spacing; preserve readable labels, dropdown behavior and the existing 64px mobile header with touch-friendly controls.
 

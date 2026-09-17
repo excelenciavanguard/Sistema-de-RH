@@ -13,7 +13,7 @@ const navItems = [{
   label: 'Recrutamento',
   description: 'Processo seletivo',
   subMenus: [{ title: 'Seleção', items: [{
-    label: 'Vagas e Kanban', description: 'Abrir vagas', href: '#/recrutamento/vagas', icon: BriefcaseBusiness,
+    label: 'Vagas', description: 'Visualizar vagas', href: '#/recrutamento/vagas', icon: BriefcaseBusiness,
   }] }],
 }];
 

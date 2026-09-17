@@ -8,7 +8,7 @@ afterEach(cleanup);
 describe("Lista operacional de vagas", () => {
   it("starts with active vacancies and compact status counts", () => {
     render(<VacanciesScreen onNavigate={vi.fn()} />);
-    expect(screen.getAllByRole("button", { name: "Abrir Kanban" })).toHaveLength(3);
+    expect(screen.getAllByRole("button", { name: "Visualizar vaga" })).toHaveLength(3);
     expect(screen.getByRole("button", { name: "Ativas 3" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.queryByText("Vagas no painel")).not.toBeInTheDocument();
   });
@@ -44,9 +44,9 @@ describe("Lista operacional de vagas", () => {
   it("clears search and filters without changing the selected situation", () => {
     render(<VacanciesScreen onNavigate={vi.fn()} />);
     fireEvent.change(screen.getByLabelText("Filtrar por posto"), { target: { value: "Comrio Ilha" } });
-    expect(screen.getAllByRole("button", { name: "Abrir Kanban" })).toHaveLength(1);
+    expect(screen.getAllByRole("button", { name: "Visualizar vaga" })).toHaveLength(1);
     fireEvent.click(screen.getByRole("button", { name: "Limpar filtros" }));
-    expect(screen.getAllByRole("button", { name: "Abrir Kanban" })).toHaveLength(3);
+    expect(screen.getAllByRole("button", { name: "Visualizar vaga" })).toHaveLength(3);
     expect(screen.getByRole("button", { name: "Ativas 3" })).toHaveAttribute("aria-pressed", "true");
   });
 });

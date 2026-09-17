@@ -295,6 +295,19 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
 .evidence-badge.info { color: #235347; background: #dff3e4; }
 .evidence-badge.warning { color: #a75b00; background: #fff0d6; }
 .duplicate-warning { margin: 7px 0 2px; color: #9a5700; background: #fff7e8; border-radius: 5px; padding: 5px 6px; display: flex; align-items: center; gap: 5px; font-size: var(--font-meta); font-weight: var(--weight-heading); }
+.candidate-pending-alert { width: 100%; min-height: 28px; margin-top: 6px; padding: 4px 6px; display: flex; align-items: center; gap: 5px; border: 0; border-radius: 5px; color: #8a5400; background: #fff4dc; font: inherit; font-size: var(--font-meta); font-weight: var(--weight-heading); text-align: left; cursor: pointer; }
+.candidate-pending-alert:hover { background: #ffe9bc; }
+.candidate-pending-alert span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.candidate-pending-alert svg { flex: 0 0 auto; }
+.candidate-pending-details { margin: 14px 0 4px; padding: 11px 12px; display: flex; align-items: flex-start; gap: 9px; border: 1px solid #f0d39a; border-radius: 8px; color: #a96300; background: #fff8e9; }
+.candidate-pending-details > span { min-width: 0; }
+.candidate-pending-details strong { color: #734400; font-size: var(--font-support); }
+.candidate-pending-details ul { margin: 6px 0 0; padding-left: 17px; color: #735d39; font-size: var(--font-meta); line-height: 1.45; }
+.dark .candidate-pending-alert { color: #ffd58a; background: #3a2a13; }
+.dark .candidate-pending-alert:hover { background: #493519; }
+.dark .candidate-pending-details { border-color: #6f5426; color: #ffd58a; background: #2d2417; }
+.dark .candidate-pending-details strong,
+.dark .candidate-pending-details li { color: #f3d8a5; }
 .card-fact { margin-top: 7px; display: flex; align-items: center; gap: 5px; color: #5f716a; font-size: var(--font-meta); min-width: 0; }
 .card-fact span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .card-fact small { color: #235347; margin-left: auto; white-space: nowrap; }
@@ -1167,6 +1180,25 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
 .alpha-dropdown-copy strong { color: #163832; font-size: var(--font-ui); font-weight: var(--weight-heading); line-height: 1.25; }
 .alpha-dropdown-copy small { color: #667970; font-size: var(--font-support); line-height: 1.35; }
 .alpha-header-search { display: flex; }
+.alpha-create-vacancy {
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 11px;
+  border: 1px solid #235347;
+  border-radius: 8px;
+  color: #fff;
+  background: #235347;
+  font-size: 13px;
+  font-weight: var(--weight-heading);
+  white-space: nowrap;
+  outline: 0;
+  transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+.alpha-create-vacancy:hover { border-color: #163832; background: #163832; }
+.alpha-create-vacancy:focus-visible { box-shadow: 0 0 0 3px rgba(35,83,71,.22); }
 .alpha-utility-action {
   width: 34px;
   height: 34px;
@@ -1182,6 +1214,80 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
 }
 .alpha-utility-action:hover { color: #235347; background: #edf6ef; border-color: #d7e5db; }
 .alpha-utility-action:focus-visible { box-shadow: 0 0 0 2px rgba(35,83,71,.24); }
+.alpha-profile-menu { position: relative; align-self: center; }
+.alpha-profile-avatar {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  background: #dff3e4;
+  box-shadow: 0 0 0 1px #c9dbcf;
+}
+.alpha-profile-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 80;
+  width: 242px;
+  padding: 8px;
+  border: 1px solid #d7e5db;
+  border-radius: 12px;
+  color: #163832;
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(5,31,32,.16);
+  animation: alpha-dropdown-enter .18s cubic-bezier(.16,1,.3,1);
+}
+.alpha-profile-popover::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  right: 0;
+  left: 0;
+  height: 9px;
+}
+.alpha-profile-popover > header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 9px 10px;
+  border-bottom: 1px solid #e2ebe5;
+}
+.alpha-profile-popover > header strong { font-size: 14px; }
+.alpha-profile-popover > header small { color: #667970; font-size: 12px; }
+.alpha-profile-theme-action {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  border: 0;
+  border-radius: 9px;
+  color: #163832;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.alpha-profile-theme-action:hover { background: #edf6ef; }
+.alpha-profile-theme-action:focus-visible { outline: 2px solid #235347; outline-offset: 2px; }
+.alpha-profile-option-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #cfdfd3;
+  border-radius: 9px;
+  color: #235347;
+  background: #f7fbf8;
+}
+.alpha-profile-theme-action > span:last-child { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.alpha-profile-theme-action strong { font-size: 13px; }
+.alpha-profile-theme-action small { color: #667970; font-size: 12px; }
 .alpha-mobile-toggle { display: none; }
 
 @media (min-width: 1121px) {
@@ -1286,6 +1392,8 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
 @media (max-width: 620px) {
   .alpha-header-shell { padding-inline: 12px; }
   .alpha-utility-action[aria-label="Abrir ajuda"] { display: none; }
+  .alpha-create-vacancy { width: 36px; padding-inline: 0; }
+  .alpha-create-vacancy span { display: none; }
   .alpha-theme-toggle { width: 40px; padding-inline: 0; }
   .alpha-theme-toggle span { display: none !important; }
 }

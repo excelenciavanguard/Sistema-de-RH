@@ -46,10 +46,10 @@ describe("Alpha RH connected screens", () => {
     expect(await screen.findByRole("heading", { name: "Aprovações da diretoria" })).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Recrutamento" }));
-    fireEvent.click(screen.getByRole("menuitem", { name: /Vagas.*Kanban/i }));
+    fireEvent.click(screen.getByRole("menuitem", { name: /^Vagas/i }));
     expect(await screen.findByRole("heading", { name: "Vagas" })).toBeInTheDocument();
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Abrir Kanban" })[0]);
+    fireEvent.click(screen.getAllByRole("button", { name: "Visualizar vaga" })[0]);
     expect(await screen.findByRole("heading", { name: /Auxiliar de Serviços Gerais/i })).toBeInTheDocument();
   }, 10_000);
 
@@ -118,15 +118,22 @@ describe("Alpha RH connected screens", () => {
     expect(within(menu).queryByText("Visão do processo")).not.toBeInTheDocument();
   });
 
-  it("alternates the global dark theme and preserves the chosen appearance", () => {
+  it("keeps vacancy creation in the header and moves the theme control to the user menu", () => {
     render(<App />);
 
-    const themeToggle = screen.getByRole("button", { name: "Ativar modo escuro" });
+    expect(screen.getByRole("link", { name: "Criar vaga" })).toHaveAttribute("href", "#/recrutamento/vagas/nova");
+    expect(screen.queryByRole("button", { name: "Ativar modo escuro" })).not.toBeInTheDocument();
+    const profileButton = screen.getByRole("button", { name: "Abrir perfil de Simão Pedro" });
+    expect(profileButton.querySelector("img")).toHaveAttribute("src", "/assets/simao-pedro-avatar.png");
+    fireEvent.mouseEnter(profileButton.closest(".alpha-profile-menu"));
+    const themeToggle = screen.getByRole("menuitem", { name: "Ativar modo escuro" });
     fireEvent.click(themeToggle);
 
     expect(document.documentElement).toHaveClass("dark");
     expect(localStorage.getItem("alpha-rh-theme")).toBe("dark");
-    expect(screen.getByRole("button", { name: "Ativar modo claro" })).toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: "Ativar modo claro" })).toBeInTheDocument();
+    fireEvent.mouseLeave(profileButton.closest(".alpha-profile-menu"));
+    expect(screen.queryByRole("menuitem", { name: "Ativar modo claro" })).not.toBeInTheDocument();
   });
 
   it("connects the Directorate decision to the RH vacancy builder", async () => {
@@ -324,11 +331,11 @@ describe("Alpha RH Kanban", () => {
     expect(screen.queryByText("Juliana Alves")).not.toBeInTheDocument();
   });
 
-  it("opens the extraction laboratory", () => {
+  it("keeps only the edit vacancy action in the header", () => {
     renderKanban();
-    fireEvent.click(screen.getByRole("button", { name: /Testar extração/i }));
-    expect(screen.getByRole("dialog", { name: /Laboratório de extração/i })).toBeInTheDocument();
-    expect(screen.getByText(/Extração segura ativa/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Editar vaga/i })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Testar extração/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /^Mais/i })).not.toBeInTheDocument();
   });
 
   it("shows the approved mobility workspace inside the candidate modal", () => {
@@ -341,55 +348,6 @@ describe("Alpha RH Kanban", () => {
     expect(screen.getByText("Percurso de ida até o posto")).toBeInTheDocument();
     expect(screen.getByText("Pontos para confirmar")).toBeInTheDocument();
     expect(screen.getByText(/A mobilidade apoia a análise/i)).toBeInTheDocument();
-  });
-
-  it("adds the chosen completed extraction to the Candidatura column", async () => {
-    const imported = {
-      id: "application-1",
-      name: "Rafael de Teste",
-      initials: "RT",
-      source: "Extração Gemini",
-      stage: "application",
-      evidence: "Revisão pendente",
-      evidenceTone: "warning",
-      requirements: "Dados extraídos · revisar",
-      route: "Mobilidade pendente",
-      fare: "A calcular",
-      stageTime: "Agora",
-      owner: "Equipe RH",
-      messages: 0,
-      role: "Auxiliar de Serviços Gerais",
-      location: "Rio de Janeiro, RJ",
-      availability: "Não informado",
-      education: "Ensino médio completo",
-      experience: "Dois anos em serviços gerais",
-      reviewStatus: "pending",
-    };
-    fetch.mockImplementation(async (url, options = {}) => {
-      if (String(url).includes("/extractions") && options.method === "POST" && options.body instanceof FormData) {
-        return jsonResponse({
-          id: "job-1",
-          status: "completed",
-          file: { original_name: "curriculo.txt", size_bytes: 30, extension: "txt", duplicate: false, text_preview: "Rafael de Teste" },
-          results: [{ provider: "gemini", status: "completed", structured_data: { nome: "Rafael de Teste", localidade: "Rio de Janeiro, RJ", experiencia: "Dois anos", escolaridade: "Ensino médio completo", disponibilidade: null } }],
-        });
-      }
-      if (String(url).includes("add-to-kanban")) return jsonResponse({ candidate: imported, duplicate: false });
-      return jsonResponse([]);
-    });
-
-    const { container } = renderKanban();
-    fireEvent.click(screen.getByRole("button", { name: /Testar extração/i }));
-    fireEvent.change(container.querySelector('input[type="file"]'), {
-      target: { files: [new File(["Rafael de Teste"], "curriculo.txt", { type: "text/plain" })] },
-    });
-    fireEvent.click(screen.getByRole("button", { name: "Gemini" }));
-    fireEvent.click(screen.getByRole("button", { name: /Executar teste/i }));
-
-    fireEvent.click(await screen.findByRole("button", { name: /Adicionar resultado do Gemini ao Kanban/i }));
-
-    expect(await screen.findByText("Candidato adicionado em Candidatura")).toBeInTheDocument();
-    expect(screen.getByLabelText("Abrir candidato Rafael de Teste")).toBeInTheDocument();
   });
 
   it("persists a real candidate movement between approved stages", async () => {
