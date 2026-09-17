@@ -48,7 +48,7 @@ export function Header({ route }: HeaderProps) {
   return (
     <header className={cn('alpha-app-header sticky top-0 z-50 w-full', scrolled && 'is-scrolled')}>
       <div className="alpha-header-bar">
-        <div className="alpha-header-shell mx-auto flex h-[68px] w-full max-w-[1820px] items-stretch gap-5 px-5 lg:px-8">
+        <div className="alpha-header-shell mx-auto flex h-14 w-full max-w-[1820px] items-stretch gap-3 px-4 lg:px-5">
           <a href="#/inicio" className="alpha-wordmark group flex shrink-0 items-center outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/35" aria-label="Alpha RH — ir para o Início">
             <Logo />
           </a>
@@ -81,9 +81,9 @@ export function Header({ route }: HeaderProps) {
               {darkMode ? <Sun className="size-[17px]" /> : <Moon className="size-[17px]" />}
               <span className="hidden xl:inline">{darkMode ? 'Claro' : 'Escuro'}</span>
             </button>
-            <span className="hidden h-8 w-px bg-[#d7e5db] xl:block" aria-hidden="true" />
-            <button className="alpha-profile-button ml-0.5 flex h-12 items-center gap-2.5 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30" type="button" aria-label="Abrir perfil de Simão Pedro">
-              <span className="grid size-9 place-items-center rounded-full bg-[#163832] text-[13px] font-extrabold text-white">SP</span>
+            <span className="hidden h-6 w-px bg-[#d7e5db] xl:block" aria-hidden="true" />
+            <button className="alpha-profile-button ml-0.5 flex h-10 items-center gap-2 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30" type="button" aria-label="Abrir perfil de Simão Pedro">
+              <span className="grid size-8 place-items-center rounded-full bg-[#163832] text-[12px] font-extrabold text-white">SP</span>
               <span className="hidden flex-col 2xl:flex"><strong>Simão Pedro</strong><small>RH Global</small></span>
               <ChevronDown className="hidden size-3.5 text-[#5f716a] 2xl:block" />
             </button>

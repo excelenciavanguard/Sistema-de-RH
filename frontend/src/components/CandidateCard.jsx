@@ -9,6 +9,9 @@ import {
 } from "@phosphor-icons/react";
 
 export function CandidateCard({ candidate, color, onOpen, onDragStart }) {
+  const requirements = candidate.requirements?.replace(/\s+comprovados?$/i, " requisitos");
+  const route = candidate.route?.replace(/conduções|condução/gi, "cond.");
+  const stageTime = candidate.stageTime?.replace(/\s+na etapa$/i, "");
   return (
     <article
       className="candidate-card"
@@ -26,9 +29,9 @@ export function CandidateCard({ candidate, color, onOpen, onDragStart }) {
         <span className={`evidence-badge ${candidate.evidenceTone}`}>{candidate.evidence}</span>
       </div>
       {candidate.duplicate && <div className="duplicate-warning"><WarningCircle size={14} weight="fill" /> {candidate.duplicate}</div>}
-      <div className="card-fact"><FileText size={14} /><span>{candidate.requirements}</span></div>
-      <div className="card-fact"><MapPin size={14} /><span>{candidate.route}</span><small>{candidate.fare}</small></div>
-      <div className="card-footer"><span><Clock size={14} />{candidate.stageTime}</span><span><UserCircle size={14} />{candidate.owner}</span><span><ChatCircle size={14} />{candidate.messages}</span><CalendarBlank size={14} /></div>
+      <div className="card-fact card-fact-summary" title={candidate.requirements}><FileText size={14} /><span>{requirements}</span></div>
+      <div className="card-fact card-fact-summary" title={candidate.route}><MapPin size={14} /><span>{route}</span><small>{candidate.fare}</small></div>
+      <div className="card-footer"><span title="Tempo na etapa" aria-label={`Tempo na etapa: ${candidate.stageTime}`}><Clock size={14} />{stageTime}</span><span><UserCircle size={14} />{candidate.owner}</span><span><ChatCircle size={14} />{candidate.messages}</span><CalendarBlank size={14} /></div>
     </article>
   );
 }

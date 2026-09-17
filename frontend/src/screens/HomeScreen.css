@@ -373,12 +373,10 @@
   background: #dff3e4;
 }
 
-.process-home .stage-progress i.done {
+.process-home .stage-progress i.has-candidates {
   border-color: #163832;
   background: #235347;
 }
-.process-home .stage-progress .is-current i { border-color: #051f20; background: #0b2b26; outline: 1px solid #051f20; outline-offset: 3px; }
-.process-home .stage-progress .is-current small { color: #0b2b26; font-weight: var(--weight-heading); }
 
 .process-home .stage-progress small {
   overflow: visible;
@@ -393,7 +391,7 @@
 .process-home .process-stage-count { color: #163832; font-weight: var(--weight-ui); font-variant-numeric: tabular-nums; }
 .processes-hint { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .processes-legend { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
-.processes-legend i { width: 14px; height: 8px; background: #0b2b26; border-radius: 2px; outline: 1px solid #051f20; outline-offset: 2px; }
+.processes-legend i { width: 14px; height: 8px; background: #235347; border-radius: 2px; }
 
 @media (max-width: 1150px) {
   .process-home.process-home .processes-table-head { display: none; }

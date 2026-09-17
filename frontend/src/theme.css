@@ -64,6 +64,7 @@
 .dark .alpha-header-bar [class*="ring-white"] { --tw-ring-color: #171d1b !important; }
 .dark .alpha-wordmark strong { color: #edf8f1 !important; }
 .dark .alpha-wordmark small { color: #a8beb1 !important; }
+.dark .alpha-logo-image { filter: brightness(1.35) saturate(.9); }
 .dark :is(.alpha-home-link, .alpha-dropdown-trigger) { color: #c9dfd3 !important; }
 .dark :is(.alpha-home-link:hover, .alpha-home-link.is-active, .alpha-dropdown-trigger:hover, .alpha-dropdown-trigger.is-active, .alpha-dropdown-trigger.is-open) { background: #203a30 !important; color: #edf8f1 !important; }
 .dark :is(.alpha-home-link, .alpha-dropdown-trigger)::after { background: #9ed3bc; }

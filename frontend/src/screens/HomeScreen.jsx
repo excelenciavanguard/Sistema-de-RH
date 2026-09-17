@@ -83,7 +83,7 @@ export function HomeScreen({ onNavigate, appointments = agenda, currentDate }) {
             <span className="stage-progress" aria-label={`Etapa atual: ${vacancy.stage}. ${pipelineStages.map((stage, index) => `${stage}: ${metrics.pipeline[index] ?? 0} candidatos`).join("; ")}`}>
               {pipelineStages.map((stage, index) => {
                 const count = metrics.pipeline[index] ?? 0;
-                return <span className={`process-stage ${index === currentStage ? "is-current" : ""}`} aria-label={`${stage}: ${count} ${count === 1 ? "candidato" : "candidatos"}`} aria-current={index === currentStage ? "step" : undefined} key={`${vacancy.code}-${stage}`}><small className="process-stage-name">{stage}</small><i className={index <= currentStage ? "done" : ""} /><small className="process-stage-count">{count}</small></span>;
+                return <span className="process-stage" aria-label={`${stage}: ${count} ${count === 1 ? "candidato" : "candidatos"}`} key={`${vacancy.code}-${stage}`}><small className="process-stage-name">{stage}</small><i className={count > 0 ? "has-candidates" : ""} /><small className="process-stage-count">{count}</small></span>;
               })}
             </span>
             <span className="process-new-badge">+{metrics.newCandidates} novos</span>
@@ -91,7 +91,7 @@ export function HomeScreen({ onNavigate, appointments = agenda, currentDate }) {
           </button>;
         })}</div>
       </div>
-      <div className="processes-hint"><span>Clique em uma vaga para abrir seu processo.</span><span className="processes-legend"><i aria-hidden="true" />Etapa atual</span></div>
+      <div className="processes-hint"><span>Clique em uma vaga para abrir seu processo.</span><span className="processes-legend"><i aria-hidden="true" />Etapa com candidatos</span></div>
     </section>
     <section className="activities-card" aria-labelledby="activities-title">
       <header className="activities-card-header"><span className="section-symbol"><Clock size={22} weight="duotone" /></span><div><h2 id="activities-title">Atividades recentes</h2><p>Últimas atualizações do sistema relacionadas ao recrutamento.</p></div><button className="text-action" type="button">Ver histórico completo <ArrowRight size={17} /></button></header>

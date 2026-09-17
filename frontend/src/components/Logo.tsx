@@ -10,8 +10,10 @@ export default function Logo({ className }: LogoProps) {
     <span className={`alpha-logo-lockup ${className ?? ''}`.trim()}>
       <img
         className="alpha-logo-image"
-        src="/assets/alpha-rh-logo.png"
+        src="/assets/Logo%20Rh.png"
         alt="Alpha RH"
+        loading="eager"
+        decoding="async"
       />
     </span>
   );

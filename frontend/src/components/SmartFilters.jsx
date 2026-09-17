@@ -1,10 +1,8 @@
+import { useState } from "react";
 import {
   Briefcase,
-  CaretDown,
   Check,
-  DotsSixVertical,
   Funnel,
-  GearSix,
   GraduationCap,
   MagnifyingGlass,
   MapPin,
@@ -13,57 +11,60 @@ import {
   X,
 } from "@phosphor-icons/react";
 
-const chips = ["Ensino médio completo", "Experiência ≥ 1 ano", "Até 2 conduções", "Questionário respondido"];
-const visibleFilters = [
-  ["Evidências", ShieldCheck, true],
-  ["Experiência", Briefcase, true],
-  ["Escolaridade", GraduationCap, true],
-  ["Mobilidade", MapPin, true],
-  ["CNH", Briefcase, false],
-  ["Disponibilidade", Check, false],
+const filterOptions = [
+  { id: "initial-screening", label: "Triagem inicial", icon: Star },
+  { id: "evidence", label: "Evidências comprovadas", icon: ShieldCheck },
+  { id: "experience", label: "Experiência ≥ 1 ano", icon: Briefcase },
+  { id: "education", label: "Ensino médio completo", icon: GraduationCap },
+  { id: "mobility", label: "Até 2 conduções", icon: MapPin },
+  { id: "questionnaire", label: "Questionário respondido", icon: Check },
 ];
 
+const initialFilters = ["experience", "education", "mobility", "questionnaire"];
+
 export function SmartFilters({ search, onSearch, open, onToggle }) {
+  const [activeFilters, setActiveFilters] = useState(initialFilters);
+
+  function toggleFilter(filterId) {
+    setActiveFilters((current) => current.includes(filterId)
+      ? current.filter((id) => id !== filterId)
+      : [...current, filterId]);
+  }
+
   return (
     <section className="filter-panel" aria-label="Filtros do Kanban">
-      <div className="filter-toolbar">
-        <div className="view-switcher" role="group" aria-label="Visualização">
-          <button type="button">Lista</button>
-          <button className="active" type="button">Kanban</button>
-          <button type="button">Mobilidade</button>
-          <button type="button">Desclassificados <span>12</span></button>
-        </div>
+      <div className="filter-toolbar kanban-filter-toolbar">
         <label className="candidate-search">
           <MagnifyingGlass size={16} />
           <input aria-label="Buscar candidatos" value={search} onChange={(event) => onSearch(event.target.value)} placeholder="Buscar candidatos" />
         </label>
-        <button className="filter-button" type="button"><Star size={16} weight="fill" /> Triagem inicial <CaretDown size={13} /></button>
-        <button className="filter-button" type="button"><ShieldCheck size={17} /> Evidências <CaretDown size={13} /></button>
-        <button className="filter-button" type="button"><Briefcase size={17} /> Experiência <CaretDown size={13} /></button>
-        <button className="filter-button" type="button"><GraduationCap size={17} /> Escolaridade <CaretDown size={13} /></button>
-        <button className="filter-button" type="button"><MapPin size={17} /> Mobilidade <CaretDown size={13} /></button>
-        <button className="filter-button emphasized" type="button"><Funnel size={17} /> Mais filtros <span className="count-badge">3</span></button>
-        <div className="personalize-wrap">
-          <button className="filter-button" type="button" onClick={onToggle} aria-expanded={open}><GearSix size={17} /> Personalizar</button>
+        <div className="kanban-filters-wrap">
+          <button className="filter-button emphasized kanban-filters-trigger" type="button" onClick={onToggle} aria-expanded={open} aria-controls="kanban-filters-popover">
+            <Funnel size={17} /> Filtros
+            {activeFilters.length > 0 && <span className="count-badge">{activeFilters.length}</span>}
+          </button>
           {open && (
-            <div className="personalize-popover" role="dialog" aria-label="Filtros visíveis">
-              <div className="popover-title"><strong>Filtros visíveis</strong><button onClick={onToggle} aria-label="Fechar" type="button"><X size={15} /></button></div>
-              {visibleFilters.map(([label, Icon, checked]) => (
-                <label className="visible-filter" key={label}>
-                  <DotsSixVertical size={16} />
-                  <input defaultChecked={checked} type="checkbox" />
-                  <Icon size={16} />
-                  <span>{label}</span>
-                </label>
-              ))}
-              <div className="popover-actions"><button type="button">Restaurar padrão</button><button className="primary-small" onClick={onToggle} type="button">Concluir</button></div>
+            <div className="kanban-filters-popover" id="kanban-filters-popover" role="dialog" aria-label="Opções de filtros">
+              <header>
+                <div><strong>Filtrar candidatos</strong><small>Selecione uma ou mais opções</small></div>
+                <button onClick={onToggle} aria-label="Fechar filtros" type="button"><X size={16} /></button>
+              </header>
+              <div className="kanban-filter-options">
+                {filterOptions.map(({ id, label, icon: Icon }) => (
+                  <label key={id}>
+                    <input checked={activeFilters.includes(id)} onChange={() => toggleFilter(id)} type="checkbox" />
+                    <Icon size={16} />
+                    <span>{label}</span>
+                  </label>
+                ))}
+              </div>
+              <footer>
+                <button type="button" onClick={() => setActiveFilters([])}>Limpar filtros</button>
+                <button className="primary-small" onClick={onToggle} type="button">Aplicar</button>
+              </footer>
             </div>
           )}
         </div>
-      </div>
-      <div className="filter-chips">
-        {chips.map((chip) => <button key={chip} type="button">{chip}<X size={13} /></button>)}
-        <button className="clear-filters" type="button">Limpar todos</button>
       </div>
     </section>
   );
