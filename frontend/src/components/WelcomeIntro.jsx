@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-export function WelcomeIntro({ userName }) {
-  const message = `Bem-vindo, ${userName}`;
+export function WelcomeIntro({ userName, message: customMessage, subtitle = "Pessoas no centro. Gestão com propósito.", onComplete }) {
+  const message = customMessage ?? `Bem-vindo, ${userName}`;
   const [text, setText] = useState("");
   const [phase, setPhase] = useState("typing");
   const [visible, setVisible] = useState(true);
@@ -28,6 +28,7 @@ export function WelcomeIntro({ userName }) {
     timers.push(window.setTimeout(() => {
       setVisible(false);
       document.body.classList.remove("welcome-intro-active");
+      onComplete?.();
     }, exitStart + fadeDuration + 50));
 
     return () => {
@@ -45,7 +46,7 @@ export function WelcomeIntro({ userName }) {
         <span className="welcome-intro-avatar" aria-hidden="true">{userName.slice(0, 1).toUpperCase()}</span>
         <div className="welcome-intro-rule" aria-hidden="true" />
         <p aria-hidden="true"><span className="welcome-intro-reserve">{message}</span><span className="welcome-intro-typed">{text}<i /></span></p>
-        <small>Pessoas no centro. Gestão com propósito.</small>
+        <small>{subtitle}</small>
       </div>
       <span className="welcome-intro-footer" aria-hidden="true">SEU ESPAÇO DE GESTÃO DE PESSOAS</span>
     </div>

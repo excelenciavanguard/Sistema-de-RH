@@ -80,6 +80,11 @@ export function Header({ route }: HeaderProps) {
             <span>Hoje no RH</span>
           </a>
 
+          <a href="#/recrutamento/vagas/nova" className={cn('alpha-home-link alpha-create-vacancy hidden h-10 self-center items-center gap-2 rounded-lg px-3 text-[14px] font-semibold outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30 lg:flex', route === '/recrutamento/vagas/nova' && 'is-active')} aria-label="Criar vaga" aria-current={route === '/recrutamento/vagas/nova' ? 'page' : undefined}>
+            <Plus className="size-[17px]" />
+            <span>Criar vaga</span>
+          </a>
+
           <DropdownNavigation navItems={menuGroups} route={route} className="alpha-desktop-nav flex-none" />
 
           <div className="ml-auto flex shrink-0 items-center gap-1.5">
@@ -89,10 +94,6 @@ export function Header({ route }: HeaderProps) {
               <kbd className="rounded border border-[#cfdfd3] bg-white px-1.5 py-0.5 text-[12px] font-semibold text-[#667970]">⌘ K</kbd>
             </label>
 
-            <a href="#/recrutamento/vagas/nova" className="alpha-create-vacancy" aria-label="Criar vaga">
-              <Plus className="size-[17px]" />
-              <span>Criar vaga</span>
-            </a>
             <a href="/mobilidade.html" className="alpha-utility-action relative" aria-label="Abrir laboratório de mobilidade" title="Laboratório de mobilidade">
               <Bell className="size-[18px]" />
               <span className="absolute right-[8px] top-[7px] size-2 rounded-full bg-[#f4a51c] ring-2 ring-white" aria-hidden="true" />

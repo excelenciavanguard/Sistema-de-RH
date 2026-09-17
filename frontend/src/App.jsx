@@ -34,6 +34,7 @@ export function App() {
   const currentUser = { name: "Ramon" };
   const previewCandidate = new URLSearchParams(window.location.search).has("candidate");
   const [route, setRoute] = useState(() => previewCandidate ? ROUTES.kanban : routeFromHash());
+  const [interviewMode, setInterviewMode] = useState(false);
 
   useEffect(() => {
     const updateRoute = () => setRoute(routeFromHash());
@@ -52,7 +53,7 @@ export function App() {
   else if (route === ROUTES.approvals) content = <ApprovalsScreen onNavigate={go} />;
   else if (route === ROUTES.vacancies) content = <VacanciesScreen onNavigate={go} />;
   else if (route === ROUTES.vacancyCreate) content = <VacancyCreateScreen onNavigate={go} />;
-  else if (kanbanCodeFromRoute(route)) content = <KanbanScreen key={route} vacancyCode={kanbanCodeFromRoute(route)} />;
+  else if (kanbanCodeFromRoute(route)) content = <KanbanScreen key={route} vacancyCode={kanbanCodeFromRoute(route)} onInterviewModeChange={setInterviewMode} />;
   else if (route === ROUTES.talents) content = <TalentsScreen onNavigate={go} />;
   else if (route === ROUTES.agenda) content = <AgendaScreen />;
   else if (route === ROUTES.admission) content = <AdmissionScreen />;
@@ -63,7 +64,7 @@ export function App() {
 
   return <>
     <WelcomeIntro userName={currentUser.name} />
-    <AppShell route={route} onNavigate={go}>
+    <AppShell route={route} onNavigate={go} hideHeader={interviewMode}>
       <Suspense fallback={<RouteFallback />}>{content}</Suspense>
     </AppShell>
   </>;

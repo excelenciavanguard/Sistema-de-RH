@@ -1,63 +1,36 @@
 import { useEffect, useMemo, useState } from "react";
-import { Briefcase, PencilSimple, UserCircle, UsersThree } from "@phosphor-icons/react";
+import { Briefcase, CaretDown, Flask, Info, PencilSimple, UserCircle, UsersThree } from "@phosphor-icons/react";
 import { CandidateModal } from "../components/CandidateModal.jsx";
+import { ExtractionLab } from "../components/ExtractionLab.jsx";
 import { KanbanBoard } from "../components/KanbanBoard.jsx";
-import { SmartFilters } from "../components/SmartFilters.jsx";
+import { CandidateWorkspaceControls, SmartFilters } from "../components/SmartFilters.jsx";
+import { InterviewLoading, InterviewsWorkspace, PromotionWorkspace, ReplacementConfirmation, CandidateList, RejectedCandidates, VacancySummary } from "../components/VacancyWorkspaceViews.jsx";
+import { InterviewMode, InterviewSummary, InterviewCompletion } from "../components/interview/InterviewWorkspace.jsx";
 import { initialCandidates, stages } from "../data.js";
 import { listCandidates, moveCandidateStage } from "../services/candidates.js";
 import { vacancies } from "../mockWorkspaceData.js";
 import "./KanbanScreen.css";
 
-const vacancyDetails = {
-  "2026-0157": {
-    requester: "Marcos Lima · Operações",
-    location: "Leblon, Rio de Janeiro · RJ · Presencial",
-    compensation: "R$ 1.610,00 por mês · CLT",
-    schedule: "Escala 6×1 · 06h às 18h",
-    description: "Executar limpeza e conservação das áreas internas e externas, organizar materiais, apoiar a rotina operacional do posto e cumprir os procedimentos de segurança.",
-    requirements: ["Ensino médio completo", "Experiência em limpeza ou serviços gerais", "Disponibilidade para escala 6×1"],
-    benefits: ["Vale-alimentação de R$ 27,00 por dia", "Vale-transporte", "Seguro de vida"],
-  },
-  "2026-0156": {
-    requester: "Ana Souza · Operações",
-    location: "Botafogo, Rio de Janeiro · RJ · Presencial",
-    compensation: "R$ 1.850,00 por mês · CLT",
-    schedule: "Escala 12×36 · turno diurno",
-    description: "Controlar o acesso de pessoas e veículos, orientar visitantes, registrar ocorrências e apoiar a segurança do posto.",
-    requirements: ["Ensino médio completo", "Experiência como porteiro ou controlador de acesso", "Boa comunicação"],
-    benefits: ["Vale-alimentação", "Vale-transporte", "Seguro de vida"],
-  },
-};
-
-function VacancyAbout({ vacancy }) {
-  const details = vacancyDetails[vacancy.code] ?? {
-    requester: `${vacancy.owner} · RH`, location: `${vacancy.city} · Presencial`, compensation: "A definir · CLT",
-    schedule: "Escala a definir", description: `Atuação como ${vacancy.role} no posto ${vacancy.post}.`,
-    requirements: ["Requisitos conforme a função", "Disponibilidade para atuação presencial"], benefits: ["Vale-transporte"],
-  };
-  return <section className="vacancy-about" aria-labelledby="vacancy-about-title">
-    <header><div><span>Sobre a vaga</span><h2 id="vacancy-about-title">Informações completas</h2></div><small>Dados demonstrativos</small></header>
-    <div className="vacancy-about-grid">
-      <article className="vacancy-about-general"><h3>Informações gerais</h3><dl><div><dt>Requisitante</dt><dd>{details.requester}</dd></div><div><dt>Local</dt><dd>{details.location}</dd></div><div><dt>Remuneração</dt><dd>{details.compensation}</dd></div><div><dt>Jornada</dt><dd>{details.schedule}</dd></div><div><dt>Posições</dt><dd>{vacancy.openings}</dd></div></dl></article>
-      <article><h3>Descrição</h3><p>{details.description}</p></article>
-      <article><h3>Requisitos</h3><ul>{details.requirements.map((item) => <li key={item}>{item}</li>)}</ul></article>
-      <article><h3>Benefícios</h3><ul>{details.benefits.map((item) => <li key={item}>{item}</li>)}</ul></article>
-    </div>
-  </section>;
-}
-
-export function KanbanScreen({ vacancyCode = "2026-0157" }) {
+export function KanbanScreen({ vacancyCode = "2026-0157", onInterviewModeChange }) {
   const vacancy = vacancies.find((item) => item.code === vacancyCode);
   const demoCandidates = vacancyCode === "2026-0157" ? initialCandidates : [];
   const previewParams = useMemo(() => new URLSearchParams(window.location.search), []);
   const [candidates, setCandidates] = useState(demoCandidates);
   const [search, setSearch] = useState("");
+  const [section, setSection] = useState("candidates");
+  const [candidateView, setCandidateView] = useState("kanban");
+  const [activeFilters, setActiveFilters] = useState({ triage: "all", evidence: "all", experience: "all", education: "all", mobility: "all" });
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("candidates");
+  const [interviewSession, setInterviewSession] = useState(null);
+  const [interviewResults, setInterviewResults] = useState({});
+  const [summaryInterview, setSummaryInterview] = useState(null);
+  const [replacementInterview, setReplacementInterview] = useState(null);
+  const [publishedChannels, setPublishedChannels] = useState({ rioVagas: false, site: false, indeed: false, linkedin: false, whatsapp: false });
   const [selectedCandidate, setSelectedCandidate] = useState(() => {
     const previewCandidateId = Number(previewParams.get("candidate"));
     return previewCandidateId ? demoCandidates.find((candidate) => candidate.id === previewCandidateId) ?? null : null;
   });
+  const [labOpen, setLabOpen] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -68,11 +41,38 @@ export function KanbanScreen({ vacancyCode = "2026-0157" }) {
     return () => { active = false; };
   }, [vacancyCode]);
 
+  useEffect(() => {
+    onInterviewModeChange?.(Boolean(interviewSession));
+    return () => onInterviewModeChange?.(false);
+  }, [interviewSession, onInterviewModeChange]);
+
+  useEffect(() => {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [interviewSession?.phase]);
+
+  function startInterview(interview, replacement = false) {
+    setSummaryInterview(null);
+    setInterviewSession({ phase: "loading", interview, replacement });
+  }
+
+  function finishInterview(result) {
+    setInterviewResults((current) => ({ ...current, [result.name]: result }));
+    setInterviewSession({ phase: "completed", interview: result });
+  }
+
   const visibleCandidates = useMemo(() => {
     const query = search.trim().toLocaleLowerCase("pt-BR");
-    if (!query) return candidates;
-    return candidates.filter((candidate) => [candidate.name, candidate.role, candidate.source, candidate.location].some((value) => value.toLocaleLowerCase("pt-BR").includes(query)));
-  }, [candidates, search]);
+    return candidates.filter((candidate) => {
+      const matchesQuery = !query || [candidate.name, candidate.role, candidate.source, candidate.location].some((value) => value.toLocaleLowerCase("pt-BR").includes(query));
+      const matchesTriage = activeFilters.triage === "all" || (activeFilters.triage === "initial" ? candidate.stage === "application" : candidate.requirements !== "3/3 comprovados");
+      const matchesEvidence = activeFilters.evidence === "all" || (activeFilters.evidence === "confirmed" ? candidate.evidence === "Comprovado" : candidate.evidence === "Declarado");
+      const matchesExperience = activeFilters.experience === "all" || (activeFilters.experience === "leadership" ? candidate.experience.toLocaleLowerCase("pt-BR").includes("lideran") : !candidate.experience.toLocaleLowerCase("pt-BR").includes("confirmar"));
+      const matchesEducation = activeFilters.education === "all" || (activeFilters.education === "high_school" ? candidate.education === "Ensino médio completo" : candidate.education !== "Ensino médio completo");
+      const matchesMobility = activeFilters.mobility === "all" || (activeFilters.mobility === "pending" ? candidate.route.toLocaleLowerCase("pt-BR").includes("pendente") || candidate.route.toLocaleLowerCase("pt-BR").includes("conferir") : !candidate.route.toLocaleLowerCase("pt-BR").includes("pendente") && !candidate.route.toLocaleLowerCase("pt-BR").includes("conferir"));
+      return matchesQuery && matchesTriage && matchesEvidence && matchesExperience && matchesEducation && matchesMobility;
+    });
+  }, [activeFilters, candidates, search]);
 
   async function moveCandidate(id, stage) {
     const previous = candidates.find((candidate) => candidate.id === id);
@@ -87,26 +87,48 @@ export function KanbanScreen({ vacancyCode = "2026-0157" }) {
     }
   }
 
+  function addCandidate(candidate) {
+    setCandidates((current) => current.some((item) => item.id === candidate.id)
+      ? current.map((item) => item.id === candidate.id ? candidate : item)
+      : [candidate, ...current]);
+  }
+
+  if (interviewSession?.phase === "loading") {
+    return <InterviewLoading interview={interviewSession.interview} onComplete={() => setInterviewSession((current) => current ? { ...current, phase: "active" } : null)} />;
+  }
+
+  if (interviewSession?.phase === "active") {
+    return <InterviewMode interview={interviewSession.interview} vacancy={vacancy} initialResult={interviewSession.replacement ? null : interviewResults[interviewSession.interview.name]} onFinish={finishInterview} onExit={() => setInterviewSession(null)} />;
+  }
+
+  if (interviewSession?.phase === "completed") {
+    return <InterviewCompletion result={interviewSession.interview} onBack={() => setInterviewSession(null)} />;
+  }
+
   return (
     <>
       <main className="workspace recruitment-workspace">
         <div className="breadcrumbs">Recrutamento <span>/</span> Vagas <span>/</span> {vacancyCode}</div>
         <section className="vacancy-header">
           <div><div className="title-line"><h1>{vacancy.role} · {vacancy.post}</h1><span className="vacancy-status">{vacancy.status}</span></div><div className="vacancy-meta"><span><UsersThree size={17} /> {vacancyCode === "2026-0157" ? "27 candidatos" : `${candidates.length} candidatos no Kanban`}</span><span><UserCircle size={17} /> Responsável: {vacancy.owner}</span><span><Briefcase size={17} /> {vacancyCode === "2026-0157" ? "Escala 6×1 · 06h às 18h" : "Escala não definida no demonstrativo"}</span></div></div>
-          <div className="vacancy-actions"><button className="primary-action" type="button"><PencilSimple size={18} /> Editar vaga</button></div>
+          <div className="vacancy-command-area"><div className="vacancy-actions"><button className="secondary-action" onClick={() => setLabOpen(true)} type="button"><Flask size={18} /> Testar extração</button><button className="primary-action" type="button"><PencilSimple size={18} /> Editar vaga</button><button className="more-action" type="button">Mais <CaretDown size={14} /></button></div>{section === "candidates" ? <CandidateWorkspaceControls activeFilters={activeFilters} candidateView={candidateView} onFiltersChange={setActiveFilters} onViewChange={setCandidateView} open={filtersOpen} onToggle={() => setFiltersOpen((value) => !value)} /> : null}</div>
         </section>
-        <div className="vacancy-navigation-row">
-          <nav className="vacancy-tabs" aria-label="Seções da vaga"><button type="button">Resumo</button><button className={activeSection === "candidates" ? "active" : ""} type="button" onClick={() => setActiveSection("candidates")}>Candidatos</button><button type="button">Entrevistas</button><button type="button">Divulgação</button><button className={activeSection === "about" ? "active" : ""} type="button" onClick={() => setActiveSection("about")}>Sobre</button></nav>
-          {activeSection === "candidates" && <SmartFilters search={search} onSearch={setSearch} open={filtersOpen} onToggle={() => setFiltersOpen((value) => !value)} />}
-        </div>
-        {activeSection === "candidates" ? <section className="board-surface">
+        <nav className="vacancy-tabs" role="tablist" aria-label="Seções da vaga">{[["summary", "Resumo"], ["candidates", "Candidatos"], ["interviews", "Entrevistas"], ["promotion", "Divulgação"]].map(([id, label]) => <button className={section === id ? "active" : ""} key={id} type="button" role="tab" aria-selected={section === id} onClick={() => { setSection(id); if (id !== "interviews") setSummaryInterview(null); }}>{label}</button>)}</nav>
+        {section === "summary" ? <VacancySummary candidates={candidates} stages={stages} vacancy={vacancy} /> : null}
+        {section === "interviews" ? (summaryInterview ? <InterviewSummary result={interviewResults[summaryInterview.name]} onBack={() => setSummaryInterview(null)} onStartReplacement={() => setReplacementInterview(summaryInterview)} /> : <InterviewsWorkspace results={interviewResults} onOpenSummary={setSummaryInterview} onRequestReplacement={setReplacementInterview} onStartInterview={startInterview} />) : null}
+        {section === "promotion" ? <PromotionWorkspace publishedChannels={publishedChannels} onPublish={(channel) => setPublishedChannels((current) => ({ ...current, [channel]: true }))} onUnpublish={(channel) => setPublishedChannels((current) => ({ ...current, [channel]: false }))} /> : null}
+        {section === "candidates" ? <section className="board-surface">
           {vacancyCode !== "2026-0157" && <p className="vacancies-demo-note">Dados demonstrativos: esta vaga ainda não tem candidatos de exemplo vinculados. A contagem da lista de vagas é ilustrativa.</p>}
-          <div className="kanban-scroll" role="region" aria-label="Etapas do Kanban">
-            <KanbanBoard stages={stages} candidates={visibleCandidates} onMove={moveCandidate} onOpen={setSelectedCandidate} />
-          </div>
-        </section> : <VacancyAbout vacancy={vacancy} />}
+          <SmartFilters activeFilters={activeFilters} onFiltersChange={setActiveFilters} onSearch={setSearch} search={search} />
+          {candidateView !== "rejected" ? <div className="mobility-notice"><Info size={17} weight="fill" /><span>A entrada considera até duas conduções na ida e duas na volta, nos horários reais da vaga. Casos sem rota confiável ficam em Mobilidade pendente.</span></div> : null}
+          {candidateView === "kanban" ? <div className="kanban-scroll" tabIndex={0} role="region" aria-label="Navegar pelas etapas do Kanban"><KanbanBoard stages={stages} candidates={visibleCandidates} onMove={moveCandidate} onOpen={setSelectedCandidate} /></div> : null}
+          {candidateView === "list" ? <CandidateList candidates={visibleCandidates} onOpen={setSelectedCandidate} /> : null}
+          {candidateView === "rejected" ? <RejectedCandidates /> : null}
+        </section> : null}
       </main>
+      {replacementInterview ? <ReplacementConfirmation interview={replacementInterview} onCancel={() => setReplacementInterview(null)} onConfirm={() => { const interview = replacementInterview; setReplacementInterview(null); startInterview(interview, true); }} /> : null}
       <CandidateModal candidate={selectedCandidate} initialTab={previewParams.get("tab") === "mobility" ? "Mobilidade" : "Resumo"} onClose={() => setSelectedCandidate(null)} />
+      <ExtractionLab open={labOpen} onClose={() => setLabOpen(false)} vacancyCode={vacancyCode} onCandidateAdded={addCandidate} />
     </>
   );
 }

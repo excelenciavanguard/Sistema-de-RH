@@ -59,14 +59,11 @@
 .dark .alpha-header-bar kbd { background: #0f1312 !important; border-color: #3b4c45 !important; color: #a8beb1 !important; }
 .dark .alpha-theme-toggle { background: #171d1b; border-color: #3b4c45; color: #d9eee2; }
 .dark .alpha-theme-toggle:hover { background: #263a32; color: #fff; }
-.dark .alpha-create-vacancy { background: #79b39d; border-color: #79b39d; color: #071713; }
-.dark .alpha-create-vacancy:hover { background: #b6ddc9; border-color: #b6ddc9; }
 .dark .alpha-profile-button { color: #e8f4ed; }
 .dark .alpha-profile-avatar { border-color: #171d1b; background: #203a30; box-shadow: 0 0 0 1px #547566; }
 .dark .alpha-profile-popover { background: #171d1b; border-color: #3b4c45; color: #e8f4ed; box-shadow: 0 18px 44px rgba(0,0,0,.38); }
 .dark .alpha-profile-popover > header { border-color: #35433d; }
-.dark .alpha-profile-popover > header small,
-.dark .alpha-profile-theme-action small { color: #a8beb1; }
+.dark .alpha-profile-popover > header small, .dark .alpha-profile-theme-action small { color: #a8beb1; }
 .dark .alpha-profile-theme-action { color: #e8f4ed; }
 .dark .alpha-profile-theme-action:hover { background: #263a32; }
 .dark .alpha-profile-option-icon { background: #0f1312; border-color: #3b4c45; color: #9ed3bc; }
@@ -79,6 +76,18 @@
 .dark :is(.alpha-home-link, .alpha-dropdown-trigger)::after { background: #9ed3bc; }
 .dark .route-loading { color: #b7cec1; }
 .dark .route-loading-indicator { border-color: #3b4c45; border-top-color: #9ed3bc; }
+
+/* The interview transition is part of the focused workspace, so it follows
+   the user's active theme rather than forcing the standard light welcome. */
+.dark .interview-loading .welcome-intro {
+  color: #ecf4ef;
+  background: #0b100e;
+  border-top-color: #79b39d;
+}
+.dark .interview-loading .welcome-intro-rule { background: #537264; }
+.dark .interview-loading .welcome-intro p i { background: #9ed3bc; }
+.dark .interview-loading .welcome-intro small,
+.dark .interview-loading .welcome-intro-footer { color: #a8bbb0; }
 .dark .alpha-dropdown-panel { background: #171d1b; border-color: #3b4c45; color: #e8f4ed; box-shadow: 0 22px 52px rgba(0,0,0,.38); }
 .dark .alpha-dropdown-summary { border-bottom-color: #35433d; }
 .dark .alpha-dropdown-summary h2,
@@ -656,13 +665,9 @@
   box-shadow: none !important;
 }
 
-.dark .process-home .stage-progress i.has-candidates {
-  border-color: #76c39f !important;
-  background: #76c39f !important;
-}
-
-.dark .processes-legend i {
-  background: #76c39f !important;
+.dark .process-home .stage-progress i.done {
+  border-color: #4b816d !important;
+  background: #2c6858 !important;
 }
 
 .dark .process-new-badge {
