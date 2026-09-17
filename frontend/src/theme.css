@@ -1,0 +1,941 @@
+/* Tema escuro — mantém a identidade Alpha RH em verdes profundos. */
+.alpha-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #cfdfd3;
+  border-radius: 9px;
+  background: #f7fbf8;
+  color: #235347;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.alpha-theme-toggle:hover { background: #dff3e4; }
+
+.dark {
+  color-scheme: dark;
+  --navy: #090c0b;
+  --blue: #79b39d;
+  --blue-dark: #b6ddc9;
+  --ink: #e8f4ed;
+  --muted: #a8beb1;
+  --line: #29312e;
+  --surface: #121615;
+  --canvas: #090c0b;
+  --shadow: 0 16px 38px rgba(0,0,0,.26);
+  --background: #121615;
+  --foreground: #e8f4ed;
+  --card: #121615;
+  --card-foreground: #e8f4ed;
+  --popover: #171d1b;
+  --popover-foreground: #e8f4ed;
+  --primary: #79b39d;
+  --primary-foreground: #071713;
+  --secondary: #1b2521;
+  --secondary-foreground: #d9eee2;
+  --ui-muted: #0f1312;
+  --muted-foreground: #a8beb1;
+  --accent: #203a30;
+  --accent-foreground: #e8f4ed;
+  --border: #29312e;
+  --input: #3b4c45;
+  --ring: #9ed3bc;
+}
+.dark html, html.dark, .dark body, .dark .app-shell { background: #090c0b; color: #e8f4ed; }
+.dark ::selection { background: #2c5c4b; color: #f4fff8; }
+.dark * { scrollbar-color: #476d5d #090c0b; }
+.dark .alpha-header-bar { background: #0d1110; border-bottom: 1px solid #29312e; }
+.dark .alpha-header-bar .alpha-header-search,
+.dark .alpha-header-bar [class*="bg-white"],
+.dark .alpha-header-bar .alpha-mobile-toggle { background: #171d1b !important; border-color: #3b4c45 !important; color: #d9eee2 !important; }
+.dark .alpha-header-bar input,
+.dark .alpha-header-bar input::placeholder,
+.dark .alpha-header-bar [class*="text-[#"] { color: #d9eee2 !important; }
+.dark .alpha-header-bar kbd { background: #0f1312 !important; border-color: #3b4c45 !important; color: #a8beb1 !important; }
+.dark .alpha-theme-toggle { background: #171d1b; border-color: #3b4c45; color: #d9eee2; }
+.dark .alpha-theme-toggle:hover { background: #263a32; color: #fff; }
+.dark .alpha-profile-button { color: #e8f4ed; }
+.dark .alpha-profile-button > span:first-child { background: #79b39d; color: #071713; }
+.dark .alpha-header-bar [class*="ring-white"] { --tw-ring-color: #171d1b !important; }
+.dark .alpha-wordmark strong { color: #edf8f1 !important; }
+.dark .alpha-wordmark small { color: #a8beb1 !important; }
+.dark :is(.alpha-home-link, .alpha-dropdown-trigger) { color: #c9dfd3 !important; }
+.dark :is(.alpha-home-link:hover, .alpha-home-link.is-active, .alpha-dropdown-trigger.is-open) { background: #203a30 !important; color: #edf8f1 !important; }
+
+.dark .workspace,
+.dark .screen-workspace,
+.dark .miro-screen { background: transparent; }
+.dark :is(.board-surface, .report-panel, .report-kpi, .admin-user-directory, .structure-table, .admin-access-summary, .admin-user-modal, .admin-invite-dialog, .detail-panel, .panel, .card, .content-card, .data-card, .table-card, .modal-content, .dialog-content, .kanban-column, .candidate-card) { background: #121615 !important; border-color: #29312e !important; color: #e8f4ed; box-shadow: 0 14px 32px rgba(0,0,0,.2); }
+.dark :is(.report-period-panel, .report-view-switcher, .filter-toolbar, .filter-panel, .filter-select, .view-switcher, .filter-button, .candidate-search, .personalize-popover, .workspace-tabs, .alpha-welcome-action) { background: #171d1b !important; border-color: #3b4c45 !important; color: #d9eee2 !important; }
+.dark :is(input, select, textarea) { background: #0f1312 !important; border-color: #3b4c45 !important; color: #e8f4ed !important; }
+.dark :is(input, select, textarea)::placeholder { color: #8eaa9b !important; }
+.dark :is(h1, h2, h3, h4, strong, th, .title-line h1, .candidate-identity strong, .column-header strong) { color: #edf8f1 !important; }
+.dark :is(p, small, td, label, .breadcrumbs, .candidate-identity small, .card-fact, .report-panel-subtitle, .admin-directory-subtitle, .structure-subtitle) { color: #a8beb1; }
+.dark :is(.primary-action, .report-primary-button, .admin-primary-action, .admin-user-create, .popover-actions .primary-small) { background: #79b39d !important; border-color: #79b39d !important; color: #071713 !important; box-shadow: 0 8px 18px rgba(0,0,0,.22); }
+.dark :is(.primary-action:hover, .report-primary-button:hover, .admin-primary-action:hover, .admin-user-create:hover) { background: #b6ddc9 !important; border-color: #b6ddc9 !important; }
+.dark :is(.secondary-action, .more-action, .report-secondary-button) { background: #171d1b !important; border-color: #3b4c45 !important; color: #d9eee2 !important; }
+.dark :is(.secondary-action:hover, .more-action:hover, .report-secondary-button:hover) { background: #263a32 !important; }
+
+.dark :is(table, thead, tbody, tr, .admin-user-table, .structure-data-table) { border-color: #29312e !important; }
+.dark :is(thead, .admin-user-table thead, .structure-data-table thead) { background: #0f1312 !important; }
+.dark :is(tbody tr:hover, .admin-user-row.is-selected, .structure-row.is-selected) { background: #1b2521 !important; }
+.dark :is(td, th) { border-color: #29312e !important; }
+.dark :is(.report-progress-track, .process-bar-track, .source-bar-track, .metric-track) { background: #29332f !important; }
+.dark :is(.report-progress-fill, .process-bar-fill, .source-bar-fill, .metric-fill) { filter: saturate(.78) brightness(1.18); }
+.dark :is(.report-view-switcher button, .workspace-tabs button, .vacancy-tabs button, .view-switcher button) { color: #b9d0c3 !important; }
+.dark :is(.report-view-switcher button.active, .workspace-tabs button.active, .vacancy-tabs button.active, .view-switcher button.active) { background: #2b4b3e !important; color: #f1faf4 !important; }
+.dark :is(.status-success, .vacancy-status, .status-active, .tag-success) { background: #1e553b !important; color: #bff1d2 !important; }
+.dark :is(.status-danger, .status-blocked, .tag-danger) { background: #5a292d !important; color: #ffc6c8 !important; }
+.dark :is(.status-warning, .tag-warning) { background: #5e451d !important; color: #ffe0a0 !important; }
+.dark :is(.empty-state, .notice, .info-notice, .admin-info-notice) { background: #171d1b !important; border-color: #3b4c45 !important; color: #c9dfd3 !important; }
+.dark :is(.alpha-welcome-banner) { box-shadow: 0 16px 32px rgba(0,0,0,.32); }
+
+/* Relatórios: estes componentes têm regras próprias e precisam de superfícies semânticas. */
+.dark .report-period-panel,
+.dark .report-primary-kpis > article,
+.dark .report-insight-panel,
+.dark .vacancy-report-table { background: #121615 !important; border-color: #35473f !important; }
+.dark .report-primary-kpis > article { box-shadow: 0 10px 24px rgba(0,0,0,.2); }
+.dark .report-primary-kpis > article > span,
+.dark .report-insight-panel header > span { background: #203a30 !important; color: #9ed3bc !important; }
+.dark .report-primary-kpis b,
+.dark .report-primary-kpis strong,
+.dark .report-insight-panel h2,
+.dark .vacancy-report-table h2,
+.dark .source-row b,
+.dark .aggregate-stages > div > div,
+.dark .vacancy-report-head,
+.dark .vacancy-report-row,
+.dark .pie-legend b,
+.dark .report-donut > div { color: #edf8f1 !important; }
+.dark .report-primary-kpis small,
+.dark .report-period-panel p,
+.dark .report-insight-panel p,
+.dark .vacancy-report-table p,
+.dark .vacancy-count,
+.dark .report-view-switcher > span,
+.dark .source-row > div,
+.dark .source-row span,
+.dark .pie-legend li,
+.dark .report-donut small,
+.dark .vacancy-report-row small { color: #a8beb1 !important; }
+.dark .report-panel-kicker,
+.dark .report-period-panel label,
+.dark .source-row strong,
+.dark .aggregate-stages b { color: #9ed3bc !important; }
+.dark .report-period-panel input { background: #0f1312 !important; border-color: #3b4c45 !important; color: #edf8f1 !important; }
+.dark .report-period-presets button,
+.dark .report-view-switcher button { background: #171d1b !important; border-color: #3b4c45 !important; color: #c9dfd3 !important; }
+.dark .report-period-presets button:hover,
+.dark .report-view-switcher button:hover { background: #263a32 !important; }
+.dark .report-view-switcher button.active,
+.dark .vacancy-report-table button { background: #79b39d !important; border-color: #79b39d !important; color: #071713 !important; }
+.dark .source-row > i,
+.dark .aggregate-stages i,
+.dark .progress-track { background: #303b36 !important; }
+.dark .source-row em,
+.dark .aggregate-stages em,
+.dark .progress-track em { background: #79b39d !important; }
+.dark .vacancy-report-head { background: #0f1312 !important; }
+.dark .vacancy-report-row { border-color: #29312e !important; }
+.dark .report-donut > div { background: #121615 !important; }
+
+/* Componentes compartilhados e utilitários Tailwind presentes nas demais telas. */
+.dark .app-shell [class~="bg-white"],
+.dark .app-shell [class*="bg-[#edf6ef]"],
+.dark .app-shell [class*="bg-[#f7fbf8]"],
+.dark .app-shell [class*="bg-[#f8fbff]"],
+.dark .app-shell [class*="bg-[#f4f8fc]"] { background-color: #121615 !important; }
+.dark .app-shell [class*="bg-[#dff3e4]"],
+.dark .app-shell [class*="bg-[#eaf3ff]"] { background-color: #203a30 !important; }
+.dark .app-shell [class*="text-[#051f20]"],
+.dark .app-shell [class*="text-[#163832]"],
+.dark .app-shell [class*="text-[#0b2a60]"] { color: #edf8f1 !important; }
+.dark .app-shell [class*="text-[#5f716a]"],
+.dark .app-shell [class*="text-[#667970]"],
+.dark .app-shell [class*="text-[#75877f]"] { color: #a8beb1 !important; }
+.dark .app-shell [class*="border-[#cfdfd3]"],
+.dark .app-shell [class*="border-[#d7e5db]"] { border-color: #3b4c45 !important; }
+.dark .screen-header,
+.dark .screen-header h1,
+.dark .screen-header p { color: #edf8f1; }
+.dark .screen-header p { color: #a8beb1; }
+.dark :is(.surface-panel, .data-table, .screen-panel, .dashboard-panel, .form-card, .summary-card, .agenda-card, .talent-card, .vacancy-card, .requisition-card, .approval-card, .integration-card, .settings-card, .workspace-card) { background: #121615 !important; border-color: #29312e !important; }
+.dark :is(.data-table thead, .table-head, .list-header, .section-header, .form-section-header) { background: #0f1312 !important; border-color: #29312e !important; }
+.dark :is(.data-table tbody tr, .list-row, .table-row) { border-color: #29312e !important; }
+.dark :is(.data-table tbody tr:hover, .list-row:hover, .table-row:hover) { background: #19221f !important; }
+.dark :is(.modal-backdrop, .dialog-backdrop) { background: rgba(2, 12, 9, .78); }
+.dark :is(.candidate-modal, .extraction-lab, .dialog-panel, [role="dialog"] > div) { background: #121615; color: #e8f4ed; }
+.dark :is(.paper-preview, .resume-preview, .mobility-workspace, .mobility-footer, .pending-mobility-main, .pending-mobility-summary, .journey-card, .mobility-detail-card, .confirmation-card, .route-source) { background: #121615 !important; border-color: #29312e !important; color: #e8f4ed !important; }
+.dark :is(.paper-preview h3, .paper-preview h4, .detail-heading strong, .detail-list dd, .journey-heading, .journey-heading b, .journey-step strong, .mobility-detail-card dd, .pending-mobility-main h3, .pending-mobility-summary h3) { color: #edf8f1 !important; }
+.dark :is(.paper-preview p, .detail-list dt, .journey-heading span, .journey-step small, .mobility-detail-card dt, .mobility-detail-card dd small, .pending-mobility-main > p, .pending-mobility-summary dt) { color: #a8beb1 !important; }
+.dark :is(.resume-preview, .mobility-workspace) { background: #0f1312 !important; }
+.dark :is(.evidence-list li, .evidence-empty, .pending-mobility-steps span, .route-cost span, .pending-mobility-note, .map-demo-badge, .direction-switch, .map-controls label, .alternative-route) { background: #171d1b !important; border-color: #3b4c45 !important; color: #c9dfd3 !important; }
+
+/* Auditoria de superfícies: módulos operacionais, listas e áreas de configuração. */
+.dark :is(
+  .executive-panel, .approval-list-panel, .approval-detail, .approval-summary > div,
+  .process-metric-grid, .vacancy-metrics > div, .vacancies-panel, .requisition-card,
+  .form-surface, .requisition-builder, .vacancy-builder, .builder-stage-content,
+  .talent-workspace, .talent-results, .talent-discovery-panel, .talent-mode-context,
+  .agenda-panel, .agenda-summary, .calendar-board, .integration-card, .integration-detail-panel,
+  .integration-browser-toolbar, .settings-layout, .admin-settings, .structure-browser,
+  .side-detail-panel, .stages-panel, .process-panel, .priority-panel, .upcoming-panel,
+  .data-panel, .module-table-card, .attention-table, .operational-table, .hiring-table,
+  .checklist-table, .training-table, .admission-table, .admission-candidates-table,
+  .report-primary-kpis > article
+) { background: #121615 !important; border-color: #29312e !important; color: #e8f4ed !important; }
+
+.dark :is(
+  .executive-panel-heading, .approval-list-head, .request-head, .vacancy-head,
+  .module-table-head, .op-table-head, .calendar-week-header, .calendar-day-head,
+  .data-footer, .table-pagination, .form-section-header, .builder-stage-heading,
+  .integration-heading-row, .structure-table-head, .admin-users-table thead,
+  .talent-reference-table thead, .admission-table thead, .admission-candidates-table thead
+) { background: #0f1312 !important; border-color: #29312e !important; color: #b9d0c3 !important; }
+
+.dark :is(
+  .executive-action-row, .executive-agenda-list > button, .process-metric-grid button,
+  .approval-item, .request-row, .vacancy-row, .process-row, .agenda-item,
+  .calendar-event, .participant-row, .question-row, .requirement-list > li,
+  .integration-card, .screen-access-list > li, .permission-list > li,
+  .admin-directory-row, .admin-user-row, .structure-row, .module-table-row,
+  .op-table-row, .talent-reference-table tbody tr, .admission-table tbody tr,
+  .admission-candidates-table tbody tr
+) { background: #121615 !important; border-color: #29312e !important; color: #e8f4ed !important; }
+
+.dark :is(
+  .executive-action-row:hover, .executive-agenda-list > button:hover,
+  .process-metric-grid button:hover, .approval-item:hover, .request-row:hover,
+  .vacancy-row:hover, .process-row:hover, .agenda-item:hover, .calendar-event:hover,
+  .participant-row:hover, .admin-directory-row:hover, .admin-user-row:hover,
+  .structure-row:hover, .module-table-row:hover, .op-table-row:hover,
+  .talent-reference-table tbody tr:hover, .admission-table tbody tr:hover,
+  .admission-candidates-table tbody tr:hover
+) { background: #19221f !important; }
+
+.dark :is(
+  .data-toolbar label, .data-toolbar > button, .talent-search, .talent-sort,
+  .talent-vacancy-picker, .calendar-toolbar, .calendar-filters, .integration-browser-toolbar input,
+  .field-control input, .field-control select, .field-control textarea, .approval-note textarea,
+  .modal-header-actions > button, .vacancy-row-actions > button, .process-row > button,
+  .table-action, .agenda-event, .filter-chips button
+) { background: #171d1b !important; border-color: #3b4c45 !important; color: #d9eee2 !important; }
+
+.dark :is(
+  .home-page-heading h1, .home-page-heading > div:last-child, .panel-heading h2,
+  .executive-panel-heading h2, .executive-action-copy strong, .executive-action-row time,
+  .executive-agenda-list strong, .process-metric-grid strong, .process-metric-grid b,
+  .action-copy strong, .agenda-date strong, .agenda-item time, .agenda-item strong,
+  .process-row strong, .request-row strong, .vacancy-row strong, .number-cell,
+  .approval-item strong, .approval-detail h2, .approval-summary strong, .approval-reason h3,
+  .vacancy-metrics strong, .form-section-heading h2, .builder-stage-heading h2,
+  .field-control, .module-preview h2, .integration-card h2, .integration-detail-panel h2,
+  .talent-card h2, .agenda-card h2, .admin-settings h2, .structure-browser h2
+) { color: #edf8f1 !important; }
+
+.dark :is(
+  .home-page-heading p, .panel-heading p, .executive-panel-heading p, .executive-action-copy small,
+  .executive-agenda-list time, .executive-agenda-list small, .process-metric-grid em,
+  .process-metric-grid small, .action-copy small, .agenda-date small, .agenda-item small,
+  .process-row small, .request-row small, .vacancy-row small, .data-footer, .approval-item small,
+  .approval-detail header p, .approval-summary small, .approval-summary em, .approval-reason p,
+  .vacancy-metrics small, .form-section-heading p, .builder-stage-heading p, .field-control small,
+  .module-preview p, .integration-card p, .integration-detail-panel p, .talent-card p,
+  .agenda-card p, .admin-settings p, .structure-browser p
+) { color: #a8beb1 !important; }
+
+.dark :is(
+  .action-icon, .form-section-heading > span, .builder-stage-heading > span, .route-icon,
+  .pending-mobility-icon, .executive-panel-heading > span, .integration-detail-icon,
+  .talent-location-cell > span
+) { background: #203a30 !important; color: #9ed3bc !important; }
+
+.dark :is(.demo-notice, .demo-badge, .demo-label, .due-badge, .priority-tag.warning, .status-badge.warning, .review-state.pending, .evidence-badge.warning) { background: #4a391c !important; border-color: #79612f !important; color: #ffe3a3 !important; }
+.dark :is(.status-badge.neutral, .evidence-badge.info, .provider-state.pending) { background: #27332f !important; color: #c9dfd3 !important; }
+.dark :is(.status-badge.success, .evidence-badge.success, .review-state, .route-approved, .priority-tag.success, .provider-state.completed, .lab-success) { background: #1e4634 !important; border-color: #326b50 !important; color: #bff1d2 !important; }
+.dark :is(.status-badge.danger, .priority-tag.danger, .provider-state.failed) { background: #51282c !important; border-color: #794044 !important; color: #ffc7ca !important; }
+
+/* Integrações: tons neutros nas superfícies; a cor comunica apenas o estado. */
+.dark .integrations-reference-screen .workspace-tabs,
+.dark .integration-browser-toolbar { background: #121615 !important; border-color: #29312e !important; }
+.dark .integrations-reference-screen .workspace-tabs button { color: #b7c5bd !important; }
+.dark .integrations-reference-screen .workspace-tabs button.active { background: #263a32 !important; color: #eff8f2 !important; }
+.dark .integration-heading-row { border-color: #29312e; }
+.dark .integration-counters article,
+.dark .integration-counters article.success,
+.dark .integration-counters article.warning { background: #171b1a !important; border-color: #303a36 !important; color: #b8c6be !important; }
+.dark .integration-counters article.success svg { color: #71c69a !important; }
+.dark .integration-counters article.warning svg { color: #edbd61 !important; }
+.dark .integration-counters article:not(.success):not(.warning) svg { color: #91a59a !important; }
+.dark .integration-counters strong { color: #f1f7f3 !important; }
+.dark .integration-counters small { color: #92a69b !important; }
+.dark .integration-card { background: #121615 !important; border-color: #2b3531 !important; color: #e8f4ed !important; box-shadow: none; }
+.dark .integration-card:hover { background: #171d1b !important; border-color: #3a4942 !important; }
+.dark .integration-card.selected { background: #151c19 !important; border-color: #4f7765 !important; box-shadow: inset 0 0 0 1px rgba(121,179,157,.12) !important; }
+.dark .integration-card > svg:first-child,
+.dark .integration-detail-icon { color: #78b99d !important; background: #1a2a24 !important; }
+.dark .integration-card > span strong,
+.dark .integration-detail-panel h2,
+.dark .integration-detail-panel h3,
+.dark .integration-facts b,
+.dark .integration-facts strong { color: #edf8f1 !important; }
+.dark .integration-card > span small,
+.dark .integration-card p,
+.dark .integration-card footer,
+.dark .integration-detail-panel p,
+.dark .integration-detail-panel .requirement-list li,
+.dark .integration-facts small,
+.dark .event-timeline li { color: #a6b8ae !important; }
+.dark .integration-detail-panel,
+.dark .integration-detail-panel > header,
+.dark .integration-detail-panel section,
+.dark .integration-facts,
+.dark .integration-facts > span { background: #121615 !important; border-color: #29312e !important; }
+.dark .integration-browser-toolbar label { background: #0e1211 !important; border-color: #3b4742 !important; color: #90aa9d !important; }
+.dark .integration-browser-toolbar input { background: transparent !important; color: #edf8f1 !important; }
+.dark .integration-detail-panel .requirement-list li i { border-color: #71867a !important; }
+.dark .integration-detail-panel .event-timeline li.danger b { color: #ff9aa2 !important; }
+.dark .status-pill.success { background: #1b4230 !important; color: #a9e8c3 !important; }
+.dark .status-pill.info { background: #203a34 !important; color: #b9ded0 !important; }
+.dark .status-pill.warning { background: #4b391a !important; color: #ffe2a0 !important; }
+.dark .status-pill.danger { background: #51262b !important; color: #ffc4ca !important; }
+.dark .status-pill.neutral { background: #252d2a !important; color: #c5d2cb !important; }
+
+/* Administração e Vagas mantêm a mesma escala de preto/grafite. */
+.dark :is(.admin-access-summary, .admin-access-summary > div, .admin-metric-row) { color: #d6e4dc !important; border-color: #303a36 !important; }
+.dark :is(.admin-access-summary strong, .admin-user-directory h2, .structure-table h2, .structure-detail h2, .admin-invite-dialog h2, .admin-invite-dialog h3, .structure-detail h3, .structure-detail dd) { color: #edf8f1 !important; }
+.dark :is(.admin-access-summary small, .admin-user-directory p, .structure-table p, .structure-detail p, .admin-invite-dialog p, .structure-detail dt, .screen-access-list small) { color: #a8beb1 !important; }
+.dark :is(.admin-user-directory > header > span, .structure-table > header > span, .access-detail-heading > span) { background: #203a30 !important; color: #b9dfcd !important; }
+.dark :is(.admin-directory-head, .structure-table-head) { background: #0f1312 !important; color: #b9c8c0 !important; }
+.dark :is(.admin-directory-row, .structure-table > button) { background: #121615 !important; border-color: #29312e !important; color: #dceae2 !important; }
+.dark :is(.admin-directory-row:hover, .admin-directory-row.selected, .structure-table > button:hover, .structure-table > button.selected) { background: #19221f !important; }
+.dark :is(.admin-invite-backdrop) { background: rgba(0,0,0,.68) !important; }
+.dark :is(.admin-invite-dialog > header > button, .invite-fields input, .invite-fields select, .profile-select select, .screen-access-list select) { background: #171d1b !important; border-color: #3b4c45 !important; color: #e7f3ec !important; }
+.dark :is(.invite-fields label, .profile-select, .screen-access-list label) { color: #d6e5dd !important; }
+.dark :is(.admin-invite-dialog fieldset, .screen-access-list, .structure-detail > header, .structure-detail > section) { border-color: #29312e !important; }
+.dark .invite-success { background: #1b4230 !important; border-color: #326b50 !important; color: #bff1d2 !important; }
+
+.dark :is(.vacancies-panel, .vacancies-details-dialog) { background: #121615 !important; border-color: #29312e !important; color: #e8f4ed !important; }
+.dark :is(.vacancies-status-tabs, .vacancies-toolbar, .vacancies-list td, .vacancies-details-dialog dl div) { border-color: #29312e !important; }
+.dark .vacancies-status-tabs button,
+.dark .vacancies-results,
+.dark .vacancies-footer,
+.dark .vacancies-empty,
+.dark .vacancies-details-dialog header p,
+.dark .vacancies-details-dialog dt,
+.dark .vacancies-demo-note { color: #a8beb1 !important; }
+.dark .vacancies-status-tabs button[aria-pressed="true"],
+.dark .vacancies-title-link,
+.dark .vacancies-clear { color: #9ed3bc !important; }
+.dark .vacancies-status-tabs button span { background: #202925 !important; color: #a8beb1 !important; }
+.dark .vacancies-status-tabs button[aria-pressed="true"] span { background: #2b4b3e !important; color: #f4fff8 !important; }
+.dark :is(.vacancies-filter select, .vacancies-search, .vacancies-open, .vacancies-details-button) { background: #171d1b !important; border-color: #3b4c45 !important; color: #d9eee2 !important; }
+.dark .vacancies-search input { color: #edf8f1 !important; }
+.dark .vacancies-list th { background: #0f1312 !important; color: #aebfb6 !important; }
+.dark .vacancies-list td { color: #e7f3ec !important; }
+.dark .vacancies-list tbody tr:hover { background: #19221f !important; }
+.dark .vacancies-list small { color: #9eb2a7 !important; }
+.dark .vacancies-status-pill.active { background: #1b4230 !important; color: #bff1d2 !important; }
+.dark .vacancies-status-pill.draft { background: #27302d !important; color: #c2d0c8 !important; }
+.dark .vacancies-avatar { background: #203a30 !important; color: #a9dfc6 !important; }
+
+/* Agenda: categorias distinguíveis mesmo quando o calendário está escuro. */
+.dark .calendar-board,
+.dark .calendar-toolbar,
+.dark .calendar-corner,
+.dark .calendar-day-head,
+.dark .calendar-hours,
+.dark .calendar-grid-lines,
+.dark .calendar-columns { background: #121615 !important; border-color: #303a36 !important; }
+.dark .calendar-toolbar button { background: #171d1b !important; border-color: #3b4c45 !important; color: #dbe9e1 !important; }
+.dark .calendar-toolbar button.active { background: #2b4b3e !important; border-color: #50846e !important; color: #f4fff8 !important; }
+.dark .calendar-toolbar strong,
+.dark .calendar-day-head strong,
+.dark .calendar-filters h2,
+.dark .upcoming-panel h2 { color: #edf8f1 !important; }
+.dark .calendar-day-head { color: #9fc2b0 !important; }
+.dark .calendar-day-head.today { background: #18251f !important; color: #c6e9d7 !important; }
+.dark .calendar-hours span { color: #7f998d !important; border-color: #303a36 !important; }
+.dark .calendar-grid-lines i { border-color: #3a4641 !important; }
+.dark .calendar-columns i,
+.dark .calendar-filters hr,
+.dark .upcoming-panel article { border-color: #303a36 !important; }
+.dark .calendar-filters label { color: #b8c8bf !important; }
+.dark .calendar-filters label:nth-of-type(4) { color: #8ee2ba !important; }
+.dark .calendar-filters label:nth-of-type(5) { color: #f1c66b !important; }
+.dark .calendar-filters label:nth-of-type(6) { color: #c6a9ff !important; }
+.dark .calendar-filters label:nth-of-type(4) input { accent-color: #56c991; }
+.dark .calendar-filters label:nth-of-type(5) input { accent-color: #e4ad45; }
+.dark .calendar-filters label:nth-of-type(6) input { accent-color: #a67be5; }
+.dark .calendar-event { box-shadow: 0 7px 14px rgba(0,0,0,.24); }
+.dark .calendar-event.interview { background: #16352b !important; border-left-color: #52ca91 !important; color: #dff9ec !important; }
+.dark .calendar-event.interview time,
+.dark .calendar-event.interview span,
+.dark .calendar-event.interview small { color: #9ee0bd !important; }
+.dark .calendar-event.task { background: #422f14 !important; border-left-color: #efb64a !important; color: #fff0c9 !important; }
+.dark .calendar-event.task time,
+.dark .calendar-event.task span,
+.dark .calendar-event.task small { color: #f2cf82 !important; }
+.dark .calendar-event.training { background: #302044 !important; border-left-color: #b184f2 !important; color: #f0e8ff !important; }
+.dark .calendar-event.training time,
+.dark .calendar-event.training span,
+.dark .calendar-event.training small { color: #d0b9ff !important; }
+.dark .calendar-event strong { color: inherit !important; font-weight: 800; }
+.dark .weekly-calendar > .calendar-event.is-compact { padding: 4px 6px !important; gap: 1px !important; }
+.dark .weekly-calendar > .calendar-event.is-compact time { font-size: 12px !important; line-height: 1.1; white-space: nowrap; }
+.dark .weekly-calendar > .calendar-event.is-compact strong { font-size: 12px !important; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dark .weekly-calendar > .calendar-event.is-compact span { display: none; }
+.dark .weekly-calendar > .calendar-event.is-compact small { display: none; }
+.dark .upcoming-panel article.interview { border-left-color: #52ca91 !important; }
+.dark .upcoming-panel article.task { border-left-color: #efb64a !important; }
+.dark .upcoming-panel article.training { border-left-color: #b184f2 !important; }
+.dark .upcoming-panel article > strong { color: #edf8f1 !important; }
+.dark .upcoming-panel time,
+.dark .upcoming-panel span { color: #a8beb1 !important; }
+
+/* Revisão de contraste: as telas operacionais usam componentes com regras locais. */
+.dark .approval-overview > div {
+  background: #171d1b !important;
+  border: 1px solid #303a36 !important;
+  box-shadow: none !important;
+}
+.dark .approval-overview strong { color: #edf8f1 !important; }
+.dark .approval-overview small { color: #a8beb1 !important; }
+.dark .approval-list-row {
+  background: #121615 !important;
+  border-color: #29312e !important;
+}
+.dark .approval-list-row:not(.approval-list-head):hover { background: #19221f !important; }
+.dark .approval-list-row strong { color: #edf8f1 !important; }
+.dark .approval-list-row small { color: #a8beb1 !important; }
+.dark .approval-list-head { background: #0f1312 !important; color: #b9d0c3 !important; }
+.dark .approval-list-row .table-action { background: #171d1b !important; border-color: #3b4c45 !important; color: #d9eee2 !important; }
+
+.dark .mobility-notice {
+  background: #2d2518 !important;
+  border-color: #70552b !important;
+  color: #f2d89f !important;
+}
+.dark .kanban-column {
+  background: #111614 !important;
+  border-color: #29312e !important;
+  box-shadow: none !important;
+}
+.dark .kanban-column.drag-over { background: #192b23 !important; box-shadow: inset 0 0 0 2px #79b39d !important; }
+.dark .column-header strong { color: #edf8f1 !important; }
+.dark .column-header small { color: #a8beb1 !important; }
+.dark .column-header > span { background: #1c2421 !important; border-color: #3b4c45 !important; color: #d9eee2 !important; }
+.dark .candidate-card {
+  background: #151a18 !important;
+  border: 1px solid #29312e !important;
+  box-shadow: none !important;
+}
+.dark .candidate-card:hover { background: #19211e !important; box-shadow: 0 8px 18px rgba(0,0,0,.24) !important; }
+.dark .candidate-identity strong { color: #edf8f1 !important; }
+.dark .candidate-identity small,
+.dark .card-fact,
+.dark .card-fact small,
+.dark .card-footer { color: #a8beb1 !important; }
+.dark .card-footer { border-color: #303a36 !important; }
+.dark .card-fact button { background: #203a30 !important; color: #ccebdc !important; }
+.dark .evidence-badge.success { background: #1b4230 !important; color: #a9e8c3 !important; }
+.dark .evidence-badge.info { background: #203a34 !important; color: #b9ded0 !important; }
+.dark .duplicate-warning { background: #402f16 !important; color: #f7d48b !important; }
+.dark .filter-chips button { background: #1d2b26 !important; color: #c9dfd3 !important; }
+.dark .filter-chips .clear-filters,
+.dark .load-more { background: transparent !important; color: #9ed3bc !important; }
+.dark .empty-stage { border-color: #3b4c45 !important; color: #9ab0a4 !important; }
+
+.dark .talent-discovery-panel { background: #121615 !important; border-color: #29312e !important; }
+.dark .talent-mode-switch {
+  background: #171d1b !important;
+  border-color: #3b4c45 !important;
+}
+.dark .talent-mode-switch button { background: transparent !important; color: #b9d0c3 !important; }
+.dark .talent-mode-switch button.active { background: #263a32 !important; color: #eff8f2 !important; }
+.dark .talent-mode-context { background: transparent !important; color: #a8beb1 !important; }
+.dark .talent-search,
+.dark .talent-sort,
+.dark .talent-vacancy-picker,
+.dark .talent-filter-row .filter-select,
+.dark .talent-results-controls .filter-select {
+  background: #171d1b !important;
+  border-color: #3b4c45 !important;
+  color: #d9eee2 !important;
+}
+.dark .talent-search input { background: transparent !important; color: #edf8f1 !important; }
+.dark .talent-results,
+.dark .talent-reference-table { background: #121615 !important; border-color: #29312e !important; }
+.dark .talent-results-summary,
+.dark .talent-reference-table .op-table-head { background: #0f1312 !important; border-color: #29312e !important; color: #b9d0c3 !important; }
+.dark .talent-results-summary strong,
+.dark .talent-reference-table .op-table-row b,
+.dark .person-cell b,
+.dark .profile-cell > b,
+.dark .opportunity-cell b { color: #edf8f1 !important; }
+.dark .talent-results-summary span,
+.dark .talent-reference-table .op-table-row,
+.dark .talent-reference-table .op-table-row small,
+.dark .person-cell small,
+.dark .profile-cell > small,
+.dark .opportunity-cell small,
+.dark .talent-location-cell,
+.dark .availability { color: #a8beb1 !important; }
+.dark .talent-reference-table .op-table-row.selected { background: #192b23 !important; }
+.dark .person-cell > i { background: #203a30 !important; color: #b9dfcd !important; }
+.dark .opportunity-cell button { background: #203a30 !important; border-color: #3b4c45 !important; color: #ccebdc !important; }
+
+.dark .privacy-callout,
+.dark .detail-notice,
+.dark .security-note {
+  background: #171d1b !important;
+  border-color: #3b4c45 !important;
+  color: #d9eee2 !important;
+}
+.dark .privacy-callout strong,
+.dark .detail-notice strong,
+.dark .security-note strong { color: #edf8f1 !important; }
+.dark .privacy-callout small,
+.dark .detail-notice small,
+.dark .security-note small { color: #a8beb1 !important; }
+.dark .admission-filter-row label,
+.dark .admission-filter-row > button {
+  background: #171d1b !important;
+  border-color: #3b4c45 !important;
+  color: #d9eee2 !important;
+}
+.dark .admission-filter-row input { background: transparent !important; color: #edf8f1 !important; }
+.dark .admission-candidates-table > h2,
+.dark .training-table > h2,
+.dark .hiring-table > h2 { border-color: #29312e !important; color: #edf8f1 !important; }
+.dark .admission-candidates-table .op-table-head,
+.dark .training-table .op-table-head,
+.dark .hiring-table .op-table-head,
+.dark .checklist-table header { background: #0f1312 !important; border-color: #29312e !important; color: #b9d0c3 !important; }
+.dark .admission-candidates-table .op-table-row,
+.dark .training-table .op-table-row,
+.dark .hiring-table .op-table-row,
+.dark .checklist-table > div { background: #121615 !important; border-color: #29312e !important; color: #d9eee2 !important; }
+.dark .admission-candidates-table .op-table-row.selected,
+.dark .training-table .op-table-row.selected,
+.dark .hiring-table .op-table-row.selected { background: #192b23 !important; }
+.dark .admission-candidates-table .op-table-row b,
+.dark .training-table .op-table-row b,
+.dark .hiring-table .op-table-row b,
+.dark .side-detail-panel h2,
+.dark .detail-section-title h2 { color: #edf8f1 !important; }
+.dark .side-detail-panel p,
+.dark .training-facts small,
+.dark .participant-row,
+.dark .checklist-table > div { color: #a8beb1 !important; }
+.dark .checklist-table { border-color: #29312e !important; }
+.dark .checklist-table button,
+.dark .detail-section-title button { color: #9ed3bc !important; }
+.dark .training-facts > span,
+.dark .participant-row { border-color: #29312e !important; }
+.dark .mini-progress > i { background: #303b36 !important; }
+.dark .mini-progress > i em { background: #79b39d !important; }
+
+.dark .integration-detail-panel .security-note { background: #171d1b !important; border-color: #3b4c45 !important; }
+
+/* Painel inicial: superfícies neutras, dados legíveis e verde reservado ao progresso. */
+.dark .processes-card,
+.dark .activities-card,
+.dark .agenda-dialog {
+  background: #121615 !important;
+  border-color: #29312e !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .2) !important;
+}
+
+.dark .processes-card-header,
+.dark .activities-card-header,
+.dark .agenda-dialog > header,
+.dark .agenda-dialog > footer {
+  background: #121615 !important;
+  border-color: #29312e !important;
+}
+
+.dark .processes-card-header h1,
+.dark .activities-card-header h2,
+.dark .agenda-dialog h2,
+.dark .process-vacancy strong,
+.dark .activities-grid strong,
+.dark .agenda-dialog-list strong {
+  color: #edf8f1 !important;
+}
+
+.dark .processes-card-header p,
+.dark .activities-card-header p,
+.dark .process-vacancy small,
+.dark .candidate-stage small,
+.dark .stage-progress small,
+.dark .processes-hint,
+.dark .activities-grid small,
+.dark .activities-grid time,
+.dark .agenda-dialog p,
+.dark .agenda-dialog-list small {
+  color: #a8beb1 !important;
+}
+
+.dark .section-symbol,
+.dark .activity-icon,
+.dark .agenda-dialog > header > button {
+  color: #9ed3bc !important;
+  background: #1a2a24 !important;
+}
+
+.dark .activity-icon.warning { color: #f0c46a !important; background: #3d3018 !important; }
+.dark .activity-icon.success { color: #a9e8c3 !important; background: #1b4230 !important; }
+
+.dark .calendar-launcher {
+  color: #c2ddcf !important;
+  border-color: #3b4c45 !important;
+  background: #171d1b !important;
+}
+
+.dark .calendar-launcher:hover,
+.dark .text-action:hover { background: #1d2924 !important; }
+.dark .text-action { color: #9ed3bc !important; }
+
+.dark .processes-table-head {
+  color: #b9d0c3 !important;
+  background: #0f1312 !important;
+}
+
+.dark .process-row {
+  color: #d9eee2 !important;
+  background: #121615 !important;
+  border-color: #29312e !important;
+}
+
+.dark .process-row:hover { background: #19221f !important; }
+
+.dark .candidate-stage b {
+  color: #dff3e4 !important;
+  border-color: #34443d !important;
+  background: #1a2420 !important;
+}
+
+.dark .process-home .stage-progress i {
+  border-color: #344039 !important;
+  background: #27312d !important;
+  box-shadow: none !important;
+}
+
+.dark .process-home .stage-progress i.done {
+  border-color: #4b816d !important;
+  background: #2c6858 !important;
+}
+
+.dark .process-new-badge {
+  color: #b6e8cb !important;
+  border-color: #3e6c57 !important;
+  background: #183a2b !important;
+}
+
+.dark .process-row-menu { color: #8fbba5 !important; }
+
+.dark .processes-hint,
+.dark .activities-grid article,
+.dark .agenda-dialog-list article {
+  border-color: #29312e !important;
+}
+
+.dark .agenda-dialog-list time { color: #9ed3bc !important; }
+
+/* Fluxo de requisição e criação de vagas: faixas internas seguem o mesmo grafite do app. */
+.dark .workflow-success,
+.dark .source-approval,
+.dark .decision-approved {
+  background: #173026 !important;
+  border: 1px solid #326b50 !important;
+  color: #ccebdc !important;
+  box-shadow: none !important;
+}
+.dark .workflow-success > span { background: #2f7c58 !important; color: #f1fff7 !important; }
+.dark .workflow-success strong,
+.dark .source-approval strong,
+.dark .decision-approved strong { color: #edf8f1 !important; }
+.dark .workflow-success p,
+.dark .source-approval span,
+.dark .decision-approved p { color: #b5d7c4 !important; }
+.dark .workflow-success button,
+.dark .source-approval button { color: #a9dfc6 !important; }
+
+.dark .vacancy-builder { background: #121615 !important; border-color: #29312e !important; }
+.dark .builder-steps { background: #0f1312 !important; border-color: #29312e !important; }
+.dark .builder-steps button { color: #9eb3a7 !important; }
+.dark .builder-steps button:hover { background: #171d1b !important; color: #d9eee2 !important; }
+.dark .builder-steps button.active { background: #18241f !important; color: #eff8f2 !important; }
+.dark .builder-steps button.completed { color: #9ed3bc !important; }
+.dark .builder-steps button > span { background: #1c2421 !important; color: inherit !important; }
+.dark .builder-steps button.active > span { background: #2b4b3e !important; color: #eafff2 !important; }
+.dark .builder-steps button.completed > span { background: #203a30 !important; color: #a9dfc6 !important; }
+.dark .builder-steps button.active::after { background: #79b39d !important; }
+.dark .builder-stage-heading { background: #121615 !important; }
+.dark .builder-footer,
+.dark .sticky-builder-footer {
+  background: #0f1312 !important;
+  border-color: #29312e !important;
+}
+.dark .section-divider { background: #29312e !important; }
+
+.dark .process-aside { background: #121615 !important; border-color: #29312e !important; }
+.dark .aside-icon { background: #203a30 !important; color: #9ed3bc !important; box-shadow: none !important; }
+.dark .process-aside h2,
+.dark .responsibility-owner strong { color: #edf8f1 !important; }
+.dark .process-aside > p,
+.dark .process-aside li,
+.dark .responsibility-owner small { color: #a8beb1 !important; }
+.dark .process-aside li svg { color: #79b39d !important; }
+.dark .aside-note {
+  background: #171d1b !important;
+  border: 1px solid #3b4c45 !important;
+  color: #c9dfd3 !important;
+}
+.dark .aside-note p { color: #b7cbbf !important; }
+.dark .responsibility-owner { border-color: #29312e !important; color: #9ed3bc !important; }
+
+.dark .drawer-backdrop { background: rgba(2, 10, 8, .78) !important; }
+.dark .decision-drawer { background: #121615 !important; color: #e8f4ed !important; box-shadow: -16px 0 42px rgba(0,0,0,.38) !important; }
+.dark .drawer-header,
+.dark .drawer-footer { background: #0f1312 !important; border-color: #29312e !important; }
+.dark .drawer-header h2,
+.dark .decision-history h3,
+.dark .approval-note strong { color: #edf8f1 !important; }
+.dark .drawer-header p,
+.dark .decision-history p,
+.dark .detail-code { color: #a8beb1 !important; }
+.dark .drawer-header > button { background: #171d1b !important; border-color: #3b4c45 !important; color: #d9eee2 !important; }
+.dark .approval-summary > div { background: #171d1b !important; border: 1px solid #29312e !important; }
+.dark .approval-reason,
+.dark .decision-history { border-color: #29312e !important; }
+.dark .approval-note { background: #171d1b !important; border: 1px solid #3b4c45 !important; color: #9ed3bc !important; }
+.dark .approval-note textarea { background: #0f1312 !important; border-color: #3b4c45 !important; color: #edf8f1 !important; }
+
+/* Auditoria complementar: modais, configurações e cartões em tema escuro. */
+.dark .mobility-signals {
+  background: #0f1312 !important;
+  border-color: #29312e !important;
+  color: #b9d0c3 !important;
+}
+.dark .mobility-signals span + span { border-color: #29312e !important; }
+.dark .mobility-signals span:first-child { color: #9ed3bc !important; }
+.dark .mobility-footer {
+  background: #0f1312 !important;
+  border-color: #29312e !important;
+}
+.dark .mobility-footer > button,
+.dark .mobility-footer div button {
+  background: #171d1b !important;
+  border-color: #3b4c45 !important;
+  color: #d9eee2 !important;
+}
+.dark .mobility-footer div .move-stage {
+  background: #79b39d !important;
+  border-color: #79b39d !important;
+  color: #071713 !important;
+}
+.dark .mobility-detail-card,
+.dark .confirmation-card,
+.dark .route-source { box-shadow: none !important; }
+.dark .mobility-review-note {
+  background: #2d2518 !important;
+  border-color: #70552b !important;
+  color: #f2d89f !important;
+}
+
+.dark .extraction-lab,
+.dark .comparison-area { background: #121615 !important; color: #e8f4ed !important; }
+.dark .lab-header { background: #121615 !important; border-color: #29312e !important; }
+.dark .lab-header h2,
+.dark .lab-empty strong { color: #edf8f1 !important; }
+.dark .lab-header p,
+.dark .lab-empty,
+.dark .lab-empty p { color: #a8beb1 !important; }
+.dark .lab-header .icon-button {
+  background: #171d1b !important;
+  border-color: #3b4c45 !important;
+  color: #d9eee2 !important;
+}
+.dark .upload-zone {
+  background: #171d1b !important;
+  border-color: #4a6659 !important;
+  color: #c9dfd3 !important;
+}
+.dark .upload-zone.has-file { background: #173026 !important; border-color: #326b50 !important; color: #bff1d2 !important; }
+.dark .upload-zone small,
+.dark .provider-picker label { color: #a8beb1 !important; }
+.dark .provider-picker > div { background: #0f1312 !important; border-color: #3b4c45 !important; }
+.dark .provider-picker button { color: #b9d0c3 !important; }
+.dark .provider-picker button.active { background: #203a30 !important; color: #eafff2 !important; }
+.dark .run-extraction { background: #79b39d !important; color: #071713 !important; }
+.dark .local-extraction-result,
+.dark .provider-result { background: #171d1b !important; border-color: #29312e !important; box-shadow: none !important; }
+
+.dark .stages-panel .op-table-head { background: #0f1312 !important; border-color: #29312e !important; color: #b9d0c3 !important; }
+.dark .stages-panel .op-table-row { background: #121615 !important; border-color: #29312e !important; color: #d9eee2 !important; }
+.dark .stages-panel .op-table-row.selected { background: #192b23 !important; }
+.dark .stages-panel .op-table-row b,
+.dark .stage-detail h2,
+.dark .stage-detail h3 { color: #edf8f1 !important; }
+.dark .stage-order { background: #1c2421 !important; color: #c9dfd3 !important; }
+.dark .stage-detail { background: #121615 !important; border-color: #29312e !important; }
+.dark .stage-detail > label,
+.dark .requirement-checks { color: #c9dfd3 !important; }
+.dark .color-input,
+.dark .automation-card {
+  background: #171d1b !important;
+  border-color: #3b4c45 !important;
+  color: #d9eee2 !important;
+}
+.dark .automation-card svg { color: #9ed3bc !important; }
+.dark .automation-card small { color: #a8beb1 !important; }
+
+.dark .info-strip {
+  background: #171d1b !important;
+  border-color: #3b4c45 !important;
+  color: #c9dfd3 !important;
+}
+.dark .info-strip > span:first-child,
+.dark .info-strip svg { color: #9ed3bc !important; border-color: #79b39d !important; }
+.dark .admin-filter-row label,
+.dark .admin-filter-row > button {
+  background: #171d1b !important;
+  border-color: #3b4c45 !important;
+  color: #d9eee2 !important;
+}
+.dark .admin-filter-row input { background: transparent !important; color: #edf8f1 !important; }
+.dark .structure-browser .structure-table,
+.dark .structure-browser .structure-detail { background: #121615 !important; border-color: #29312e !important; }
+.dark .structure-table > button { background: #121615 !important; border-color: #29312e !important; color: #d9eee2 !important; }
+.dark .structure-table > button.selected { background: #192b23 !important; }
+
+.dark .talent-card-grid { background: #0f1312 !important; }
+.dark .talent-card-grid article {
+  background: #171d1b !important;
+  border-color: #29312e !important;
+  box-shadow: none !important;
+}
+.dark .talent-card-grid article strong,
+.dark .talent-card-grid article footer b { color: #edf8f1 !important; }
+.dark .talent-card-grid article > div:nth-child(2) > span,
+.dark .talent-card-grid article > div:nth-child(2) > small,
+.dark .talent-card-grid article footer small { color: #a8beb1 !important; }
+.dark .talent-card-grid article footer { border-color: #29312e !important; }
+.dark .talent-card-grid article footer button { background: #171d1b !important; border-color: #3b4c45 !important; color: #ccebdc !important; }
+
+.dark .talent-section-preview,
+.dark .talent-section-preview > header,
+.dark .talent-section-preview-grid article { background: #121615 !important; border-color: #29312e !important; }
+.dark .talent-section-preview > header > span,
+.dark .talent-section-preview-grid strong { color: #9ed3bc !important; }
+.dark .talent-section-preview h2,
+.dark .talent-section-preview-grid b { color: #edf8f1 !important; }
+.dark .talent-section-preview p,
+.dark .talent-section-preview-grid small { color: #a8beb1 !important; }
+
+@media (max-width: 1279px) {
+  .alpha-theme-toggle { width: 36px; padding: 0; }
+}
+
+/* Refinamento das superfícies mais densas no tema escuro. */
+.dark .restored-home-heading { border-color: #29312e !important; }
+.dark .process-home .restored-home-heading h1 { color: #9fb9ac !important; }
+.dark .restored-home-heading .home-personal-greeting { color: #f2fbf5 !important; }
+.dark .restored-home-heading .home-greeting-quote { border-left-color: #79b39d !important; color: #c6dbd0 !important; }
+.dark .restored-home-date { color: #9fb9ac !important; }
+.dark .restored-home-date time { color: #a9dfc6 !important; }
+.dark .today-agenda-button {
+  background: #171d1b !important;
+  border-color: #3b4c45 !important;
+  color: #e5f2eb !important;
+  box-shadow: none !important;
+}
+.dark .today-agenda-button:hover { background: #20332b !important; border-color: #5d9279 !important; }
+.dark .today-agenda-button > span { background: #235347 !important; color: #effbf4 !important; }
+.dark .processes-total { background: #183a2b !important; border-color: #3e6c57 !important; color: #bfe8d0 !important; }
+.dark .processes-card-header .text-action { background: #171d1b !important; border-color: #3b4c45 !important; color: #c9ead9 !important; }
+.dark .processes-card-header .text-action:hover { background: #20332b !important; border-color: #5d9279 !important; }
+
+/* Banco de talentos: filtros e resultados usam camadas neutras, sem botões brancos. */
+.dark .talent-filter-row .filter-more {
+  background: #235347 !important;
+  border-color: #3d7963 !important;
+  color: #effbf4 !important;
+  box-shadow: none !important;
+}
+.dark .talent-filter-row .filter-more:hover { background: #2f6958 !important; }
+.dark .talent-filter-row .filter-more b { background: #dff3e4 !important; color: #163832 !important; }
+.dark .talent-filter-row .filter-select:hover,
+.dark .talent-results-controls .filter-select:hover,
+.dark .opportunity-cell button:hover,
+.dark .talent-card-grid article footer button:hover { background: #263a32 !important; border-color: #5d9279 !important; }
+.dark .talent-reference-table .op-table-row:hover { background: #18211e !important; }
+.dark .talent-reference-table .op-table-row.selected:hover { background: #192b23 !important; }
+.dark .talent-reference-table input[type="checkbox"] { accent-color: #79b39d; }
+.dark .talent-results .table-pagination { background: #0f1312 !important; border-color: #29312e !important; }
+.dark .talent-results .table-pagination strong { color: #d9eee2 !important; }
+.dark .talent-results .table-pagination button { background: #171d1b !important; border-color: #3b4c45 !important; color: #c9dfd3 !important; }
+.dark .talent-results .table-pagination button.active { background: #235347 !important; border-color: #3d7963 !important; color: #f0fbf4 !important; }
+
+/* Agenda: o calendário e todos os estados de navegação pertencem ao mesmo espaço grafite. */
+.dark .agenda-command-surface { background: #121615 !important; border-color: #29312e !important; box-shadow: none !important; }
+.dark .agenda-command-toolbar { background: #121615 !important; border-color: #29312e !important; }
+.dark .agenda-date-navigation > button,
+.dark .agenda-filter-menu > button,
+.dark .agenda-list-button,
+.dark .agenda-view-switch button {
+  background: #171d1b !important;
+  border-color: #3b4c45 !important;
+  color: #dcebe3 !important;
+}
+.dark .agenda-date-navigation > button:hover,
+.dark .agenda-filter-menu > button:hover,
+.dark .agenda-list-button:hover,
+.dark .agenda-view-switch button:hover { background: #20332b !important; border-color: #5d9279 !important; }
+.dark .agenda-date-navigation strong { color: #edf8f1 !important; }
+.dark .agenda-view-switch { background: #0f1312 !important; border-color: #3b4c45 !important; }
+.dark .agenda-view-switch button.active { background: #235347 !important; border-color: #3d7963 !important; color: #f2fbf5 !important; }
+.dark .agenda-filter-popover { background: #171d1b !important; border-color: #3b4c45 !important; box-shadow: 0 14px 30px rgba(0, 0, 0, .34) !important; }
+.dark .agenda-filter-popover label { color: #c9dfd3 !important; }
+.dark .agenda-filter-popover label:hover { background: #20332b !important; }
+.dark .agenda-month-view { background: #121615 !important; }
+.dark .agenda-month-weekdays { background: #0f1312 !important; border-color: #29312e !important; color: #b9d0c3 !important; }
+.dark .agenda-month-weekdays span { border-color: #29312e !important; }
+.dark .agenda-month-grid { background: #121615 !important; }
+.dark .agenda-month-day { background: #121615 !important; border-color: #29312e !important; color: #d9eee2 !important; }
+.dark .agenda-month-day:hover { background: #18211e !important; box-shadow: inset 0 0 0 1px #5d9279 !important; }
+.dark .agenda-month-day.selected { background: #192b23 !important; box-shadow: inset 0 0 0 2px #79b39d !important; }
+.dark .agenda-month-day.muted { background: #0f1312 !important; color: #566b60 !important; }
+.dark .agenda-month-day.muted:hover { background: #0f1312 !important; }
+.dark .agenda-month-event { background: #173a2d !important; color: #d8f0e2 !important; }
+.dark .agenda-month-event.task { background: #422f14 !important; color: #ffe0a0 !important; }
+.dark .agenda-month-event.training { background: #302044 !important; color: #e7dcff !important; }
+.dark .agenda-month-events small { color: #9ed3bc !important; }
+.dark .agenda-week-day { border-color: #29312e !important; background: #121615 !important; }
+.dark .agenda-week-day-heading { background: #0f1312 !important; border-color: #29312e !important; color: #d9eee2 !important; }
+.dark .agenda-week-day-heading > span,
+.dark .agenda-week-day-heading > small,
+.dark .agenda-week-empty { color: #9fb9ac !important; }
+.dark .agenda-week-day.selected .agenda-week-day-heading { background: #192b23 !important; }
+.dark .agenda-week-day-heading:hover { background: #18211e !important; }
+.dark .agenda-week-appointment { background: #173a2d !important; border-color: #3e6c57 !important; color: #d8f0e2 !important; }
+.dark .agenda-week-appointment.task { background: #422f14 !important; border-color: #7a5a29 !important; color: #ffe0a0 !important; }
+.dark .agenda-week-appointment.training { background: #302044 !important; border-color: #72569d !important; color: #e7dcff !important; }
+.dark .agenda-day-drawer { background: #121615 !important; color: #d9eee2 !important; }
+.dark .agenda-drawer-header,
+.dark .agenda-day-drawer > footer { background: #0f1312 !important; border-color: #29312e !important; }
+.dark .agenda-drawer-header h2 { color: #edf8f1 !important; }
+.dark .agenda-drawer-header p { color: #a8beb1 !important; }
+.dark .agenda-drawer-header > button { background: #171d1b !important; border-color: #3b4c45 !important; color: #d9eee2 !important; }
+.dark .agenda-detail-event { background: #171d1b !important; border-color: #29312e !important; box-shadow: none !important; }
+.dark .agenda-detail-event strong { color: #edf8f1 !important; }
+.dark .agenda-detail-event time,
+.dark .agenda-detail-event dd { color: #c9dfd3 !important; }

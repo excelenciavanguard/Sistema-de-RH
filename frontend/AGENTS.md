@@ -22,6 +22,7 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 - Entry welcome direction (2026-09-16): retain a full-screen typed personalized greeting; use a professional, restrained presentation with the actual Alpha RH logo, light background, green accents and subtle transitions.
 
+- Dark-mode direction approved on 2026-09-16: use black and graphite surfaces with high-contrast text. Never leave white panels, filters, notices, table sections, modals, or footers in dark mode. Reserve green for primary actions, selected states and positive status; preserve amber and red for warning and destructive status. Keep the desktop header free of the global search field.
 - Documents admission direction approved on 2026-09-16: use a full-width candidate list and a right modal drawer opened on candidate selection, not a permanent detail column. Distinguish received and validated documents, request only missing/correction items, require a correction reason, and block completion until all required documents are validated. Keep fixed drawer header/footer and a scrolling body. All actions remain illustrative in this frontend phase.
 
 - Implement only frontend screens and navigation in this phase. Do not add login or change backend, database, Weboper, e-mail, WhatsApp, Maps, or AI integrations.

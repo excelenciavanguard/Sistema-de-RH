@@ -62,6 +62,11 @@ export function HomeScreen({ onNavigate, appointments = agenda, currentDate }) {
       </div>
     </header>
     <section className="processes-card" aria-labelledby="processes-title">
+      <header className="processes-card-header">
+        <span className="section-symbol"><Briefcase size={22} weight="duotone" /></span>
+        <div className="processes-title-line"><h2 id="processes-title">Processos em andamento</h2><span className="processes-total">{activeVacancies.length} vagas ativas</span></div>
+        <button className="text-action" type="button" onClick={() => onNavigate(ROUTES.vacancies)}>Ver todas as vagas <ArrowRight size={17} /></button>
+      </header>
       <div className="processes-table" role="table" aria-label="Processos em andamento">
         <div className="processes-table-head" role="row"><span>Vaga</span><span>Candidatos por etapa</span><span>Novos</span></div>
         <div role="rowgroup">{activeVacancies.map((vacancy) => {
@@ -87,11 +92,6 @@ export function HomeScreen({ onNavigate, appointments = agenda, currentDate }) {
         })}</div>
       </div>
       <div className="processes-hint"><span>Clique em uma vaga para abrir seu processo.</span><span className="processes-legend"><i aria-hidden="true" />Etapa atual</span></div>
-      <footer className="processes-card-header processes-card-footer">
-        <span className="section-symbol"><Briefcase size={22} weight="duotone" /></span>
-        <div className="processes-title-line"><h2 id="processes-title">Processos em andamento</h2><span className="processes-total">{activeVacancies.length} vagas ativas</span></div>
-        <button className="text-action" type="button" onClick={() => onNavigate(ROUTES.vacancies)}>Ver todas as vagas <ArrowRight size={17} /></button>
-      </footer>
     </section>
     <section className="activities-card" aria-labelledby="activities-title">
       <header className="activities-card-header"><span className="section-symbol"><Clock size={22} weight="duotone" /></span><div><h2 id="activities-title">Atividades recentes</h2><p>Últimas atualizações do sistema relacionadas ao recrutamento.</p></div><button className="text-action" type="button">Ver histórico completo <ArrowRight size={17} /></button></header>

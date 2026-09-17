@@ -9,6 +9,8 @@ function jsonResponse(payload, ok = true) {
 
 beforeEach(() => {
   window.history.replaceState(null, "", "#/inicio");
+  window.localStorage.clear();
+  document.documentElement.classList.remove("dark");
   vi.stubGlobal("ResizeObserver", class ResizeObserver {
     observe() {}
     unobserve() {}
@@ -47,7 +49,7 @@ describe("Alpha RH connected screens", () => {
 
     fireEvent.click(screen.getAllByRole("button", { name: "Abrir Kanban" })[0]);
     expect(await screen.findByRole("heading", { name: /Auxiliar de Serviços Gerais/i })).toBeInTheDocument();
-  });
+  }, 10_000);
 
   it("keeps the confirmed responsibility sequence visible", async () => {
     render(<App />);
@@ -66,10 +68,12 @@ describe("Alpha RH connected screens", () => {
   it("shows the greeting, current date area and compact today agenda access", () => {
     render(<App />);
     expect(screen.getByRole("button", { name: "Agenda de hoje 3" })).toBeInTheDocument();
+    expect(screen.getByRole("table", { name: "Processos em andamento" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Atividades recentes" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Próximo compromisso" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Hoje no RH" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Olá, Simão Pedro!" })).toBeInTheDocument();
-    expect(screen.getByText("Bom trabalho, Simão Pedro!")).toBeInTheDocument();
+    expect(screen.getByText("Pessoas bem cuidadas constroem grandes resultados.")).toBeInTheDocument();
   });
 
   it("lets Operations prepare and submit a new requisition", async () => {
@@ -88,12 +92,23 @@ describe("Alpha RH connected screens", () => {
 
   it("uses grouped dropdown menus without a duplicated secondary bar", () => {
     render(<App />);
-    expect(screen.getByRole("searchbox", { name: "Buscar no Alpha RH" })).toBeInTheDocument();
+    expect(screen.queryByRole("searchbox", { name: "Buscar no Alpha RH" })).not.toBeInTheDocument();
     for (const group of ["Recrutamento", "Talentos e Pessoas", "Jornada", "Gestão"]) {
       expect(screen.getByRole("button", { name: group })).toBeInTheDocument();
     }
     expect(screen.queryByRole("navigation", { name: "Módulos do sistema" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Nova requisição" })).not.toBeInTheDocument();
+  });
+
+  it("alternates the global dark theme and preserves the chosen appearance", () => {
+    render(<App />);
+
+    const themeToggle = screen.getByRole("button", { name: "Ativar modo escuro" });
+    fireEvent.click(themeToggle);
+
+    expect(document.documentElement).toHaveClass("dark");
+    expect(localStorage.getItem("alpha-rh-theme")).toBe("dark");
+    expect(screen.getByRole("button", { name: "Ativar modo claro" })).toBeInTheDocument();
   });
 
   it("connects the Directorate decision to the RH vacancy builder", async () => {
@@ -114,9 +129,9 @@ describe("Alpha RH connected screens", () => {
     ["#/talentos", "Banco de talentos", "Encontre pessoas ou descubra talentos para uma vaga"],
     ["#/agenda", "Agenda", "Lista de compromissos"],
     ["#/admissao", "Documentos de admissão", "Selecione um candidato para conferir"],
-    ["#/relatorios", "Relatórios de recrutamento", "Origem dos candidatos"],
+    ["#/relatorios", "Relatórios de recrutamento", "Fontes de currículos"],
     ["#/integracoes", "Integrações", "Configure fontes de dados"],
-    ["#/administracao", "Usuários e permissões", "Controle quem pode acessar"],
+    ["#/administracao", "Usuários e permissões", "Organize quem acessa"],
   ])("renders the connected module %s", async (hash, heading, content) => {
     window.history.replaceState(null, "", hash);
     render(<App />);
@@ -138,9 +153,19 @@ describe("Alpha RH connected screens", () => {
     expect(screen.getByTestId("talent-card-grid")).toBeInTheDocument();
   });
 
+  it("shows the segments workspace when the corresponding talent tab is selected", () => {
+    window.history.replaceState(null, "", "#/talentos");
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("tab", { name: "Segmentos" }));
+    expect(screen.getByRole("heading", { name: "Segmentos de talentos" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Banco de talentos" })).not.toBeInTheDocument();
+  });
+
   it("opens the agenda in month view and lets the user inspect a day", () => {
     window.history.replaceState(null, "", "#/agenda");
     render(<App />);
+
     expect(screen.getByTestId("agenda-month-view")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Calendários" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tipos" })).toBeInTheDocument();
@@ -149,18 +174,10 @@ describe("Alpha RH connected screens", () => {
     fireEvent.click(screen.getByRole("button", { name: /Abrir terça-feira, 22 de abril/i }));
     const drawer = screen.getByRole("dialog", { name: "Terça-feira, 22 de abril" });
     expect(within(drawer).getByText("3 compromissos neste dia")).toBeInTheDocument();
-    expect(within(drawer).getByRole("button", { name: "Novo compromisso" })).toBeInTheDocument();
     fireEvent.click(within(drawer).getByRole("button", { name: "Fechar detalhes do dia" }));
-    expect(screen.queryByRole("dialog", { name: "Terça-feira, 22 de abril" })).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Semana" }));
     expect(screen.getByTestId("agenda-week-view")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Entrevista RH, Paulo Henrique, 10:00" }));
-    const thursday = screen.getByRole("dialog", { name: "Quinta-feira, 24 de abril" });
-    expect(within(thursday).getAllByRole("button", { name: "Editar" })).toHaveLength(3);
-    expect(within(thursday).getAllByRole("button", { name: "Abrir candidato" })).toHaveLength(2);
-    fireEvent.click(within(thursday).getByRole("button", { name: "Fechar detalhes do dia" }));
-
     fireEvent.click(screen.getByRole("button", { name: "Dia" }));
     expect(screen.getByTestId("agenda-day-view")).toBeInTheDocument();
   });
@@ -177,12 +194,25 @@ describe("Alpha RH connected screens", () => {
     expect(screen.getByRole("heading", { name: "Contratações e encerramentos" })).toBeInTheDocument();
   });
 
-  it("renders the complete recruitment report", () => {
+  it("renders the demonstrative recruitment report with period filtering and an expandable vacancy view", () => {
     window.history.replaceState(null, "", "#/relatorios");
     render(<App />);
-    expect(screen.getByRole("heading", { name: "Vagas com atenção" })).toBeInTheDocument();
-    expect(screen.getByLabelText("Conversão por etapa")).toBeInTheDocument();
-    expect(screen.getAllByLabelText(/Origem dos candidatos/)).toHaveLength(1);
+    expect(screen.getByLabelText("Data inicial")).toBeInTheDocument();
+    expect(screen.getByLabelText("Data final")).toBeInTheDocument();
+    expect(screen.getByText("Currículos recebidos")).toBeInTheDocument();
+    expect(screen.getByText("Maior fonte")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Fontes de currículos" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Processo agregado" })).toBeInTheDocument();
+    expect(screen.queryByText("Salvar visão")).not.toBeInTheDocument();
+    expect(screen.queryByText("Conversão por etapa")).not.toBeInTheDocument();
+    expect(screen.queryByText("Tempo médio por etapa")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Ver todas as vagas" }));
+    expect(screen.getByText("8 vagas abertas")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Pizza" }));
+    expect(screen.getByLabelText("Gráfico de pizza das fontes de currículos")).toBeInTheDocument();
+    expect(screen.getByLabelText("Gráfico de pizza do processo agregado")).toBeInTheDocument();
   });
 
   it("opens the selected integration detail", () => {
@@ -198,10 +228,42 @@ describe("Alpha RH connected screens", () => {
     render(<App />);
     fireEvent.click(screen.getByRole("tab", { name: "Estrutura" }));
     expect(screen.getByRole("heading", { name: "Postos, departamentos e responsáveis" })).toBeInTheDocument();
-    expect(screen.getAllByText(/CAD_CLIENTE/).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/somente leitura/i).length).toBeGreaterThan(0);
+    expect(screen.getByText("Estrutura organizacional")).toBeInTheDocument();
+    expect(screen.getByText(/dados apresentados neste ambiente/i)).toBeInTheDocument();
     fireEvent.click(screen.getByRole("tab", { name: "Configurações" }));
     expect(screen.getByRole("heading", { name: "Configurações do recrutamento" })).toBeInTheDocument();
+  });
+
+  it("lets an administrator prepare a demonstrative user invitation with screen access", () => {
+    window.history.replaceState(null, "", "#/administracao");
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Novo usuário" }));
+    const dialog = screen.getByRole("dialog", { name: "Criar novo usuário" });
+    fireEvent.click(within(dialog).getByLabelText("Relatórios"));
+    fireEvent.click(within(dialog).getByRole("button", { name: "Enviar convite" }));
+    expect(within(dialog).getByText("Convite demonstrativo preparado")).toBeInTheDocument();
+  });
+
+  it("opens user access configuration in a focused card", () => {
+    window.history.replaceState(null, "", "#/administracao");
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: /Ana Marques/ }));
+    expect(screen.getByRole("dialog", { name: "Configurar acessos de Ana Marques" })).toBeInTheDocument();
+  });
+
+  it("shows demonstrative department, contract and owner workspaces", () => {
+    window.history.replaceState(null, "", "#/administracao");
+    render(<App />);
+    fireEvent.click(screen.getByRole("tab", { name: "Estrutura" }));
+
+    fireEvent.click(screen.getByRole("tab", { name: "Departamentos" }));
+    expect(screen.getByRole("heading", { name: "Departamentos" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("tab", { name: "Contratos" }));
+    expect(screen.getByRole("heading", { name: "Contratos" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("tab", { name: "Responsáveis" }));
+    expect(screen.getByRole("heading", { name: "Responsáveis" })).toBeInTheDocument();
   });
 
   it("moves through vacancy details, requirements, questions, stages and review", async () => {

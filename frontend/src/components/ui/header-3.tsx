@@ -13,8 +13,10 @@ import {
   Home,
   LayoutDashboard,
   Link2,
+  Moon,
   Search,
   Settings2,
+  Sun,
   UserRoundCheck,
   UsersRound,
 } from 'lucide-react';
@@ -28,7 +30,13 @@ type HeaderProps = { route: string };
 
 export function Header({ route }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [darkMode, setDarkMode] = React.useState(() => window.localStorage.getItem('alpha-rh-theme') === 'dark');
   const scrolled = useScroll(8);
+
+  React.useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+    window.localStorage.setItem('alpha-rh-theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
 
   React.useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
@@ -53,7 +61,7 @@ export function Header({ route }: HeaderProps) {
           <DropdownNavigation navItems={menuGroups} route={route} className="alpha-desktop-nav flex-none" />
 
           <div className="ml-auto flex shrink-0 items-center gap-1.5">
-            <label className="alpha-header-search h-10 w-[320px] items-center gap-2 rounded-lg border border-[#cfdfd3] bg-white px-3 text-[#5f716a] transition-colors focus-within:border-[#7fa68d] focus-within:ring-2 focus-within:ring-[#235347]/10">
+            <label hidden className="alpha-header-search h-10 w-[320px] items-center gap-2 rounded-lg border border-[#cfdfd3] bg-white px-3 text-[#5f716a] transition-colors focus-within:border-[#7fa68d] focus-within:ring-2 focus-within:ring-[#235347]/10">
               <Search className="size-4 shrink-0" />
               <input type="search" aria-label="Buscar no Alpha RH" placeholder="Buscar pessoas, vagas ou menus" className="min-w-0 flex-1 bg-transparent text-[13px] text-[#163832] outline-none placeholder:text-[#75877f]" />
               <kbd className="rounded border border-[#cfdfd3] bg-white px-1.5 py-0.5 text-[12px] font-semibold text-[#667970]">⌘ K</kbd>
@@ -63,6 +71,16 @@ export function Header({ route }: HeaderProps) {
               <Bell className="size-[18px]" />
               <span className="absolute right-[8px] top-[7px] size-2 rounded-full bg-[#f4a51c] ring-2 ring-white" aria-hidden="true" />
             </a>
+            <button
+              type="button"
+              className="alpha-theme-toggle"
+              aria-label={darkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
+              aria-pressed={darkMode}
+              onClick={() => setDarkMode((current) => !current)}
+            >
+              {darkMode ? <Sun className="size-[17px]" /> : <Moon className="size-[17px]" />}
+              <span className="hidden xl:inline">{darkMode ? 'Claro' : 'Escuro'}</span>
+            </button>
             <span className="hidden h-8 w-px bg-[#d7e5db] xl:block" aria-hidden="true" />
             <button className="alpha-profile-button ml-0.5 flex h-12 items-center gap-2.5 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30" type="button" aria-label="Abrir perfil de Simão Pedro">
               <span className="grid size-9 place-items-center rounded-full bg-[#163832] text-[13px] font-extrabold text-white">SP</span>

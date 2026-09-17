@@ -39,6 +39,41 @@ const opportunityDetails = {
 
 const filterLabels = ["Experiência", "Escolaridade", "Localidade", "Disponibilidade"];
 
+const talentWorkspaceViews = {
+  overview: {
+    title: "Visão geral de talentos",
+    description: "Acompanhe a base consolidada e os principais recortes disponíveis para o RH.",
+    eyebrow: "Panorama da base",
+    heading: "Talentos em destaque",
+    items: [["1.248", "talentos cadastrados", "Base consolidada do RH"], ["486", "disponíveis agora", "39% da base de talentos"], ["904", "perfis completos", "Dados prontos para busca"]],
+  },
+  segments: {
+    title: "Segmentos de talentos",
+    description: "Organize grupos de pessoas para buscas, campanhas e oportunidades recorrentes.",
+    eyebrow: "Segmentos salvos",
+    heading: "Grupos prontos para consultar",
+    items: [["486", "Disponíveis agora", "Contato recente e disponibilidade confirmada"], ["312", "Mobilidade validada", "Rota compatível com postos ativos"], ["186", "Recomendados para vagas", "Perfis com aderência às oportunidades abertas"]],
+  },
+  history: {
+    title: "Histórico de contatos",
+    description: "Consulte os últimos contatos realizados com os talentos da base.",
+    eyebrow: "Atividade recente",
+    heading: "Interações registradas",
+    items: [["Hoje, 10:42", "Currículo enviado para revisão", "Rafael Santos · Auxiliar de Serviços Gerais"], ["Hoje, 09:18", "Convite para entrevista enviado", "Mariana Lima · Auxiliar de Limpeza"], ["Ontem, 16:25", "Interesse confirmado", "André Cardoso · Porteiro"]],
+  },
+};
+
+function TalentWorkspacePreview({ section }) {
+  const view = talentWorkspaceViews[section];
+  return <>
+    <ScreenHeader title={view.title} description={view.description} />
+    <section className="surface-panel talent-section-preview" aria-label={view.title}>
+      <header><span>{view.eyebrow}</span><h2>{view.heading}</h2><p>Dados demonstrativos organizados para facilitar a consulta da equipe.</p></header>
+      <div className="talent-section-preview-grid">{view.items.map(([value, label, note]) => <article key={label}><strong>{value}</strong><b>{label}</b><small>{note}</small></article>)}</div>
+    </section>
+  </>;
+}
+
 export function TalentsScreen() {
   const [search, setSearch] = useState("");
   const [section, setSection] = useState("bank");
@@ -57,6 +92,13 @@ export function TalentsScreen() {
 
   const vacancyMode = mode === "vacancy";
   const resultLabel = search ? `${visible.length} resultado${visible.length === 1 ? "" : "s"}` : "1.248 talentos";
+
+  if (section !== "bank") {
+    return <main className="screen-workspace miro-screen talent-workspace">
+      <WorkspaceTabs items={sectionTabs} active={section} onChange={setSection} ariaLabel="Áreas de talentos" />
+      <TalentWorkspacePreview section={section} />
+    </main>;
+  }
 
   return (
     <main className="screen-workspace miro-screen talent-workspace">

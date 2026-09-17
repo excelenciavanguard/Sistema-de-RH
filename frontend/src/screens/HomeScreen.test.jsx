@@ -21,6 +21,16 @@ it("restores the personal greeting and browser-local date above the processes", 
   expect(greeting.closest("header")).toContainElement(agendaButton);
 });
 
+it("places the processes title before its pipeline rows", () => {
+  render(<HomeScreen onNavigate={vi.fn()} currentDate={new Date(2026, 8, 16)} />);
+
+  const processTable = screen.getByRole("table", { name: "Processos em andamento" });
+  const processCard = processTable.closest(".processes-card");
+  const title = screen.getByRole("heading", { name: "Processos em andamento" });
+
+  expect(processCard.firstElementChild).toContainElement(title);
+});
+
 it("opens the whole day and navigates to the complete agenda", () => {
   const navigate = vi.fn();
   render(<HomeScreen onNavigate={navigate} />);

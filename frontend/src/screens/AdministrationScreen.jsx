@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./administration-users.css";
 import { Building2, CheckCircle2, ChevronDown, Info, KeyRound, Mail, MoreVertical, Plus, Search, Settings2, ShieldCheck, UserPlus, UsersRound } from "lucide-react";
 import { ScreenHeader } from "../components/ScreenHeader.jsx";
 import { StatusPill } from "../components/StatusPill.jsx";
@@ -12,7 +13,41 @@ export function AdministrationScreen() {
   return <main className="screen-workspace miro-screen admin-reference-screen"><WorkspaceTabs items={areas} active={area} onChange={setArea} ariaLabel="Áreas da administração" />{area === "users" && <UsersView />}{area === "structure" && <StructureView />}{area === "settings" && <SettingsView />}</main>;
 }
 
+const accessScreens = [
+  ["Hoje no RH", "Visão geral e prioridades"], ["Requisições", "Criação e aprovações"], ["Vagas", "Vagas e Kanban"], ["Candidatos", "Banco de talentos e currículos"], ["Agenda", "Entrevistas e compromissos"], ["Relatórios", "Indicadores demonstrativos"], ["Administração", "Usuários, estrutura e configurações"],
+];
+
 function UsersView() {
+  const [selectedId, setSelectedId] = useState(2);
+  const [isInviteOpen, setInviteOpen] = useState(false);
+  const [inviteReady, setInviteReady] = useState(false);
+  const [isAccessOpen, setAccessOpen] = useState(false);
+  const selected = adminUsers.find((user) => user.id === selectedId) ?? adminUsers[0];
+  const enabledScreens = selected.area === "Diretoria" ? accessScreens : accessScreens.slice(0, 5);
+
+  return <>
+    <ScreenHeader title="Usuários e permissões" description="Organize quem acessa cada tela do Alpha RH e o que pode fazer nela." actions={<button className="primary-action" onClick={() => { setInviteReady(false); setInviteOpen(true); }}><UserPlus size={17} />Novo usuário</button>} />
+    <section className="admin-access-summary"><article><UsersRound /><span><strong>4</strong><small>Usuários ativos</small></span></article><article><Mail /><span><strong>2</strong><small>Convites pendentes</small></span></article><article><ShieldCheck /><span><strong>1</strong><small>Acesso suspenso</small></span></article><div><ShieldCheck size={17} /><span><b>Controle por tela</b><small>Defina menus, dados e ações para cada perfil.</small></span></div></section>
+    <section className="admin-management-layout">
+      <div className="admin-user-main" onClick={() => setAccessOpen(true)}>
+        <div className="surface-panel admin-user-directory"><header><div><span className="report-panel-kicker"><UsersRound size={15} />Diretório de usuários</span><h2>Usuários do sistema</h2><p>Selecione uma pessoa para revisar seus acessos.</p></div><span>{adminUsers.length} cadastrados</span></header><div className="admin-directory-head"><span>Usuário</span><span>Perfil</span><span>Telas liberadas</span><span>Último acesso</span><span>Status</span></div>{adminUsers.map((user) => <button className={`admin-directory-row ${user.id === selected.id ? "selected" : ""}`} key={user.id} onClick={() => setSelectedId(user.id)}><span className="person-cell"><i>{user.initials}</i><b>{user.name}<small>{user.email} · {user.area}</small></b></span><span>{user.profile}</span><span>{user.area === "Diretoria" ? "Todas as telas" : "5 telas"}</span><span>{user.lastAccess}</span><span><StatusPill tone={user.tone}>{user.status}</StatusPill></span></button>)}</div>
+      </div>
+      <aside className="surface-panel admin-access-detail"><header><div className="avatar-token large">{selected.initials}</div><div><span className="report-panel-kicker">Acesso do usuário</span><h2>{selected.name}</h2><p>{selected.email}</p></div><StatusPill tone={selected.tone}>{selected.status}</StatusPill></header><label className="profile-select">Perfil atribuído<select defaultValue={selected.profile}><option>Acesso integral</option><option>Gestora de recrutamento</option><option>Solicitante</option><option>Acesso restrito</option></select><small>O perfil inicia as permissões; você pode ajustar cada tela abaixo.</small></label><div className="access-detail-heading"><div><h3>Telas liberadas</h3><p>Escolha quais módulos aparecem na navegação deste usuário.</p></div><span>{enabledScreens.length}/{accessScreens.length}</span></div><div className="screen-access-list">{accessScreens.map(([label, description], index) => <label key={label}><input type="checkbox" defaultChecked={selected.area === "Diretoria" || index < 5} /><span><b>{label}</b><small>{description}</small></span><select defaultValue={index < 4 ? "Editar" : "Visualizar"}><option>Editar</option><option>Visualizar</option><option>Sem acesso</option></select></label>)}</div><div className="security-note"><ShieldCheck /><span><strong>Acesso protegido</strong><small>Convites usam um link para a pessoa definir a própria senha.</small></span></div><footer><button className="secondary-action">Cancelar</button><button className="primary-action">Salvar acessos</button></footer></aside>
+    </section>
+    {isAccessOpen ? <UserAccessDialog user={selected} onClose={() => setAccessOpen(false)} /> : null}
+    {isInviteOpen ? <UserInviteDialog ready={inviteReady} onClose={() => setInviteOpen(false)} onSend={() => setInviteReady(true)} /> : null}
+  </>;
+}
+
+function UserInviteDialog({ ready, onClose, onSend }) {
+  return <div className="admin-invite-backdrop"><section className="surface-panel admin-invite-dialog" role="dialog" aria-label="Criar novo usuário"><header><div><span className="report-panel-kicker"><UserPlus size={15} />Novo acesso</span><h2>Criar novo usuário</h2><p>Configure o acesso inicial e envie um convite demonstrativo.</p></div><button aria-label="Fechar" onClick={onClose}>×</button></header><div className="invite-fields"><label>Nome completo<input placeholder="Ex.: Marina Costa" /></label><label>E-mail corporativo<input type="email" placeholder="marina@empresa.com.br" /></label><label>Perfil inicial<select><option>Gestora de recrutamento</option><option>Solicitante</option><option>Acesso restrito</option></select></label></div><fieldset><legend>Telas que a pessoa poderá acessar</legend><div>{accessScreens.map(([label]) => <label key={label}><input aria-label={label} type="checkbox" defaultChecked={["Hoje no RH", "Vagas", "Candidatos"].includes(label)} />{label}</label>)}</div></fieldset>{ready ? <div className="invite-success"><CheckCircle2 /><span><strong>Convite demonstrativo preparado</strong><small>Em produção, a pessoa receberá um link para criar sua senha com segurança.</small></span></div> : null}<footer><button className="secondary-action" onClick={onClose}>Cancelar</button><button className="primary-action" onClick={onSend}><Mail size={16} />Enviar convite</button></footer></section></div>;
+}
+
+function UserAccessDialog({ user, onClose }) {
+  return <div className="admin-invite-backdrop"><section className="surface-panel admin-invite-dialog admin-user-config-dialog" role="dialog" aria-label={`Configurar acessos de ${user.name}`}><header><div className="admin-config-person"><div className="avatar-token large">{user.initials}</div><div><span className="report-panel-kicker"><ShieldCheck size={15} />Acesso do usuário</span><h2>{user.name}</h2><p>{user.email}</p></div></div><button aria-label="Fechar configurações" onClick={onClose}>×</button></header><label className="profile-select">Perfil atribuído<select defaultValue={user.profile}><option>Acesso integral</option><option>Gestora de recrutamento</option><option>Solicitante</option><option>Acesso restrito</option></select><small>O perfil inicia as permissões; ajuste as telas abaixo quando necessário.</small></label><div className="access-detail-heading"><div><h3>Telas liberadas</h3><p>Defina os módulos e o nível de acesso desta pessoa.</p></div><span>{user.area === "Diretoria" ? "7/7" : "5/7"}</span></div><div className="screen-access-list">{accessScreens.map(([label, description], index) => <label key={label}><input type="checkbox" defaultChecked={user.area === "Diretoria" || index < 5} /><span><b>{label}</b><small>{description}</small></span><select defaultValue={index < 4 ? "Editar" : "Visualizar"}><option>Editar</option><option>Visualizar</option><option>Sem acesso</option></select></label>)}</div><footer><button className="secondary-action" onClick={onClose}>Cancelar</button><button className="primary-action" onClick={onClose}>Salvar acessos</button></footer></section></div>;
+}
+
+function LegacyUsersView() {
   const [selectedId, setSelectedId] = useState(2);
   const selected = adminUsers.find((user) => user.id === selectedId) ?? adminUsers[0];
   return <>
@@ -28,7 +63,23 @@ function UsersView() {
   </>;
 }
 
+const structureWorkspaces = {
+  posts: { title: "Postos", singular: "Posto", description: "Unidades e locais utilizados nas vagas.", rows: adminPosts.map((post) => [post.id, post.name, post.legalName, post.owner, post.city]) },
+  departments: { title: "Departamentos", singular: "Departamento", description: "Áreas responsáveis pelas solicitações e aprovações.", rows: [["DEP-001", "Operações", "Escalas e postos operacionais", "Carlos Souza", "12 vagas"], ["DEP-002", "Recursos Humanos", "Recrutamento e admissão", "Ana Marques", "8 vagas"], ["DEP-003", "Jurídico", "Documentação e conformidade", "Marina Lopes", "2 vagas"], ["DEP-004", "Diretoria", "Aprovações estratégicas", "Lucas", "3 vagas"]] },
+  contracts: { title: "Contratos", singular: "Contrato", description: "Contratos que vinculam postos, operação e prazo.", rows: [["CTR-2025-014", "Leblon Power", "Vigente até 30/09/2025", "Ana Souza", "4 postos"], ["CTR-2025-022", "Centro Empresarial Rio", "Vigente até 31/12/2025", "Bruno Almeida", "3 postos"], ["CTR-2025-031", "Alpha Serviços", "Vigente até 15/08/2025", "Carla Mendes", "2 postos"], ["CTR-2025-038", "Barra Tower", "Vigente até 28/02/2026", "Diego Lima", "5 postos"]] },
+  owners: { title: "Responsáveis", singular: "Responsável", description: "Pessoas que acompanham vagas e operações por estrutura.", rows: [["USR-021", "Ana Souza", "Operações · Leblon Power", "Gestora de operação", "4 postos"], ["USR-034", "Bruno Almeida", "Operações · Centro", "Supervisor regional", "3 postos"], ["USR-052", "Carla Mendes", "RH · Matriz", "Analista de RH", "2 postos"], ["USR-067", "Diego Lima", "Operações · Barra", "Coordenador de contrato", "5 postos"]] },
+};
+
 function StructureView() {
+  const [workspace, setWorkspace] = useState("posts");
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const current = structureWorkspaces[workspace];
+  const selected = current.rows[selectedIndex] ?? current.rows[0];
+  const selectWorkspace = (next) => { setWorkspace(next); setSelectedIndex(0); };
+  return <><ScreenHeader title="Postos, departamentos e responsáveis" description="Organize a estrutura utilizada nas requisições e vagas." /><div className="info-strip"><Info /><span>Dados apresentados neste ambiente são <strong>demonstrativos</strong> e servem para configurar a operação.</span></div><WorkspaceTabs items={[{ id: "posts", label: "Postos" }, { id: "departments", label: "Departamentos" }, { id: "contracts", label: "Contratos" }, { id: "owners", label: "Responsáveis" }]} active={workspace} onChange={selectWorkspace} ariaLabel="Estrutura organizacional" /><section className="structure-browser"><div><div className="admin-filter-row"><label><Search size={16} /><input placeholder={`Buscar ${current.title.toLowerCase()}...`} /></label><button>Ativos<ChevronDown size={14} /></button><button>Todos os responsáveis<ChevronDown size={14} /></button></div><div className="surface-panel structure-table"><header><div><span className="report-panel-kicker"><Building2 size={15} />Estrutura organizacional</span><h2>{current.title}</h2><p>{current.description}</p></div><span>{current.rows.length} cadastrados</span></header><div className="structure-table-head"><span>Código</span><span>{current.singular}</span><span>Vínculo</span><span>Responsável</span><span>Escopo</span></div>{current.rows.map((row, index) => <button className={selectedIndex === index ? "selected" : ""} key={row[0]} onClick={() => setSelectedIndex(index)}><span>{row[0]}</span><span><b>{row[1]}</b></span><span>{row[2]}</span><span>{row[3]}</span><span>{row[4]}</span></button>)}</div></div><aside className="surface-panel structure-detail"><header><div className="avatar-token"><Building2 /></div><div><span className="report-panel-kicker">{current.singular} selecionado</span><h2>{selected[1]}</h2><p>{selected[0]}</p></div><StatusPill tone="success">Ativo</StatusPill></header><section><h3>Informações principais</h3><dl><div><dt>Vínculo</dt><dd>{selected[2]}</dd></div><div><dt>Responsável</dt><dd>{selected[3]}</dd></div><div><dt>Escopo</dt><dd>{selected[4]}</dd></div></dl></section><section><h3>Uso no recrutamento</h3><p>Esta estrutura pode ser associada às requisições, vagas e responsáveis do processo.</p></section><footer><button className="secondary-action">Ver histórico</button><button className="primary-action">Editar dados</button></footer></aside></section></>;
+}
+
+function LegacyStructureView() {
   const [selectedId, setSelectedId] = useState("CLI-0001");
   const selected = adminPosts.find((post) => post.id === selectedId) ?? adminPosts[0];
   return <>
