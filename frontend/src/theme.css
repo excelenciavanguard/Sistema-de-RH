@@ -647,9 +647,13 @@
   box-shadow: none !important;
 }
 
-.dark .process-home .stage-progress i.done {
-  border-color: #4b816d !important;
-  background: #2c6858 !important;
+.dark .process-home .stage-progress i.has-candidates {
+  border-color: #76c39f !important;
+  background: #76c39f !important;
+}
+
+.dark .processes-legend i {
+  background: #76c39f !important;
 }
 
 .dark .process-new-badge {
