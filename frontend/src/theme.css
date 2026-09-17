@@ -65,7 +65,10 @@
 .dark .alpha-wordmark strong { color: #edf8f1 !important; }
 .dark .alpha-wordmark small { color: #a8beb1 !important; }
 .dark :is(.alpha-home-link, .alpha-dropdown-trigger) { color: #c9dfd3 !important; }
-.dark :is(.alpha-home-link:hover, .alpha-home-link.is-active, .alpha-dropdown-trigger.is-open) { background: #203a30 !important; color: #edf8f1 !important; }
+.dark :is(.alpha-home-link:hover, .alpha-home-link.is-active, .alpha-dropdown-trigger:hover, .alpha-dropdown-trigger.is-active, .alpha-dropdown-trigger.is-open) { background: #203a30 !important; color: #edf8f1 !important; }
+.dark :is(.alpha-home-link, .alpha-dropdown-trigger)::after { background: #9ed3bc; }
+.dark .route-loading { color: #b7cec1; }
+.dark .route-loading-indicator { border-color: #3b4c45; border-top-color: #9ed3bc; }
 .dark .alpha-dropdown-panel { background: #171d1b; border-color: #3b4c45; color: #e8f4ed; box-shadow: 0 22px 52px rgba(0,0,0,.38); }
 .dark .alpha-dropdown-summary { border-bottom-color: #35433d; }
 .dark .alpha-dropdown-summary h2,

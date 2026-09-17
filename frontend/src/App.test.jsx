@@ -1,7 +1,9 @@
 import "@testing-library/jest-dom/vitest";
-import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { cleanup, configure, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { App } from "./App.jsx";
+
+configure({ asyncUtilTimeout: 5_000 });
 
 function jsonResponse(payload, ok = true) {
   return { ok, json: async () => payload };
@@ -101,8 +103,11 @@ describe("Alpha RH connected screens", () => {
   });
 
   it("shows the approved compact recruitment menu copy", () => {
-    render(<App />);
-    fireEvent.click(screen.getByRole("button", { name: "Recrutamento" }));
+    renderKanban();
+    const recruitmentTrigger = screen.getByRole("button", { name: "Recrutamento" });
+    expect(recruitmentTrigger).toHaveClass("is-active");
+    expect(recruitmentTrigger).toHaveAttribute("aria-current", "page");
+    fireEvent.click(recruitmentTrigger);
 
     const menu = screen.getByRole("menu");
     expect(within(menu).getByRole("heading", { name: "Recrutamento" })).toBeInTheDocument();
@@ -128,7 +133,7 @@ describe("Alpha RH connected screens", () => {
     window.history.replaceState(null, "", "#/recrutamento/aprovacoes");
     render(<App />);
 
-    fireEvent.click(screen.getByRole("button", { name: /Analisar REQ-2026-041/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /Analisar REQ-2026-041/i }));
     const decision = screen.getByRole("dialog", { name: /Analisar requisição REQ-2026-041/i });
     fireEvent.click(within(decision).getByRole("button", { name: "Aprovar requisição" }));
     expect(within(decision).getByText("Requisição aprovada")).toBeInTheDocument();
@@ -283,7 +288,7 @@ describe("Alpha RH connected screens", () => {
     window.history.replaceState(null, "", "#/recrutamento/vagas/nova");
     render(<App />);
 
-    expect(screen.getByRole("heading", { name: "Criar vaga" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Criar vaga" })).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Continuar para requisitos" }));
     expect(screen.getByRole("heading", { name: "Requisitos da vaga" })).toBeInTheDocument();
 

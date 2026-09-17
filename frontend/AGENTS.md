@@ -10,6 +10,10 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Current frontend phase
 
+- Frontend performance direction approved on 2026-09-17: keep the operational home and app shell in the initial bundle, lazy-load every secondary screen by route behind one accessible `Suspense` fallback, and prefer the small CSS navigation transition over a general-purpose animation runtime. Preserve the current visual behavior while keeping route chunks independently cacheable.
+
+- Top-level navigation refinement approved on 2026-09-17: keep every desktop module control at the same 40px height with aligned 17px outline icons, 14px semibold labels and compact chevrons. The active module uses `#EDF6EF`, an 8px radius and a thin `#235347` underline; avoid the previous full-height rectangular green block, shadows or pill styling. Hover is lighter than the active state, and dark mode keeps the same hierarchy with graphite/green surfaces.
+
 - Responsive adaptation approved on 2026-09-17: preserve the full executive desktop navigation on common compact monitor resolutions such as 1366×768, 1440×900 and 1600×900. Use a compact intermediate header and tighter workspace spacing without reducing the approved typography; dropdowns must remain inside the viewport and become internally scrollable on short screens. At 1120px and below, switch to the existing mobile navigation with 44px-class touch targets and keep all core destinations available.
 
 - Recruitment dropdown direction approved on 2026-09-17: preserve the white executive header and grouped navigation behavior, but use a compact 590px two-column menu with a slim inline summary, tighter item spacing and clear hover/active states. Keep Abertura da vaga and Seleção as the two groups; use “Processos seletivos” with “Acompanhe os processos em andamento”. Single-group menus use the same component in a narrower one-column layout, and dark mode must use graphite surfaces rather than white or pale panels.

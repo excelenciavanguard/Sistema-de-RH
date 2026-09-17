@@ -53,7 +53,7 @@ export function Header({ route }: HeaderProps) {
             <Logo />
           </a>
 
-          <a href="#/inicio" className={cn('alpha-home-link hidden items-center gap-2 px-4 text-[13px] font-extrabold outline-none lg:flex', route === '/inicio' && 'is-active')} aria-label="Hoje no RH" aria-current={route === '/inicio' ? 'page' : undefined}>
+          <a href="#/inicio" className={cn('alpha-home-link hidden h-10 self-center items-center gap-2 rounded-lg px-3 text-[14px] font-semibold outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30 lg:flex', route === '/inicio' && 'is-active')} aria-label="Hoje no RH" aria-current={route === '/inicio' ? 'page' : undefined}>
             <Home className="size-[17px]" />
             <span>Hoje no RH</span>
           </a>

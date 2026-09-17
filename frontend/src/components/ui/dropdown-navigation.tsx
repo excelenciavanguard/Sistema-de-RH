@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { ChevronDown, LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -33,7 +32,6 @@ type DropdownNavigationProps = {
 
 export function DropdownNavigation({ navItems, route, className }: DropdownNavigationProps) {
   const [openMenu, setOpenMenu] = React.useState<string | null>(null);
-  const [hoveredMenu, setHoveredMenu] = React.useState<string | null>(null);
 
   React.useEffect(() => setOpenMenu(null), [route]);
 
@@ -46,7 +44,6 @@ export function DropdownNavigation({ navItems, route, className }: DropdownNavig
   }, []);
 
   return (
-    <MotionConfig reducedMotion="user" transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}>
       <nav className={cn('relative', className)} aria-label="Navegação principal">
         <ul className="m-0 flex list-none items-center gap-0.5 p-0">
           {navItems.map((navItem) => {
@@ -57,8 +54,8 @@ export function DropdownNavigation({ navItems, route, className }: DropdownNavig
               <li
                 key={navItem.id}
                 className="relative"
-                onMouseEnter={() => { setHoveredMenu(navItem.label); setOpenMenu(navItem.label); }}
-                onMouseLeave={() => { setHoveredMenu(null); setOpenMenu(null); }}
+                onMouseEnter={() => setOpenMenu(navItem.label)}
+                onMouseLeave={() => setOpenMenu(null)}
                 onBlur={(event) => {
                   if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setOpenMenu(null);
                 }}
@@ -66,33 +63,27 @@ export function DropdownNavigation({ navItems, route, className }: DropdownNavig
                 <button
                   type="button"
                   className={cn(
-                    'alpha-dropdown-trigger relative flex h-full cursor-pointer items-center justify-center gap-1.5 overflow-hidden border-x-0 border-t-0 border-b-2 border-transparent px-3 text-[13px] font-bold text-[#163832] outline-none transition-colors hover:bg-[#edf6ef] hover:text-[#235347] focus-visible:ring-2 focus-visible:ring-[#235347]/30',
-                    active && !open && 'bg-[#dff3e4] text-[#163832]',
-                    open && 'is-open border-[#cfdfd3] bg-white text-[#235347] shadow-[0_7px_18px_rgba(5,31,32,.10)]',
+                    'alpha-dropdown-trigger relative flex h-10 cursor-pointer items-center justify-center gap-2 overflow-hidden border border-transparent px-3 text-[14px] font-semibold text-[#163832] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#235347]/30',
+                    active && 'is-active',
+                    open && 'is-open',
                   )}
                   aria-expanded={open}
                   aria-haspopup="menu"
                   aria-controls={`alpha-menu-${navItem.id}`}
+                  aria-current={active ? 'page' : undefined}
                   onClick={() => setOpenMenu(navItem.label)}
                   onFocus={() => setOpenMenu(navItem.label)}
                 >
-                  {(hoveredMenu === navItem.label || active) && !open ? (
-                    <motion.span layoutId="alpha-nav-hover" className="absolute inset-0 rounded-xl bg-[#dff3e4]" aria-hidden="true" />
-                  ) : null}
-                  {NavIcon ? <NavIcon className="relative z-10 size-[15px]" aria-hidden="true" /> : null}
+                  {NavIcon ? <NavIcon className="relative z-10 size-[17px]" aria-hidden="true" /> : null}
                   <span className="relative z-10">{navItem.label}</span>
-                  <ChevronDown className={cn('relative z-10 size-3.5 transition-transform duration-200', open && 'rotate-180')} aria-hidden="true" />
+                  <ChevronDown className={cn('relative z-10 size-[14px] transition-transform duration-200', open && 'rotate-180')} aria-hidden="true" />
                 </button>
 
-                <AnimatePresence>
                   {open ? (
                     <div className="alpha-dropdown-flyout absolute left-0 top-full">
-                      <motion.div
+                      <div
                         id={`alpha-menu-${navItem.id}`}
                         role="menu"
-                        initial={{ opacity: 0, y: -6, filter: 'blur(4px)' }}
-                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                        exit={{ opacity: 0, y: -4, filter: 'blur(3px)' }}
                         className={cn('alpha-dropdown-panel', navItem.subMenus.length > 1 ? 'is-multi' : 'is-single')}
                       >
                         <div className="alpha-dropdown-summary">
@@ -125,15 +116,13 @@ export function DropdownNavigation({ navItems, route, className }: DropdownNavig
                             </section>
                           ))}
                         </div>
-                      </motion.div>
+                      </div>
                     </div>
                   ) : null}
-                </AnimatePresence>
               </li>
             );
           })}
         </ul>
       </nav>
-    </MotionConfig>
   );
 }

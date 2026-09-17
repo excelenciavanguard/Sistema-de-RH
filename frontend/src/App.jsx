@@ -1,21 +1,24 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { AppShell } from "./components/AppShell.jsx";
 import { WelcomeIntro } from "./components/WelcomeIntro.jsx";
 import { HomeScreen } from "./screens/HomeScreen.jsx";
-import { RequisitionsScreen } from "./screens/RequisitionsScreen.jsx";
-import { RequisitionCreateScreen } from "./screens/RequisitionCreateScreen.jsx";
-import { ApprovalsScreen } from "./screens/ApprovalsScreen.jsx";
-import { VacanciesScreen } from "./screens/VacanciesScreen.jsx";
-import { VacancyCreateScreen } from "./screens/VacancyCreateScreen.jsx";
-import { KanbanScreen } from "./screens/KanbanScreen.jsx";
-import { ModulePreviewScreen } from "./screens/ModulePreviewScreen.jsx";
-import { TalentsScreen } from "./screens/TalentsScreen.jsx";
-import { AgendaScreen } from "./screens/AgendaScreen.jsx";
-import { AdmissionScreen } from "./screens/AdmissionScreen.jsx";
-import { ReportsScreen } from "./screens/ReportsScreen.jsx";
-import { IntegrationsScreen } from "./screens/IntegrationsScreen.jsx";
-import { AdministrationScreen } from "./screens/AdministrationScreen.jsx";
 import { kanbanCodeFromRoute, navigateTo, routeFromHash, ROUTES } from "./navigation.js";
+
+const lazyNamed = (loader, exportName) => lazy(() => loader().then((module) => ({ default: module[exportName] })));
+
+const RequisitionsScreen = lazyNamed(() => import("./screens/RequisitionsScreen.jsx"), "RequisitionsScreen");
+const RequisitionCreateScreen = lazyNamed(() => import("./screens/RequisitionCreateScreen.jsx"), "RequisitionCreateScreen");
+const ApprovalsScreen = lazyNamed(() => import("./screens/ApprovalsScreen.jsx"), "ApprovalsScreen");
+const VacanciesScreen = lazyNamed(() => import("./screens/VacanciesScreen.jsx"), "VacanciesScreen");
+const VacancyCreateScreen = lazyNamed(() => import("./screens/VacancyCreateScreen.jsx"), "VacancyCreateScreen");
+const KanbanScreen = lazyNamed(() => import("./screens/KanbanScreen.jsx"), "KanbanScreen");
+const ModulePreviewScreen = lazyNamed(() => import("./screens/ModulePreviewScreen.jsx"), "ModulePreviewScreen");
+const TalentsScreen = lazyNamed(() => import("./screens/TalentsScreen.jsx"), "TalentsScreen");
+const AgendaScreen = lazyNamed(() => import("./screens/AgendaScreen.jsx"), "AgendaScreen");
+const AdmissionScreen = lazyNamed(() => import("./screens/AdmissionScreen.jsx"), "AdmissionScreen");
+const ReportsScreen = lazyNamed(() => import("./screens/ReportsScreen.jsx"), "ReportsScreen");
+const IntegrationsScreen = lazyNamed(() => import("./screens/IntegrationsScreen.jsx"), "IntegrationsScreen");
+const AdministrationScreen = lazyNamed(() => import("./screens/AdministrationScreen.jsx"), "AdministrationScreen");
 
 const moduleTitles = {
   [ROUTES.talents]: "Banco de talentos",
@@ -57,6 +60,17 @@ export function App() {
 
   return <>
     <WelcomeIntro userName={currentUser.name} />
-    <AppShell route={route} onNavigate={go}>{content}</AppShell>
+    <AppShell route={route} onNavigate={go}>
+      <Suspense fallback={<RouteFallback />}>{content}</Suspense>
+    </AppShell>
   </>;
+}
+
+function RouteFallback() {
+  return (
+    <main className="route-loading" aria-busy="true" aria-label="Carregando módulo">
+      <span className="route-loading-indicator" aria-hidden="true" />
+      <span>Carregando módulo…</span>
+    </main>
+  );
 }
