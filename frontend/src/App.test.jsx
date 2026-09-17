@@ -100,6 +100,19 @@ describe("Alpha RH connected screens", () => {
     expect(screen.queryByRole("link", { name: "Nova requisição" })).not.toBeInTheDocument();
   });
 
+  it("shows the approved compact recruitment menu copy", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "Recrutamento" }));
+
+    const menu = screen.getByRole("menu");
+    expect(within(menu).getByRole("heading", { name: "Recrutamento" })).toBeInTheDocument();
+    expect(within(menu).getByText("Da solicitação de pessoal à condução dos candidatos.")).toBeInTheDocument();
+    expect(within(menu).getByRole("heading", { name: "Abertura da vaga" })).toBeInTheDocument();
+    expect(within(menu).getByRole("heading", { name: "Seleção" })).toBeInTheDocument();
+    expect(within(menu).getByRole("menuitem", { name: /Processos seletivos.*Acompanhe os processos em andamento/i })).toBeInTheDocument();
+    expect(within(menu).queryByText("Visão do processo")).not.toBeInTheDocument();
+  });
+
   it("alternates the global dark theme and preserves the chosen appearance", () => {
     render(<App />);
 

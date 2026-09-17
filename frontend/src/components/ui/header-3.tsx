@@ -48,7 +48,7 @@ export function Header({ route }: HeaderProps) {
   return (
     <header className={cn('alpha-app-header sticky top-0 z-50 w-full', scrolled && 'is-scrolled')}>
       <div className="alpha-header-bar">
-        <div className="mx-auto flex h-[68px] w-full max-w-[1820px] items-stretch gap-5 px-5 lg:px-8">
+        <div className="alpha-header-shell mx-auto flex h-[68px] w-full max-w-[1820px] items-stretch gap-5 px-5 lg:px-8">
           <a href="#/inicio" className="alpha-wordmark group flex shrink-0 items-center outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/35" aria-label="Alpha RH — ir para o Início">
             <Logo />
           </a>
@@ -136,7 +136,7 @@ const menuGroups: DropdownNavigationItem[] = [
     id: 1,
     label: 'Recrutamento',
     icon: BriefcaseBusiness,
-    description: 'Da solicitação de pessoal à condução dos candidatos no processo seletivo.',
+    description: 'Da solicitação de pessoal à condução dos candidatos.',
     active: (route) => route.startsWith('/recrutamento'),
     subMenus: [
       {
@@ -150,7 +150,7 @@ const menuGroups: DropdownNavigationItem[] = [
         title: 'Seleção',
         items: [
           { label: 'Vagas e Kanban', href: '#/recrutamento/vagas', description: 'RH cria vagas e conduz os candidatos', icon: BriefcaseBusiness, active: (route) => route.startsWith('/recrutamento/vagas') && !route.endsWith('/kanban') },
-          { label: 'Visão do processo', href: '#/recrutamento/vagas/2026-0157/kanban', description: 'Acesse o processo seletivo em andamento', icon: LayoutDashboard, active: (route) => route.endsWith('/kanban') },
+          { label: 'Processos seletivos', href: '#/recrutamento/vagas/2026-0157/kanban', description: 'Acompanhe os processos em andamento', icon: LayoutDashboard, active: (route) => route.endsWith('/kanban') },
         ],
       },
     ],

@@ -598,6 +598,29 @@
   white-space: nowrap;
 }
 
+@media (max-width: 1440px) and (min-width: 801px) {
+  .process-home { gap: 14px; }
+  .restored-home-heading { padding: 4px 2px 14px; }
+  .processes-card-header,
+  .activities-card-header { min-height: 68px; padding: 12px 16px; }
+  .process-home.process-home .processes-table-head,
+  .process-home.process-home .process-row {
+    grid-template-columns: minmax(190px, .9fr) minmax(0, 4fr) 86px;
+    gap: 16px;
+  }
+  .process-home .process-row { min-height: 104px; padding: 16px 18px; }
+  .process-home .stage-progress { gap: 6px; }
+  .process-home .process-stage-name { min-height: 2.6em; }
+  .activities-grid article { min-height: 76px; padding: 12px 16px; }
+}
+
+@media (max-height: 800px) and (min-width: 801px) {
+  .restored-home-heading .home-personal-greeting { font-size: 1.5rem; }
+  .restored-home-heading .home-greeting-quote { margin-top: 7px; }
+  .process-home .process-row { min-height: 96px; padding-block: 13px; }
+  .processes-hint { padding-block: 8px 10px; }
+}
+
 .agenda-dialog {
   position: fixed;
   inset: 0;

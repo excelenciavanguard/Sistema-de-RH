@@ -10,6 +10,10 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Current frontend phase
 
+- Responsive adaptation approved on 2026-09-17: preserve the full executive desktop navigation on common compact monitor resolutions such as 1366×768, 1440×900 and 1600×900. Use a compact intermediate header and tighter workspace spacing without reducing the approved typography; dropdowns must remain inside the viewport and become internally scrollable on short screens. At 1120px and below, switch to the existing mobile navigation with 44px-class touch targets and keep all core destinations available.
+
+- Recruitment dropdown direction approved on 2026-09-17: preserve the white executive header and grouped navigation behavior, but use a compact 590px two-column menu with a slim inline summary, tighter item spacing and clear hover/active states. Keep Abertura da vaga and Seleção as the two groups; use “Processos seletivos” with “Acompanhe os processos em andamento”. Single-group menus use the same component in a narrower one-column layout, and dark mode must use graphite surfaces rather than white or pale panels.
+
 - Home detail placement: use the motivational phrase as the single supporting line directly beneath the personal greeting, with readable UI-size text, strong green contrast and a subtle green left accent. Place the Processes in progress title, active vacancy count and vacancies action below the click-a-vacancy hint, in the process card footer.
 
 - Home greeting direction supersedes earlier banner layouts: integrate the personal greeting into the page header, with a small Hoje no RH label above it, short supporting text, and date/agenda on the right. Use the light application canvas and a subtle bottom divider; no separate welcome banner or duplicate greeting. Stack the header on mobile.
