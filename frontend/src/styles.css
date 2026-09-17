@@ -98,28 +98,6 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
   object-fit: contain;
   animation: welcome-caption-in .6s ease both;
 }
-.welcome-intro-avatar {
-  display: grid;
-  place-items: center;
-  width: clamp(80px, 9vw, 108px);
-  height: clamp(80px, 9vw, 108px);
-  margin-top: 24px;
-  border: 4px solid #fff;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
-  background: #dff3e4;
-  color: #163832;
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: var(--weight-heading);
-  box-shadow: 0 0 0 1px #c9dbcf, 0 14px 32px rgba(5,31,32,.14);
-  animation: welcome-avatar-in .65s .12s cubic-bezier(.16,1,.3,1) both;
-}
-.dark .welcome-intro-avatar {
-  border-color: #171d1b;
-  background: #203a30;
-  box-shadow: 0 0 0 1px #547566, 0 14px 32px rgba(0,0,0,.32);
-}
 .welcome-intro-rule {
   width: 36px;
   height: 2px;
@@ -169,11 +147,9 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
 @keyframes welcome-caret { 50% { opacity: 0; } }
 @keyframes welcome-screen-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes welcome-caption-in { from { opacity: 0; transform: translateY(8px); } }
-@keyframes welcome-avatar-in { from { opacity: 0; transform: translateY(10px) scale(.94); } }
 @media (prefers-reduced-motion: reduce) {
   .welcome-intro,
   .welcome-intro-logo,
-  .welcome-intro-avatar,
   .welcome-intro p i,
   .welcome-intro small { animation: none; transition-duration: .01ms; }
 }

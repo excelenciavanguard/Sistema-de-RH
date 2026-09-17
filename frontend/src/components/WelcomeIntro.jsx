@@ -43,7 +43,6 @@ export function WelcomeIntro({ userName, message: customMessage, subtitle = "Pes
     <div className={`welcome-intro ${phase === "leaving" ? "is-leaving" : ""}`} style={{ "--welcome-fade-duration": "600ms" }} role="status" aria-live="polite" aria-label={message}>
       <div className="welcome-intro-content">
         <img className="welcome-intro-logo" src="/assets/Logo%20Rh.png" alt="Alpha RH" />
-        <span className="welcome-intro-avatar" aria-hidden="true">{userName.slice(0, 1).toUpperCase()}</span>
         <div className="welcome-intro-rule" aria-hidden="true" />
         <p aria-hidden="true"><span className="welcome-intro-reserve">{message}</span><span className="welcome-intro-typed">{text}<i /></span></p>
         <small>{subtitle}</small>
