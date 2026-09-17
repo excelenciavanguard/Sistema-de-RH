@@ -110,7 +110,7 @@ export function Header({ route }: HeaderProps) {
               }}
             >
               <button className="alpha-profile-button ml-0.5 flex h-10 items-center gap-2 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30" type="button" aria-label="Abrir perfil de Ramon" aria-expanded={profileOpen} aria-controls="alpha-profile-options" onClick={() => setProfileOpen((current) => !current)}>
-                <span className="alpha-profile-avatar alpha-profile-initial" aria-hidden="true">R</span>
+                <img className="alpha-profile-avatar" src="/assets/simao-pedro-avatar.png" alt="" />
                 <span className="hidden flex-col 2xl:flex"><strong>Ramon</strong><small>RH Global</small></span>
                 <ChevronDown className={cn('hidden size-3.5 text-[#5f716a] transition-transform 2xl:block', profileOpen && 'rotate-180')} />
               </button>

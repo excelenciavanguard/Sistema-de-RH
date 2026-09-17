@@ -19,37 +19,37 @@
 
 .dark {
   color-scheme: dark;
-  --navy: #090c0b;
+  --navy: #030504;
   --blue: #79b39d;
   --blue-dark: #b6ddc9;
   --ink: #e8f4ed;
   --muted: #a8beb1;
-  --line: #29312e;
-  --surface: #121615;
-  --canvas: #090c0b;
+  --line: #1f382e;
+  --surface: #0a0d0b;
+  --canvas: #030504;
   --shadow: 0 16px 38px rgba(0,0,0,.26);
-  --background: #121615;
+  --background: #0a0d0b;
   --foreground: #e8f4ed;
-  --card: #121615;
+  --card: #0a0d0b;
   --card-foreground: #e8f4ed;
-  --popover: #171d1b;
+  --popover: #101512;
   --popover-foreground: #e8f4ed;
   --primary: #79b39d;
   --primary-foreground: #071713;
-  --secondary: #1b2521;
+  --secondary: #12231b;
   --secondary-foreground: #d9eee2;
-  --ui-muted: #0f1312;
+  --ui-muted: #070a08;
   --muted-foreground: #a8beb1;
   --accent: #203a30;
   --accent-foreground: #e8f4ed;
-  --border: #29312e;
-  --input: #3b4c45;
+  --border: #1f382e;
+  --input: #315345;
   --ring: #9ed3bc;
 }
-.dark html, html.dark, .dark body, .dark .app-shell { background: #090c0b; color: #e8f4ed; }
+.dark html, html.dark, .dark body, .dark .app-shell { background: #030504; color: #e8f4ed; }
 .dark ::selection { background: #2c5c4b; color: #f4fff8; }
-.dark * { scrollbar-color: #476d5d #090c0b; }
-.dark .alpha-header-bar { background: #0d1110; border-bottom: 1px solid #29312e; }
+.dark * { scrollbar-color: #235347 #030504; }
+.dark .alpha-header-bar { background: #050806; border-bottom: 1px solid #1f382e; }
 .dark .alpha-header-bar .alpha-header-search,
 .dark .alpha-header-bar [class*="bg-white"],
 .dark .alpha-header-bar .alpha-mobile-toggle { background: #171d1b !important; border-color: #3b4c45 !important; color: #d9eee2 !important; }
@@ -976,3 +976,54 @@
 .dark .agenda-detail-event strong { color: #edf8f1 !important; }
 .dark .agenda-detail-event time,
 .dark .agenda-detail-event dd { color: #c9dfd3 !important; }
+
+/* Paleta final do modo escuro: preto dominante com verde Alpha RH nos estados interativos. */
+.dark :is(
+  .board-surface, .report-panel, .report-kpi, .admin-user-directory, .structure-table,
+  .admin-access-summary, .admin-user-modal, .admin-invite-dialog, .detail-panel, .panel,
+  .card, .content-card, .data-card, .table-card, .modal-content, .dialog-content,
+  .kanban-column, .candidate-card, .vacancy-about, .processes-card, .activities-card,
+  .agenda-command-surface, .agenda-month-view, .agenda-month-grid, .agenda-month-day,
+  .agenda-week-day, .agenda-day-drawer, .agenda-detail-event, .decision-drawer,
+  .vacancy-builder, .process-aside, .talent-card-grid article
+) {
+  background: #0a0d0b !important;
+  border-color: #1f382e !important;
+}
+.dark :is(
+  .alpha-dropdown-panel, .alpha-profile-popover, .filter-panel, .filter-select,
+  .filter-button, .candidate-search, .personalize-popover, .workspace-tabs,
+  .agenda-filter-popover, .agenda-command-toolbar, .drawer-header, .drawer-footer,
+  .agenda-drawer-header, .agenda-day-drawer > footer, .lab-header
+) {
+  background: #101512 !important;
+  border-color: #29483b !important;
+}
+.dark :is(input, select, textarea, .agenda-view-switch, .agenda-month-weekdays, .agenda-week-day-heading) {
+  background: #070a08 !important;
+  border-color: #315345 !important;
+}
+.dark :is(
+  .alpha-home-link:hover, .alpha-home-link.is-active, .alpha-dropdown-trigger:hover,
+  .alpha-dropdown-trigger.is-active, .alpha-dropdown-trigger.is-open,
+  .alpha-dropdown-link:hover, .alpha-dropdown-link:focus-visible, .alpha-dropdown-link.is-active,
+  .workspace-tabs button.active, .vacancy-tabs button.active, .view-switcher button.active,
+  .report-view-switcher button.active, .agenda-view-switch button.active,
+  .agenda-month-day.selected, .agenda-week-day.selected .agenda-week-day-heading
+) {
+  background: #163832 !important;
+  border-color: #3d7963 !important;
+  color: #f1faf4 !important;
+}
+.dark :is(.primary-action, .report-primary-button, .admin-primary-action, .admin-user-create, .run-extraction, .move-stage) {
+  background: #3d8a68 !important;
+  border-color: #4d9d79 !important;
+  color: #020604 !important;
+}
+.dark :is(.primary-action:hover, .report-primary-button:hover, .admin-primary-action:hover, .admin-user-create:hover, .run-extraction:hover, .move-stage:hover) {
+  background: #79b39d !important;
+  border-color: #79b39d !important;
+}
+.dark :is(.text-action, .load-more, .detail-section-title button, .agenda-dialog-list time) {
+  color: #9ed3bc !important;
+}
