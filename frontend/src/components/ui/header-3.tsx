@@ -108,13 +108,13 @@ export function Header({ route }: HeaderProps) {
                 if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setProfileOpen(false);
               }}
             >
-              <button className="alpha-profile-button ml-0.5 flex h-10 items-center gap-2 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30" type="button" aria-label="Abrir perfil de Simão Pedro" aria-expanded={profileOpen} aria-controls="alpha-profile-options" onClick={() => setProfileOpen((current) => !current)}>
-                <img className="alpha-profile-avatar" src="/assets/simao-pedro-avatar.png" alt="" />
-                <span className="hidden flex-col 2xl:flex"><strong>Simão Pedro</strong><small>RH Global</small></span>
+              <button className="alpha-profile-button ml-0.5 flex h-10 items-center gap-2 border-0 bg-transparent px-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#235347]/30" type="button" aria-label="Abrir perfil de Ramon" aria-expanded={profileOpen} aria-controls="alpha-profile-options" onClick={() => setProfileOpen((current) => !current)}>
+                <span className="alpha-profile-avatar alpha-profile-initial" aria-hidden="true">R</span>
+                <span className="hidden flex-col 2xl:flex"><strong>Ramon</strong><small>RH Global</small></span>
                 <ChevronDown className={cn('hidden size-3.5 text-[#5f716a] transition-transform 2xl:block', profileOpen && 'rotate-180')} />
               </button>
               {profileOpen && <div className="alpha-profile-popover" id="alpha-profile-options" role="menu" aria-label="Opções do usuário">
-                <header><strong>Simão Pedro</strong><small>RH Global</small></header>
+                <header><strong>Ramon</strong><small>RH Global</small></header>
                 <button type="button" className="alpha-profile-theme-action" role="menuitem" aria-label={darkMode ? 'Ativar modo claro' : 'Ativar modo escuro'} aria-pressed={darkMode} onClick={() => setDarkMode((current) => !current)}>
                   <span className="alpha-profile-option-icon">{darkMode ? <Sun className="size-[17px]" /> : <Moon className="size-[17px]" />}</span>
                   <span><strong>{darkMode ? 'Modo claro' : 'Modo escuro'}</strong><small>{darkMode ? 'Usar aparência clara' : 'Usar aparência escura'}</small></span>

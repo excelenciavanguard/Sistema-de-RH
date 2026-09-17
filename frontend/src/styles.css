@@ -1245,6 +1245,14 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3
   background: #dff3e4;
   box-shadow: 0 0 0 1px #c9dbcf;
 }
+.alpha-profile-initial {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #163832;
+  font-size: 12px;
+  font-weight: var(--weight-heading);
+}
 .alpha-profile-popover {
   position: absolute;
   top: calc(100% + 8px);

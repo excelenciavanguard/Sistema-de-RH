@@ -31,6 +31,7 @@ export function CandidateCard({ candidate, color, onOpen, onDragStart }) {
         <div className="candidate-identity"><strong>{candidate.name}</strong><small>{candidate.source}</small></div>
         <span className={`evidence-badge ${candidate.evidenceTone}`}>{candidate.evidence}</span>
       </div>
+      {candidate.requirements && <span className="sr-only">{candidate.requirements}</span>}
       {pendingLabel && <button className="candidate-pending-alert" type="button" onClick={(event) => { event.stopPropagation(); onOpen(candidate); }} aria-label={`Ver pendências de ${candidate.name}: ${pendingItems.join(", ")}`}><WarningCircle size={14} weight="fill" /><span>{pendingLabel}</span></button>}
       <div className="card-footer"><span title="Tempo na etapa" aria-label={`Tempo na etapa: ${candidate.stageTime}`}><Clock size={14} />{stageTime}</span><span><UserCircle size={14} />{candidate.owner}</span><span><ChatCircle size={14} />{candidate.messages}</span><CalendarBlank size={14} /></div>
     </article>

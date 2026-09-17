@@ -123,8 +123,9 @@ describe("Alpha RH connected screens", () => {
 
     expect(screen.getByRole("link", { name: "Criar vaga" })).toHaveAttribute("href", "#/recrutamento/vagas/nova");
     expect(screen.queryByRole("button", { name: "Ativar modo escuro" })).not.toBeInTheDocument();
-    const profileButton = screen.getByRole("button", { name: "Abrir perfil de Simão Pedro" });
-    expect(profileButton.querySelector("img")).toHaveAttribute("src", "/assets/simao-pedro-avatar.png");
+    const profileButton = screen.getByRole("button", { name: "Abrir perfil de Ramon" });
+    expect(profileButton).toHaveTextContent("Ramon");
+    expect(profileButton.querySelector(".alpha-profile-initial")).toHaveTextContent("R");
     fireEvent.mouseEnter(profileButton.closest(".alpha-profile-menu"));
     const themeToggle = screen.getByRole("menuitem", { name: "Ativar modo escuro" });
     fireEvent.click(themeToggle);
