@@ -1,0 +1,10 @@
+Use case: precise-object-edit
+Asset type: full-bleed photographic website login background, not a UI mockup.
+Input images: Image 1 is the edit target and exact scene/composition reference.
+Primary request: Extract and reconstruct ONLY the underlying modern office meeting-room photograph from Image 1. Remove ALL interface elements, all text, all logos, all icons, the white login card/form, and the dark green tinted gradient overlay. Fill removed areas naturally with the continuous office photograph.
+Scene/backdrop: Preserve the same glass-walled office meeting room, broad wooden conference table in the lower-left/center, dark green upholstered chairs, small potted leafy plant in a cylindrical beige vase at the table center, open silver laptop and thin notebooks on the table, vertical dark window frames, glass partitions, pale wall/columns, light tiled floor at right, distant trees and city skyline outside, soft out-of-focus foliage in the lower-left foreground, potted plant near the far-right window.
+Composition/framing: Keep the same wide landscape 16:9 frame and photographic camera viewpoint, geometry, perspective, object placement and natural depth of field. Continue the hidden right-side room behind the removed card, with windows and light tiled floor. No cropping, no border.
+Style/medium: Photorealistic architectural interior photograph with real wood grain, upholstery texture, glass reflections and natural materials.
+Lighting/mood: Restore unfiltered soft warm daylight and realistic sunlight/shadows across the entire scene. The left side must not have a dark green gradient or graphic color filter; leave all tinting to future website CSS.
+Constraints: Change only removal of interface/text/logo/overlay and natural photographic reconstruction. Preserve table, laptop, vase, chairs, glass, daylight, plants and room composition. Walls and glass must be plain with no lettering, especially no PESSOAS IDEIAS RESULTADOS wording.
+Avoid: Any text, letters, logos, watermark, branding, people, UI, form, fields, buttons, card, graphic overlays, dark green gradient.

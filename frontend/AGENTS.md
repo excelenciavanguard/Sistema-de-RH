@@ -10,6 +10,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Current frontend phase
 
+- Login approved on 2026-09-17 supersedes the older no-login instruction: implement the frontend-only option 3 with full office photography, green left overlay, white right login form, Usuário (not email) and Senha. Remove wall lettering; preserve the approved marketing copy. Open the login at the root and #/login; existing internal routes remain usable for preview. Entry is explicitly demonstrative, never real authentication; do not store passwords or change backend integrations.
+
 - Displayed prototype user name is Ramon (approved on 2026-09-17), including the home greeting, entry welcome and header profile; use R for the profile avatar. This supersedes earlier references to Simão Pedro.
 
 - Frontend performance direction approved on 2026-09-17: keep the operational home and app shell in the initial bundle, lazy-load every secondary screen by route behind one accessible `Suspense` fallback, and prefer the small CSS navigation transition over a general-purpose animation runtime. Preserve the current visual behavior while keeping route chunks independently cacheable.

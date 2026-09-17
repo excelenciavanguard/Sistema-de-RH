@@ -1,4 +1,5 @@
 export const ROUTES = {
+  login: "/login",
   home: "/inicio",
   requisitions: "/recrutamento/requisicoes",
   requisitionCreate: "/recrutamento/requisicoes/nova",
@@ -25,6 +26,7 @@ function isKnownRoute(route) {
 }
 
 export function routeFromHash(hash = window.location.hash) {
+  if (!hash || hash === "#" || hash === "#/") return ROUTES.login;
   const route = hash.replace(/^#/, "").split("?")[0];
   return isKnownRoute(route) ? route : ROUTES.home;
 }

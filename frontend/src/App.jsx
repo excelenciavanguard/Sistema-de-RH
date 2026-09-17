@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { AppShell } from "./components/AppShell.jsx";
 import { WelcomeIntro } from "./components/WelcomeIntro.jsx";
 import { HomeScreen } from "./screens/HomeScreen.jsx";
+import { LoginScreen } from "./screens/LoginScreen";
 import { kanbanCodeFromRoute, navigateTo, routeFromHash, ROUTES } from "./navigation.js";
 
 const lazyNamed = (loader, exportName) => lazy(() => loader().then((module) => ({ default: module[exportName] })));
@@ -41,6 +42,8 @@ export function App() {
   }, []);
 
   const go = (nextRoute) => navigateTo(nextRoute);
+
+  if (route === ROUTES.login) return <LoginScreen onEnter={() => go(ROUTES.home)} />;
 
   let content;
   if (route === ROUTES.home) content = <HomeScreen onNavigate={go} />;
