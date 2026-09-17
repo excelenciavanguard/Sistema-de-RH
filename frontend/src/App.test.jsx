@@ -74,7 +74,7 @@ describe("Alpha RH connected screens", () => {
     expect(screen.getByRole("heading", { name: "Atividades recentes" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Próximo compromisso" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Hoje no RH" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Olá, Simão Pedro!" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Olá, Ramon!" })).toBeInTheDocument();
     expect(screen.getByText("Pessoas bem cuidadas constroem grandes resultados.")).toBeInTheDocument();
   });
 

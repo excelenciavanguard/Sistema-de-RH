@@ -10,6 +10,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Current frontend phase
 
+- Displayed prototype user name is Ramon (approved on 2026-09-17), including the home greeting, entry welcome and header profile; use R for the profile avatar. This supersedes earlier references to Simão Pedro.
+
 - Frontend performance direction approved on 2026-09-17: keep the operational home and app shell in the initial bundle, lazy-load every secondary screen by route behind one accessible `Suspense` fallback, and prefer the small CSS navigation transition over a general-purpose animation runtime. Preserve the current visual behavior while keeping route chunks independently cacheable.
 
 - Top-level navigation refinement approved on 2026-09-17: keep every desktop module control at the same 40px height with aligned 17px outline icons, 14px semibold labels and compact chevrons. The active module uses `#EDF6EF`, an 8px radius and a thin `#235347` underline; avoid the previous full-height rectangular green block, shadows or pill styling. Hover is lighter than the active state, and dark mode keeps the same hierarchy with graphite/green surfaces.

@@ -30,7 +30,7 @@ const moduleTitles = {
 };
 
 export function App() {
-  const currentUser = { name: "Simão Pedro" };
+  const currentUser = { name: "Ramon" };
   const previewCandidate = new URLSearchParams(window.location.search).has("candidate");
   const [route, setRoute] = useState(() => previewCandidate ? ROUTES.kanban : routeFromHash());
 

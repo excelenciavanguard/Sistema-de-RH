@@ -13,11 +13,11 @@ it("restores the personal greeting and browser-local date above the processes", 
   render(<HomeScreen onNavigate={vi.fn()} currentDate={new Date(2026, 8, 16)} />);
   expect(screen.getByRole("button", { name: "Agenda de hoje 3" })).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "Hoje no RH" })).toBeInTheDocument();
-  expect(screen.getByRole("heading", { name: "Olá, Simão Pedro!" })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "Olá, Ramon!" })).toBeInTheDocument();
   expect(screen.getByText("Quarta-feira, 16 de setembro de 2026")).toBeInTheDocument();
   expect(screen.queryByRole("heading", { name: "Próximo compromisso" })).not.toBeInTheDocument();
   const agendaButton = screen.getByRole("button", { name: "Agenda de hoje 3" });
-  const greeting = screen.getByRole("heading", { name: "Olá, Simão Pedro!" });
+  const greeting = screen.getByRole("heading", { name: "Olá, Ramon!" });
   expect(greeting.closest("header")).toContainElement(agendaButton);
 });
 

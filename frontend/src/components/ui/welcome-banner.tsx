@@ -17,7 +17,7 @@ export default function WelcomeBanner({ onShowActions, description }: WelcomeBan
       <CardContent className="alpha-welcome-content relative z-10">
         <span className="alpha-welcome-symbol" aria-hidden="true"><SunMedium /></span>
         <div className="alpha-welcome-copy">
-          <h2>Olá, Simão Pedro!</h2>
+          <h2>Olá, Ramon!</h2>
           <p>{description ?? <>Você tem <strong>27 currículos para revisar</strong> e <strong>3 requisições aguardando decisão</strong> hoje.</>}</p>
         </div>
         <p className="alpha-welcome-message">Pessoas bem cuidadas constroem grandes resultados.</p>

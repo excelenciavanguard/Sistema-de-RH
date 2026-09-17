@@ -51,7 +51,7 @@ export function HomeScreen({ onNavigate, appointments = agenda, currentDate }) {
     <header className="restored-home-heading">
       <div>
         <h1>Hoje no RH</h1>
-        <h2 className="home-personal-greeting">Olá, Simão Pedro!</h2>
+        <h2 className="home-personal-greeting">Olá, Ramon!</h2>
         <p className="home-greeting-quote">Pessoas bem cuidadas constroem grandes resultados.</p>
       </div>
       <div className="restored-home-date">
