@@ -305,6 +305,45 @@
 .dark :is(.status-badge.success, .evidence-badge.success, .review-state, .route-approved, .priority-tag.success, .provider-state.completed, .lab-success) { background: #1e4634 !important; border-color: #326b50 !important; color: #bff1d2 !important; }
 .dark :is(.status-badge.danger, .priority-tag.danger, .provider-state.failed) { background: #51282c !important; border-color: #794044 !important; color: #ffc7ca !important; }
 
+/* Criar vaga: todas as superfícies internas precisam acompanhar o tema escuro. */
+.dark .vacancy-builder { background: #121615 !important; border-color: #29312e !important; }
+.dark .builder-steps { background: #0f1312 !important; border-color: #29312e !important; }
+.dark .builder-steps button { color: #a8beb1 !important; }
+.dark .builder-steps button.active { color: #edf8f1 !important; background: #18231f !important; }
+.dark .builder-steps button.active::after { background: #79b39d !important; }
+.dark .builder-steps button.completed { color: #9ed3bc !important; }
+.dark .builder-steps button > span { background: #1c2723 !important; color: #b9d0c3 !important; }
+.dark .builder-steps button.active > span { background: #315d4d !important; color: #eff8f2 !important; }
+.dark .builder-steps button.completed > span { background: #1e4634 !important; color: #bff1d2 !important; }
+.dark .builder-stage-content,
+.dark .sticky-builder-footer { background: #121615 !important; border-color: #29312e !important; }
+.dark .vacancy-details-section { border-color: #29312e !important; }
+.dark .vacancy-details-section h3 { color: #edf8f1 !important; }
+.dark .vacancy-details-section p { color: #a8beb1 !important; }
+.dark .generate-description-action { background: #173b30 !important; border-color: #3b6b57 !important; color: #bff1d2 !important; }
+.dark .currency-input { background: #171d1b !important; border-color: #3b4c45 !important; }
+.dark .currency-input b { color: #9ed3bc !important; }
+.dark .salary-single-toggle { color: #c9dfd3 !important; }
+.dark .benefits-editor legend { color: #d9eee2 !important; }
+.dark .benefits-editor > p { color: #a8beb1 !important; }
+.dark .benefit-option { background: #171d1b !important; border-color: #303a36 !important; }
+.dark .benefit-option > label { color: #c9dfd3 !important; }
+.dark :is(.requirement-column, .pipeline-editor li, .review-layout section) { background: #171d1b !important; border-color: #303a36 !important; }
+.dark :is(.requirement-column h3, .check-line strong, .pipeline-editor strong, .review-layout h3) { color: #edf8f1 !important; }
+.dark :is(.check-line, .question-row) { border-color: #29312e !important; }
+.dark :is(.check-line small, .pipeline-editor small, .review-layout dt) { color: #a8beb1 !important; }
+.dark .pipeline-editor li > span,
+.dark .drag-handle { background: #203a30 !important; color: #9ed3bc !important; }
+.dark .review-pipeline li { background: #121615 !important; border-color: #303a36 !important; }
+.dark .review-pipeline li > span { background: #203a30 !important; color: #9ed3bc !important; }
+.dark .review-pipeline li strong { color: #edf8f1 !important; }
+.dark :is(.review-pipeline-heading p, .review-pipeline li small) { color: #a8beb1 !important; }
+.dark .review-pipeline-heading > span { color: #9ed3bc !important; background: #173b30 !important; }
+.dark :is(.editor-guidance, .pipeline-guidance, .review-layout aside) { background: #173b30 !important; color: #c9ead9 !important; }
+.dark :is(.editor-guidance p, .pipeline-guidance p, .review-layout aside p) { color: #b6d8c7 !important; }
+.dark .review-layout dd { color: #9ed3bc !important; }
+.dark .inline-add { color: #9ed3bc !important; }
+
 /* Integrações: tons neutros nas superfícies; a cor comunica apenas o estado. */
 .dark .integrations-reference-screen .workspace-tabs,
 .dark .integration-browser-toolbar { background: #121615 !important; border-color: #29312e !important; }
@@ -585,6 +624,35 @@
 .dark .participant-row { border-color: #29312e !important; }
 .dark .mini-progress > i { background: #303b36 !important; }
 .dark .mini-progress > i em { background: #79b39d !important; }
+
+/* Gaveta de documentos de admissão. */
+.dark .admission-doc-mask { background: rgba(2, 12, 9, .76) !important; }
+.dark .admission-doc-drawer,
+.dark .admission-doc-body { background: #121615 !important; color: #e8f4ed !important; }
+.dark .admission-doc-drawer { box-shadow: -12px 0 40px rgba(0, 0, 0, .42) !important; }
+.dark .admission-doc-drawer > header,
+.dark .admission-doc-drawer > footer { background: #0f1312 !important; border-color: #29312e !important; }
+.dark .admission-doc-drawer h2,
+.dark .doc-summary strong,
+.dark .doc-checklist-title h3,
+.dark .admission-doc-checklist strong,
+.dark .doc-review h3 { color: #edf8f1 !important; }
+.dark :is(.admission-doc-drawer header p, .doc-summary span, .doc-checklist-title small, .admission-doc-checklist small, .admission-doc-drawer > footer small, .doc-review p) { color: #a8beb1 !important; }
+.dark :is(.doc-summary, .admission-doc-checklist li, .doc-review) { background: #171d1b !important; border-color: #3b4c45 !important; }
+.dark .doc-summary span + span { border-color: #29312e !important; }
+.dark .admission-doc-checklist button { color: #9ed3bc !important; }
+.dark .admission-doc-checklist li > svg { color: #9ed3bc !important; }
+.dark .doc-review textarea { background: #0f1312 !important; border-color: #3b4c45 !important; color: #edf8f1 !important; }
+.dark .doc-feedback { background: #173b30 !important; color: #c9ead9 !important; }
+.dark :is(.admission-doc-filters select, .doc-search) { background: #171d1b !important; border-color: #3b4c45 !important; color: #d9eee2 !important; }
+.dark .doc-search input { background: transparent !important; color: #edf8f1 !important; }
+.dark .admission-doc-list { background: #121615 !important; border-color: #29312e !important; color: #e8f4ed !important; }
+.dark .admission-doc-list th { background: #0f1312 !important; border-color: #29312e !important; color: #b9d0c3 !important; }
+.dark .admission-doc-list td,
+.dark .doc-list-footer,
+.dark .doc-empty { border-color: #29312e !important; color: #a8beb1 !important; }
+.dark .admission-doc-list tr.is-selected { background: #192b23 !important; }
+.dark .admission-doc-list tbody tr:hover { background: #19221f !important; }
 
 .dark .integration-detail-panel .security-note { background: #171d1b !important; border-color: #3b4c45 !important; }
 

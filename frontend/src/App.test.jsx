@@ -315,11 +315,12 @@ describe("Alpha RH connected screens", () => {
     expect(screen.getByRole("heading", { name: "Responsáveis" })).toBeInTheDocument();
   });
 
-  it("moves through vacancy details, requirements, questions, stages and review", async () => {
+  it("moves through vacancy details, requirements, questions and review", async () => {
     window.history.replaceState(null, "", "#/recrutamento/vagas/nova");
     render(<App />);
 
     expect(await screen.findByRole("heading", { name: "Criar vaga" })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Criar vaga" })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Continuar para requisitos" }));
     expect(screen.getByRole("heading", { name: "Requisitos da vaga" })).toBeInTheDocument();
 
@@ -327,13 +328,99 @@ describe("Alpha RH connected screens", () => {
     expect(screen.getByRole("heading", { name: "Perguntas da candidatura" })).toBeInTheDocument();
     expect(screen.getByDisplayValue("Possui disponibilidade para trabalhar à noite?")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "Continuar para etapas" }));
-    expect(screen.getByRole("heading", { name: "Etapas do processo" })).toBeInTheDocument();
-
     fireEvent.click(screen.getByRole("button", { name: "Revisar vaga" }));
     expect(screen.getByRole("heading", { name: "Revisão e publicação" })).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Publicar vaga" }));
+    fireEvent.click(screen.getByRole("button", { name: "Criar vaga" }));
     expect(await screen.findByText("Vaga publicada no protótipo")).toBeInTheDocument();
+  });
+
+  it("shows the approved pipeline only in the final review", async () => {
+    window.history.replaceState(null, "", "#/recrutamento/vagas/nova");
+    render(<App />);
+
+    expect(await screen.findByRole("heading", { name: "Criar vaga" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Etapas" })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Continuar para requisitos" }));
+    fireEvent.click(screen.getByRole("button", { name: "Continuar para perguntas" }));
+    fireEvent.click(screen.getByRole("button", { name: "Revisar vaga" }));
+
+    const pipelineReview = screen.getByRole("heading", { name: "Pipeline do processo" }).closest("section");
+    expect(pipelineReview).toBeInTheDocument();
+    expect(within(pipelineReview).getByText("Candidatura")).toBeInTheDocument();
+    expect(within(pipelineReview).getByText("Contratação")).toBeInTheDocument();
+  });
+
+  it("carries complete public offer details from the builder into the final review", async () => {
+    window.history.replaceState(null, "", "#/recrutamento/vagas/nova");
+    render(<App />);
+
+    fireEvent.change(await screen.findByLabelText("Área / departamento"), { target: { value: "Operações" } });
+    fireEvent.change(screen.getByLabelText("Valor mínimo"), { target: { value: "2100" } });
+    fireEvent.change(screen.getByLabelText("Valor máximo"), { target: { value: "2450" } });
+    fireEvent.change(screen.getByLabelText("Benefícios"), { target: { value: "Vale-transporte, vale-refeição e seguro de vida" } });
+    fireEvent.change(screen.getByLabelText("Previsão de início"), { target: { value: "2026-10-06" } });
+
+    fireEvent.click(screen.getByRole("button", { name: "Continuar para requisitos" }));
+    fireEvent.click(screen.getByRole("button", { name: "Continuar para perguntas" }));
+    fireEvent.click(screen.getByRole("button", { name: "Revisar vaga" }));
+
+    expect(screen.getByText("Operações")).toBeInTheDocument();
+    expect(screen.getByText("R$ 2.100,00 a R$ 2.450,00")).toBeInTheDocument();
+    expect(screen.getByText("Vale-transporte, vale-refeição e seguro de vida")).toBeInTheDocument();
+    expect(screen.getByText("06/10/2026")).toBeInTheDocument();
+  });
+
+  it("keeps one candidate-facing vacancy description with a demonstrative AI action", async () => {
+    window.history.replaceState(null, "", "#/recrutamento/vagas/nova");
+    render(<App />);
+
+    expect(await screen.findByLabelText("Descrição da vaga")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Gerar com IA" })).toBeInTheDocument();
+    expect(screen.queryByLabelText("Resumo da vaga")).not.toBeInTheDocument();
+  });
+
+  it("formats a salary range in reais and allows a single-value salary", async () => {
+    window.history.replaceState(null, "", "#/recrutamento/vagas/nova");
+    render(<App />);
+
+    fireEvent.change(await screen.findByLabelText("Valor mínimo"), { target: { value: "2100" } });
+    fireEvent.change(screen.getByLabelText("Valor máximo"), { target: { value: "2500" } });
+    expect(screen.getByLabelText("Valor mínimo")).toHaveValue("R$ 2.100,00");
+    expect(screen.getByLabelText("Valor máximo")).toHaveValue("R$ 2.500,00");
+    fireEvent.click(screen.getByRole("button", { name: "Continuar para requisitos" }));
+    fireEvent.click(screen.getByRole("button", { name: "Continuar para perguntas" }));
+    fireEvent.click(screen.getByRole("button", { name: "Revisar vaga" }));
+    expect(screen.getByText("R$ 2.100,00 a R$ 2.500,00")).toBeInTheDocument();
+  });
+
+  it("uses only the minimum amount when the salary has a single value", async () => {
+    window.history.replaceState(null, "", "#/recrutamento/vagas/nova");
+    render(<App />);
+
+    fireEvent.click(await screen.findByLabelText("Salário com valor único"));
+    expect(screen.queryByLabelText("Valor máximo")).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("Valor do salário"), { target: { value: "2100" } });
+    expect(screen.getByLabelText("Valor do salário")).toHaveValue("R$ 2.100,00");
+    fireEvent.click(screen.getByRole("button", { name: "Continuar para requisitos" }));
+    fireEvent.click(screen.getByRole("button", { name: "Continuar para perguntas" }));
+    fireEvent.click(screen.getByRole("button", { name: "Revisar vaga" }));
+    expect(screen.getByText("R$ 2.100,00")).toBeInTheDocument();
+  });
+
+  it("reveals a monetary value for each selected benefit and carries it to review", async () => {
+    window.history.replaceState(null, "", "#/recrutamento/vagas/nova");
+    render(<App />);
+
+    expect(await screen.findByLabelText("Plano de saúde")).not.toBeChecked();
+    expect(screen.queryByLabelText("Valor de Plano de saúde")).not.toBeInTheDocument();
+    fireEvent.click(screen.getByLabelText("Plano de saúde"));
+    fireEvent.change(screen.getByLabelText("Valor de Plano de saúde"), { target: { value: "320" } });
+    expect(screen.getByLabelText("Valor de Plano de saúde")).toHaveValue("R$ 320,00");
+    fireEvent.click(screen.getByRole("button", { name: "Continuar para requisitos" }));
+    fireEvent.click(screen.getByRole("button", { name: "Continuar para perguntas" }));
+    fireEvent.click(screen.getByRole("button", { name: "Revisar vaga" }));
+    expect(screen.getByText(/Plano de saúde · R\$ 320,00/)).toBeInTheDocument();
   });
 });
 
