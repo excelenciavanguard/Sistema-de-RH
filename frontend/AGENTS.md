@@ -10,6 +10,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Current frontend phase
 
+- Header white-surface restoration approved on 2026-09-18 supersedes the pale-green header surface: use a white bar with a subtle bottom divider in light mode so navigation remains distinct from the green application canvas. Preserve current compact sizing, side curves, navigation, Agenda placement and profile; dark mode remains dark.
+
 - Agenda day-view direction approved on 2026-09-18: follow the selected green/white timeline mock. Put start/end times in a left rail, participant names ahead of appointment type in the visual hierarchy, and vacancy/subject, owner, location and existing actions in compact readable cards. Keep generous grouping gaps without the former 900px centered narrow list or forced minimum height; automatically reflow to a stacked timeline on phones without shrinking type or clipping actions. Retain month default, week view, top filters and natural-height drawer cards. Keep one creation action in the page header. Label the existing static conflict as illustrative, not computed scheduling validation.
 
 - Requisition correction flow (2026-09-18): Operations can edit any demonstrative requisition that is not approved. Open the existing requisition form prefilled with role, post, openings and requester, and change the submit action to save corrections. Keep approved requests read-only. Present the three responsibility stages as a compact light timeline with small numbered circles and subtle connectors, including an equivalent dark-mode treatment.

@@ -97,10 +97,11 @@
 
 /* Cabeçalho compacto inspirado em docks: mantém a navegação horizontal e a identidade Alpha RH. */
 .alpha-header-bar {
-  --header-surface: #edf6ef;
+  --header-surface: #fff;
   width: 100%;
   margin: 0;
   border: 0;
+  border-bottom: 1px solid #d7e5db;
   border-radius: 0;
   color: #163832;
   background: var(--header-surface);
