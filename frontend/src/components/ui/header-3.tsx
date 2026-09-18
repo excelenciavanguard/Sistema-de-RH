@@ -8,7 +8,6 @@ import {
   CalendarDays,
   ChartNoAxesCombined,
   ChevronDown,
-  FileCheck2,
   GitPullRequestCreateArrow,
   Home,
   LayoutDashboard,
@@ -188,7 +187,6 @@ const menuGroups: DropdownNavigationItem[] = [
         title: 'Abertura da vaga',
         items: [
           { label: 'Requisições', href: '#/recrutamento/requisicoes', description: 'Operações solicita a abertura da vaga', icon: GitPullRequestCreateArrow, active: (route) => route.startsWith('/recrutamento/requisicoes') },
-          { label: 'Aprovações', href: '#/recrutamento/aprovacoes', description: 'Diretoria analisa e registra a decisão', icon: FileCheck2, active: (route) => route === '/recrutamento/aprovacoes' },
         ],
       },
       {
