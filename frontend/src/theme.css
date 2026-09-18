@@ -1052,6 +1052,24 @@
 .dark .agenda-detail-event time,
 .dark .agenda-detail-event dd { color: #c9dfd3 !important; }
 
+/* Dia: preserve a hierarquia da linha do tempo nos mesmos níveis do tema. */
+.dark .agenda-focused-day > header { border-color: #1f382e; }
+.dark .agenda-focused-day h2, .dark .agenda-day-event-heading h3 { color: #e8f4ed; }
+.dark .agenda-focused-day > header p, .dark .agenda-day-time,
+.dark .agenda-day-event-heading > div > span, .dark .agenda-day-event dd { color: #a8beb1; }
+.dark .agenda-day-slot { --appointment-color: #9ed3bc; --appointment-soft: #203a30; }
+.dark .agenda-day-slot.training { --appointment-color: #c3a5ee; --appointment-soft: #302044; }
+.dark .agenda-day-slot.has-conflict { --appointment-color: #ffb4c1; --appointment-soft: #461923; }
+.dark .agenda-day-slot::before { background: #315345; }
+.dark .agenda-day-time time:first-child, .dark .agenda-day-event dt { color: #9ed3bc; }
+.dark .agenda-day-event { background: #101512; border-color: #29483b; }
+.dark .agenda-day-event footer button { color: #d9eee2; background: #101512; border-color: #315345; }
+.dark .agenda-day-event footer button:hover { background: #203a30; border-color: #79b39d; }
+.dark .agenda-day-conflict { color: #ffb4c1; background: #36141c; }
+.dark .agenda-command-screen button:focus-visible, .dark .agenda-command-screen input:focus-visible { outline-color: #9ed3bc; }
+.dark .agenda-focused-day .agenda-empty-day { color: #a8beb1; }
+.dark .agenda-focused-day .agenda-empty-day strong { color: #e8f4ed; }
+
 /* Paleta final do modo escuro: preto dominante com verde Alpha RH nos estados interativos. */
 .dark :is(
   .board-surface, .report-panel, .report-kpi, .admin-user-directory, .structure-table,

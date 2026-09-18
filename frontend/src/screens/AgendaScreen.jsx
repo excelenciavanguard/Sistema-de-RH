@@ -59,7 +59,7 @@ export function AgendaScreen() {
       <ScreenHeader title="Agenda" description="Entrevistas, tarefas e compromissos da equipe." actions={<><button className="secondary-action"><Plus size={17} />Novo compromisso</button><button className="primary-action"><CalendarPlus size={17} />Agendar entrevista</button></>} />
       <section className="surface-panel agenda-command-surface">
         <header className="agenda-command-toolbar">
-          <div className="agenda-date-navigation"><button type="button" aria-label="Período anterior"><ChevronLeft /></button><button type="button">Hoje</button><button type="button" aria-label="Próximo período"><ChevronRight /></button><strong>Abril de 2025</strong></div>
+          <div className="agenda-date-navigation"><button type="button" aria-label="Período anterior"><ChevronLeft /></button><button type="button">Hoje</button><button type="button" aria-label="Próximo período"><ChevronRight /></button><strong>{mode === "day" ? "22 de abril de 2025" : "Abril de 2025"}</strong></div>
           <div className="agenda-toolbar-actions">
             <FilterMenu label="Calendários" open={openFilter === "calendars"} onToggle={() => setOpenFilter((current) => current === "calendars" ? null : "calendars")}>
               {calendarOptions.map((label) => <label key={label}><input type="checkbox" checked={selectedCalendars.has(label)} onChange={() => toggleSet(setSelectedCalendars, label)} />{label}</label>)}
@@ -109,7 +109,38 @@ function WeekView({ events, onSelectDay }) {
 }
 
 function DayView({ events }) {
-  return <div className="agenda-day-view agenda-focused-day" data-testid="agenda-day-view"><header><div><span><CalendarDays /></span><div><h2>Terça-feira, 22 de abril</h2><p>{events.length} compromissos programados</p></div></div><button type="button" className="secondary-action"><Plus size={15} />Novo compromisso</button></header><div className="agenda-day-timeline">{events.map((event) => <DetailedEvent key={event.id} event={event} compact />)}</div></div>;
+  const orderedEvents = [...events].sort((a, b) => a.start - b.start || a.id - b.id);
+  return <div className="agenda-day-view agenda-focused-day" data-testid="agenda-day-view">
+    <header><div><span aria-hidden="true"><CalendarDays /></span><div><h2>Terça-feira, 22 de abril</h2><p aria-live="polite">{events.length} {events.length === 1 ? "compromisso programado" : "compromissos programados"}</p></div></div></header>
+    {orderedEvents.length ? <ol className="agenda-day-timeline" aria-label="Compromissos do dia em ordem de horário">
+      {orderedEvents.map((event) => <li key={event.id} className={`agenda-day-slot ${event.type}${event.conflict ? " has-conflict" : ""}`}>
+        <div className="agenda-day-time" aria-label={`Das ${formatTime(event.start)} às ${formatTime(event.start + event.duration)}`}>
+          <time dateTime={`2025-04-22T${formatTime(event.start)}`}>{formatTime(event.start)}</time>
+          <time dateTime={`2025-04-22T${formatTime(event.start + event.duration)}`}>{formatTime(event.start + event.duration)}</time>
+        </div>
+        <DayEvent event={event} />
+      </li>)}
+    </ol> : <div className="agenda-empty-day"><CalendarDays aria-hidden="true" /><strong>Nenhum compromisso com os filtros atuais</strong><p>Revise os filtros Calendários e Tipos para exibir outros compromissos.</p></div>}
+  </div>;
+}
+
+function DayEvent({ event }) {
+  const tone = event.conflict ? "danger" : event.status === "Confirmada" ? "success" : "warning";
+  return <article className="agenda-day-event" aria-labelledby={`agenda-day-event-${event.id}`}>
+    <header className="agenda-day-event-heading">
+      <div><span>{event.title}</span><h3 id={`agenda-day-event-${event.id}`}>{event.person}</h3></div>
+      <StatusPill tone={tone}>{event.status}</StatusPill>
+    </header>
+    {event.conflict && <p className="agenda-day-conflict"><AlertTriangle aria-hidden="true" />Conflito ilustrativo — verificar antes de agendar.</p>}
+    <div className="agenda-day-event-body">
+      <dl>
+        <div><dt><BriefcaseBusiness aria-hidden="true" /><span className="sr-only">{event.type === "interview" ? "Vaga" : "Assunto"}</span></dt><dd>{event.type === "interview" ? "Vaga" : "Assunto"}: {event.vacancy}</dd></div>
+        <div><dt><UserRound aria-hidden="true" /><span className="sr-only">Responsável</span></dt><dd>Responsável: {event.responsible}</dd></div>
+        <div><dt>{event.location === "Teams" ? <Video aria-hidden="true" /> : <MapPin aria-hidden="true" />}<span className="sr-only">Local</span></dt><dd>{event.location}</dd></div>
+      </dl>
+      <footer><button type="button"><Pencil aria-hidden="true" />Editar</button>{event.type === "interview" && <button type="button"><ExternalLink aria-hidden="true" />Abrir candidato</button>}</footer>
+    </div>
+  </article>;
 }
 
 function AgendaEvent({ event, onClick }) {
