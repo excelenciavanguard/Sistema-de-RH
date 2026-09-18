@@ -17,6 +17,7 @@ export type DropdownNavigationItem = {
   label: string;
   description: string;
   icon?: LucideIcon;
+  href?: string;
   subMenus: Array<{
     title: string;
     items: DropdownNavigationLink[];
@@ -50,6 +51,16 @@ export function DropdownNavigation({ navItems, route, className }: DropdownNavig
             const open = openMenu === navItem.label;
             const active = navItem.active?.(route) ?? false;
             const NavIcon = navItem.icon;
+            if (navItem.href) {
+              return (
+                <li key={navItem.id} className="relative">
+                  <a href={navItem.href} className={cn('alpha-dropdown-trigger relative flex h-10 items-center justify-center gap-2 overflow-hidden border border-transparent px-3 text-[14px] font-semibold text-[#163832] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#235347]/30', active && 'is-active')} aria-current={active ? 'page' : undefined}>
+                    {NavIcon ? <NavIcon className="relative z-10 size-[17px]" aria-hidden="true" /> : null}
+                    <span className="relative z-10">{navItem.label}</span>
+                  </a>
+                </li>
+              );
+            }
             return (
               <li
                 key={navItem.id}

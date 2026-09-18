@@ -728,6 +728,13 @@
 
 .dark .process-row:hover { background: #19221f !important; }
 
+.dark .responsibility-flow { color: #dff3e4; border-color: #293e35; background: #101714; box-shadow: none; }
+.dark .flow-connector { background: #34443d; }
+.dark .flow-step > span { color: #bde4cf; border-color: #3e6c57; background: #183a2b; }
+.dark .flow-step.active > span { color: #07130e; border-color: #79b39d; background: #79b39d; }
+.dark .flow-step:hover > span { color: #07130e; border-color: #9ed3bc; background: #9ed3bc; box-shadow: 0 4px 12px rgba(0,0,0,.28); }
+.dark .flow-step small { color: #a8beb1; }
+
 .dark .candidate-stage b {
   color: #dff3e4 !important;
   border-color: #34443d !important;

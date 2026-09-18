@@ -94,9 +94,8 @@ export function Header({ route }: HeaderProps) {
             {route !== '/recrutamento/vagas/nova' && <a href="#/recrutamento/vagas/nova" className="alpha-create-vacancy" aria-label="Criar vaga" title="Criar vaga">
               <Plus className="size-[17px]" /><span>Criar vaga</span>
             </a>}
-            <a href="/mobilidade.html" className="alpha-utility-action relative" aria-label="Abrir laboratório de mobilidade" title="Laboratório de mobilidade">
-              <Bell className="size-[18px]" />
-              <span className="absolute right-[8px] top-[7px] size-2 rounded-full bg-[#f4a51c] ring-2 ring-white" aria-hidden="true" />
+            <a href="#/agenda" className={cn('alpha-utility-action alpha-header-agenda', route === '/agenda' && 'is-active')} aria-label="Abrir agenda" title="Agenda" aria-current={route === '/agenda' ? 'page' : undefined}>
+              <CalendarDays className="size-[18px]" /><span>Agenda</span>
             </a>
             <span className="hidden h-6 w-px bg-[#d7e5db] xl:block" aria-hidden="true" />
             <div
@@ -120,6 +119,10 @@ export function Header({ route }: HeaderProps) {
                   <span className="alpha-profile-option-icon">{darkMode ? <Sun className="size-[17px]" /> : <Moon className="size-[17px]" />}</span>
                   <span><strong>{darkMode ? 'Modo claro' : 'Modo escuro'}</strong><small>{darkMode ? 'Usar aparência clara' : 'Usar aparência escura'}</small></span>
                 </button>
+                <a className="alpha-profile-theme-action" role="menuitem" href="/mobilidade.html" onClick={() => setProfileOpen(false)}>
+                  <span className="alpha-profile-option-icon relative"><Bell className="size-[17px]" /><i className="alpha-profile-notification-dot" aria-hidden="true" /></span>
+                  <span><strong>Notificações</strong><small>Ver avisos e atualizações</small></span>
+                </a>
                 <a className="alpha-profile-theme-action alpha-profile-logout" role="menuitem" href="#/login" onClick={(event) => { event.preventDefault(); setProfileOpen(false); navigateTo(ROUTES.login); }}>
                   <span className="alpha-profile-option-icon"><LogOut className="size-[17px]" /></span>
                   <span><strong>Sair da conta</strong><small>Encerrar esta sessão</small></span>
@@ -147,6 +150,9 @@ function MobileMenu({ open, route }: { open: boolean; route: string }) {
       </label>
       <a href="#/inicio" className={cn('mt-3 flex items-center gap-3 rounded-xl bg-white p-3 text-sm font-bold text-[#163832] shadow-sm', route === '/inicio' && 'ring-2 ring-[#235347]/20')}>
         <span className="grid size-9 place-items-center rounded-lg bg-[#dff3e4] text-[#235347]"><Home className="size-[17px]" /></span>Início
+      </a>
+      <a href="#/agenda" className={cn('mt-3 flex items-center gap-3 rounded-xl bg-white p-3 text-sm font-bold text-[#163832] shadow-sm', route === '/agenda' && 'ring-2 ring-[#235347]/20')}>
+        <span className="grid size-9 place-items-center rounded-lg bg-[#dff3e4] text-[#235347]"><CalendarDays className="size-[17px]" /></span>Agenda
       </a>
       <div className="mt-3 grid gap-3 sm:grid-cols-2">
         {menuGroups.map((group) => (
@@ -206,21 +212,6 @@ const menuGroups: DropdownNavigationItem[] = [
         items: [
           { label: 'Banco de talentos', href: '#/talentos', description: 'Candidatos classificados e arquivados', icon: UsersRound, active: (route) => route === '/talentos' },
           { label: 'Admissão', href: '#/admissao', description: 'Documentos e preparação da contratação', icon: UserRoundCheck, active: (route) => route === '/admissao' },
-        ],
-      },
-    ],
-  },
-  {
-    id: 3,
-    label: 'Jornada',
-    icon: CalendarDays,
-    description: 'Entrevistas, tarefas, compromissos e próximos passos da equipe de RH.',
-    active: (route) => route === '/agenda',
-    subMenus: [
-      {
-        title: 'Organização',
-        items: [
-          { label: 'Agenda da equipe', href: '#/agenda', description: 'Entrevistas, contatos e compromissos', icon: CalendarDays, active: (route) => route === '/agenda' },
         ],
       },
     ],
