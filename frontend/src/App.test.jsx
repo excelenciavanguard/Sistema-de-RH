@@ -243,13 +243,15 @@ describe("Alpha RH connected screens", () => {
     expect(screen.getByRole("heading", { name: "Contratações e encerramentos" })).toBeInTheDocument();
   });
 
-  it("renders the demonstrative recruitment report with period filtering and an expandable vacancy view", () => {
+  it("renders the demonstrative recruitment report with period filtering and an expandable vacancy view", async () => {
     window.history.replaceState(null, "", "#/relatorios");
     render(<App />);
-    expect(screen.getByLabelText("Data inicial")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Data inicial")).toBeInTheDocument();
     expect(screen.getByLabelText("Data final")).toBeInTheDocument();
     expect(screen.getByText("Currículos recebidos")).toBeInTheDocument();
     expect(screen.getByText("Maior fonte")).toBeInTheDocument();
+    expect(screen.getByText("Currículos recebidos").closest("article")).toHaveClass("report-kpi-blue");
+    expect(screen.getByText("Maior fonte").closest("article")).toHaveClass("report-kpi-violet");
     expect(screen.getByRole("heading", { name: "Fontes de currículos" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Processo agregado" })).toBeInTheDocument();
     expect(screen.queryByText("Salvar visão")).not.toBeInTheDocument();
@@ -262,6 +264,7 @@ describe("Alpha RH connected screens", () => {
     fireEvent.click(screen.getByRole("button", { name: "Pizza" }));
     expect(screen.getByLabelText("Gráfico de pizza das fontes de currículos")).toBeInTheDocument();
     expect(screen.getByLabelText("Gráfico de pizza do processo agregado")).toBeInTheDocument();
+    expect(screen.getByText("Gmail").previousElementSibling).toHaveStyle({ background: "#3b82f6" });
   });
 
   it("opens the selected integration detail", () => {

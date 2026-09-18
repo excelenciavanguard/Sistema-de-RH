@@ -4,6 +4,7 @@ import { WelcomeIntro } from "./components/WelcomeIntro.jsx";
 import { HomeScreen } from "./screens/HomeScreen.jsx";
 import { LoginScreen } from "./screens/LoginScreen";
 import { kanbanCodeFromRoute, navigateTo, routeFromHash, ROUTES } from "./navigation.js";
+import { requisitions as initialRequisitions } from "./mockWorkspaceData.js";
 
 const lazyNamed = (loader, exportName) => lazy(() => loader().then((module) => ({ default: module[exportName] })));
 
@@ -36,6 +37,8 @@ export function App() {
   const [route, setRoute] = useState(() => previewCandidate ? ROUTES.kanban : routeFromHash());
   const [interviewMode, setInterviewMode] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
+  const [editingRequisition, setEditingRequisition] = useState(null);
+  const [requisitionItems, setRequisitionItems] = useState(initialRequisitions);
 
   useEffect(() => {
     const updateRoute = () => setRoute(routeFromHash());
@@ -50,8 +53,8 @@ export function App() {
 
   let content;
   if (route === ROUTES.home) content = <HomeScreen onNavigate={go} />;
-  else if (route === ROUTES.requisitions) content = <RequisitionsScreen onNavigate={go} />;
-  else if (route === ROUTES.requisitionCreate) content = <RequisitionCreateScreen onNavigate={go} />;
+  else if (route === ROUTES.requisitions) content = <RequisitionsScreen requisitions={requisitionItems} onNavigate={go} onCreate={() => { setEditingRequisition(null); go(ROUTES.requisitionCreate); }} onEdit={(requisition) => { setEditingRequisition(requisition); go(ROUTES.requisitionCreate); }} />;
+  else if (route === ROUTES.requisitionCreate) content = <RequisitionCreateScreen onNavigate={go} initialData={editingRequisition} onSave={(updated) => { setRequisitionItems((current) => current.map((item) => item.code === updated.code ? updated : item)); setEditingRequisition(updated); }} />;
   else if (route === ROUTES.approvals) content = <ApprovalsScreen onNavigate={go} />;
   else if (route === ROUTES.vacancies) content = <VacanciesScreen onNavigate={go} />;
   else if (route === ROUTES.vacancyCreate) content = <VacancyCreateScreen onNavigate={go} />;

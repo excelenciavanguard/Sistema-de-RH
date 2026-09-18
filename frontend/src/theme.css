@@ -728,6 +728,13 @@
 
 .dark .process-row:hover { background: #19221f !important; }
 
+.dark .responsibility-flow { color: #dff3e4; border-color: #293e35; background: #101714; box-shadow: none; }
+.dark .flow-connector { background: #34443d; }
+.dark .flow-step > span { color: #bde4cf; border-color: #3e6c57; background: #183a2b; }
+.dark .flow-step.active > span { color: #07130e; border-color: #79b39d; background: #79b39d; }
+.dark .flow-step:hover > span { color: #07130e; border-color: #9ed3bc; background: #9ed3bc; box-shadow: 0 4px 12px rgba(0,0,0,.28); }
+.dark .flow-step small { color: #a8beb1; }
+
 .dark .candidate-stage b {
   color: #dff3e4 !important;
   border-color: #34443d !important;
@@ -1120,3 +1127,4 @@
 .dark :is(.text-action, .load-more, .detail-section-title button, .agenda-dialog-list time) {
   color: #9ed3bc !important;
 }
+.dark .reports-reference-screen .source-row em,.dark .reports-reference-screen .aggregate-stages em,.dark .reports-reference-screen .progress-track em{background:var(--report-series-color,#79b39d)!important}.dark .reports-reference-screen .report-primary-kpis .report-kpi-blue{border-color:#4a91d9!important}.dark .reports-reference-screen .report-primary-kpis .report-kpi-violet{border-color:#9570eb!important}.dark .reports-reference-screen .report-primary-kpis .report-kpi-amber{border-color:#d99a37!important}

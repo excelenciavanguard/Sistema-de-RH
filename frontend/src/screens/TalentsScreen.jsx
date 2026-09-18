@@ -10,11 +10,11 @@ import {
   MoreVertical,
   Search,
   Send,
-  Settings2,
   Tag,
   Target,
   Upload,
   UserPlus,
+  X,
 } from "lucide-react";
 import { ScreenHeader } from "../components/ScreenHeader.jsx";
 import { StatusPill } from "../components/StatusPill.jsx";
@@ -37,7 +37,15 @@ const opportunityDetails = {
   6: { title: "Supervisora de Limpeza", evidence: "4 de 5 requisitos · rota disponível" },
 };
 
-const filterLabels = ["Experiência", "Escolaridade", "Localidade", "Disponibilidade"];
+const talentFilterDefinitions = {
+  experience: { label: "Experiência", options: [["all", "Qualquer experiência"], ["cleaning", "Experiência em limpeza"], ["three_years", "3 anos ou mais"]] },
+  education: { label: "Escolaridade", options: [["all", "Qualquer escolaridade"], ["high_school", "Ensino médio completo"], ["qualification", "Curso ou qualificação"]] },
+  location: { label: "Localidade", options: [["all", "Todas as localidades"], ["rio", "Rio de Janeiro"], ["capital", "Capital"], ["baixada", "Baixada Fluminense"]] },
+  availability: { label: "Disponibilidade", options: [["all", "Qualquer disponibilidade"], ["now", "Disponível agora"], ["confirm", "Interesse a confirmar"]] },
+  mobility: { label: "Mobilidade", options: [["all", "Todas as situações"], ["available", "Rota disponível"], ["pending", "Mobilidade pendente"]] },
+};
+
+const initialTalentFilters = { experience: "cleaning", education: "high_school", location: "all", availability: "now", mobility: "all" };
 
 const talentWorkspaceViews = {
   overview: {
@@ -80,11 +88,23 @@ export function TalentsScreen() {
   const [mode, setMode] = useState("all");
   const [view, setView] = useState("list");
   const [selected, setSelected] = useState([]);
-  const [filters, setFilters] = useState(["Experiência em limpeza", "Ensino médio completo", "Disponível agora"]);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [filters, setFilters] = useState(initialTalentFilters);
   const visible = useMemo(
-    () => talentCandidates.filter((item) => `${item.name} ${item.role} ${item.location} ${item.source} ${item.tags.join(" ")}`.toLowerCase().includes(search.toLowerCase())),
-    [search],
+    () => talentCandidates.filter((item) => {
+      const searchMatch = `${item.name} ${item.role} ${item.location} ${item.source} ${item.tags.join(" ")}`.toLowerCase().includes(search.toLowerCase());
+      const experienceYears = Number.parseInt(item.experience, 10) || 0;
+      const experienceMatch = filters.experience === "all" || (filters.experience === "cleaning" && item.tags.includes("Limpeza")) || (filters.experience === "three_years" && experienceYears >= 3);
+      const educationMatch = filters.education === "all" || (filters.education === "high_school" && item.education === "Ensino médio completo") || (filters.education === "qualification" && item.education !== "Ensino médio completo");
+      const locationMatch = filters.location === "all" || (filters.location === "rio" && item.location.includes("RJ")) || (filters.location === "capital" && !item.location.includes("Duque de Caxias")) || (filters.location === "baixada" && item.location.includes("Duque de Caxias"));
+      const availabilityMatch = filters.availability === "all" || (filters.availability === "now" && item.availability === "Disponível agora") || (filters.availability === "confirm" && item.availability.toLowerCase().includes("confirm"));
+      const mobilityMatch = filters.mobility === "all" || (filters.mobility === "available" && item.mobility === "Rota disponível") || (filters.mobility === "pending" && item.mobility === "Mobilidade pendente");
+      return searchMatch && experienceMatch && educationMatch && locationMatch && availabilityMatch && mobilityMatch;
+    }),
+    [filters, search],
   );
+
+  const activeFilterEntries = Object.entries(filters).filter(([, value]) => value !== "all");
 
   function toggleCandidate(id) {
     setSelected((current) => current.includes(id) ? current.filter((value) => value !== id) : [...current, id]);
@@ -140,17 +160,24 @@ export function TalentsScreen() {
               placeholder={vacancyMode ? "Buscar nos candidatos compatíveis" : "Buscar por nome, telefone, e-mail ou função"}
             />
           </label>
-          {filterLabels.map((label) => (
-            <button type="button" className="filter-select" key={label}><BriefcaseBusiness size={15} />{label}<ChevronDown size={14} /></button>
-          ))}
-          <button type="button" className="filter-more"><Filter size={15} />Mais filtros <b>2</b></button>
-          <button type="button" className="filter-select talent-personalize"><Settings2 size={15} />Personalizar</button>
+          <div className="talent-filters-wrap">
+            <button type="button" className={`filter-more talent-filters-trigger ${activeFilterEntries.length ? "is-active" : ""}`} onClick={() => setFiltersOpen((current) => !current)} aria-expanded={filtersOpen} aria-controls="talent-filters-popover">
+              <Filter size={16} />Filtros{activeFilterEntries.length > 0 && <b>{activeFilterEntries.length}</b>}<ChevronDown size={14} />
+            </button>
+            {filtersOpen && <div className="talent-filters-popover" id="talent-filters-popover" role="dialog" aria-label="Opções de filtros do banco de talentos">
+              <header><div><strong>Filtrar talentos</strong><small>Todas as opções em um só lugar</small></div><button type="button" aria-label="Fechar filtros" onClick={() => setFiltersOpen(false)}><X size={16} /></button></header>
+              <div className="talent-filter-options">
+                {Object.entries(talentFilterDefinitions).map(([key, definition]) => <label key={key}><span>{definition.label}</span><select value={filters[key]} onChange={(event) => setFilters((current) => ({ ...current, [key]: event.target.value }))}>{definition.options.map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>)}
+              </div>
+              <footer><button type="button" onClick={() => setFilters(Object.fromEntries(Object.keys(talentFilterDefinitions).map((key) => [key, "all"])))}>Limpar filtros</button><button type="button" className="primary-small" onClick={() => setFiltersOpen(false)}>Aplicar</button></footer>
+            </div>}
+          </div>
         </div>
 
-        {filters.length > 0 ? (
+        {activeFilterEntries.length > 0 ? (
           <div className="active-filter-row">
-            {filters.map((filter) => <button type="button" key={filter} onClick={() => setFilters((current) => current.filter((value) => value !== filter))}>{filter}<span aria-hidden="true">×</span></button>)}
-            <button type="button" className="clear-filter-action" onClick={() => setFilters([])}>Limpar filtros</button>
+            {activeFilterEntries.map(([key, value]) => <button type="button" key={key} onClick={() => setFilters((current) => ({ ...current, [key]: "all" }))}>{talentFilterDefinitions[key].options.find(([option]) => option === value)?.[1]}<span aria-hidden="true">×</span></button>)}
+            <button type="button" className="clear-filter-action" onClick={() => setFilters(Object.fromEntries(Object.keys(talentFilterDefinitions).map((key) => [key, "all"])))}>Limpar filtros</button>
           </div>
         ) : null}
       </section>

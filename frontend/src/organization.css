@@ -1,9 +1,52 @@
 /* Shared operating controls and surface hierarchy. */
 :root {
   --control-height: 36px;
-  --control-radius: 7px;
+  --control-radius: 10px;
+  --radius-card: 14px;
+  --radius-panel: 18px;
+  --radius-dialog: 22px;
   --surface-base: #fff;
   --surface-raised: #fff;
+}
+/* Shared rounded geometry. Keep table cells, progress bars and avatars intact. */
+#root :is(.board-surface, .surface-panel, .processes-card, .activities-card,
+  .vacancies-panel, .vacancy-about, .report-panel, .report-kpi, .table-card,
+  .content-card, .data-card, .admin-user-directory, .structure-table,
+  .admin-access-summary, .stages-panel, .rejection-reasons, .talent-discovery-panel,
+  .calendar-columns, .iw-panel, .vacancy-detail-card) {
+  border-radius: var(--radius-panel);
+}
+#root :is(.candidate-card, .kanban-column, .agenda-detail-event,
+  .talent-card-grid article, .report-insight-panel, .automation-card,
+  .vacancy-interview-card, .integration-detail-panel) {
+  border-radius: var(--radius-card);
+}
+#root .kanban-column > .column-header {
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+#root :is(.primary-action, .secondary-action, .more-action, .filter-button,
+  .filter-select, .filter-more, .candidate-search, .vacancies-search,
+  .filter-search, .vacancies-open, .alpha-create-vacancy, .iw-button,
+  .admin-primary-action, .run-extraction, .move-stage, .table-action) {
+  border-radius: var(--control-radius);
+}
+#root :is(.screen-workspace, .candidate-modal, .iw-shell) :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+  select, textarea) {
+  border-radius: var(--control-radius);
+}
+/* Search inputs retain their outer wrapper's single outline. */
+#root :is(.candidate-search, .vacancies-search, .filter-search) input { border-radius: 0; }
+.alpha-app-header :is(.alpha-home-link, .alpha-dropdown-trigger, .alpha-profile-button),
+.alpha-app-header .alpha-desktop-nav .alpha-dropdown-trigger { border-radius: var(--control-radius); }
+.alpha-app-header a.alpha-dropdown-trigger { text-decoration: none; }
+.alpha-dropdown-panel, .alpha-profile-popover,
+.recruitment-workspace .kanban-filters-popover { border-radius: var(--radius-panel); }
+.modal-backdrop :is(.candidate-modal, .extraction-lab),
+.admin-user-modal, .admin-invite-dialog { border-radius: var(--radius-dialog); }
+@media (max-width: 720px) {
+  :root { --radius-panel: 14px; --radius-card: 12px; }
+  .modal-backdrop :is(.candidate-modal, .extraction-lab) { border-radius: 0; }
 }
 .app-shell :is(.primary-action, .secondary-action, .more-action, .filter-button, .candidate-search, .vacancies-search, .vacancies-filter select, .vacancies-open) {
   min-height: var(--control-height);
@@ -51,6 +94,69 @@
 .dark .app-shell :is(.candidate-card, .agenda-detail-event, .talent-card-grid article) { background: var(--surface-raised) !important; border-color: #35433b !important; }
 .dark .alpha-header-bar .alpha-create-vacancy { background: #3d8a68; border-color: #4d9d79; color: #020604; }
 .dark .candidate-history-note, .dark .candidate-history-empty { color: #b7c8be; }
+
+/* Cabeçalho compacto inspirado em docks: mantém a navegação horizontal e a identidade Alpha RH. */
+.alpha-header-bar {
+  --header-surface: #edf6ef;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  color: #163832;
+  background: var(--header-surface);
+  box-shadow: none;
+}
+.dark .alpha-header-bar { --header-surface: #050806; border-bottom: 0; }
+.alpha-header-bar::before,
+.alpha-header-bar::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 100%;
+  width: 22px;
+  height: 26px;
+  pointer-events: none;
+}
+.alpha-header-bar::before {
+  left: 0;
+  background: radial-gradient(ellipse at bottom right, transparent 69%, var(--header-surface) 71%);
+}
+.alpha-header-bar::after {
+  right: 0;
+  background: radial-gradient(ellipse at bottom left, transparent 69%, var(--header-surface) 71%);
+}
+.alpha-header-shell { height: 54px !important; max-width: none !important; align-items: center; padding-inline: clamp(12px, 1.6vw, 24px) !important; }
+.alpha-header-bar .alpha-wordmark { padding: 4px 6px; border-radius: 8px; background: transparent; }
+.alpha-header-bar .alpha-home-link,
+.alpha-header-bar .alpha-dropdown-trigger,
+.alpha-header-bar .alpha-utility-action { color: #163832 !important; }
+.alpha-header-bar .alpha-home-link.is-active,
+.alpha-header-bar .alpha-dropdown-trigger.is-active,
+.alpha-header-bar .alpha-dropdown-trigger.is-open,
+.alpha-header-bar .alpha-dropdown-trigger:hover,
+.alpha-header-bar .alpha-home-link:hover { color: #051f20 !important; background: #d3e8da !important; }
+.alpha-header-bar .alpha-wordmark .alpha-logo-image { filter: none; }
+.alpha-header-bar .alpha-profile-button strong { color: #163832; }
+.alpha-header-bar .alpha-profile-button small { color: #5f716a; }
+.alpha-header-bar :is(.alpha-home-link, .alpha-dropdown-trigger):focus-visible { outline: 2px solid #235347; outline-offset: 2px; }
+.alpha-header-bar .alpha-utility-action { border-radius: 9px; }
+.alpha-header-bar .alpha-utility-action:hover { background: #d3e8da; }
+.alpha-header-bar .alpha-header-agenda.is-active { background: #d3e8da; }
+.alpha-header-bar .alpha-profile-button { color: #163832; }
+.alpha-header-bar .alpha-profile-button:hover { background: #d3e8da; border-radius: 9px; }
+.alpha-header-bar .alpha-create-vacancy { background: #235347; border-color: #235347; color: #fff; }
+.alpha-header-bar .alpha-create-vacancy:hover { background: #163832; }
+.alpha-header-bar .alpha-mobile-toggle { border-color: #cfdfd3 !important; background: #edf6ef !important; color: #163832 !important; }
+.dark .alpha-header-bar .alpha-wordmark { background: #edf6ef; }
+.dark .alpha-header-bar :is(.alpha-home-link, .alpha-dropdown-trigger, .alpha-utility-action, .alpha-profile-button strong) { color: #dff3e4 !important; }
+.dark .alpha-header-bar :is(.alpha-home-link, .alpha-dropdown-trigger):is(:hover, .is-active, .is-open),
+.dark .alpha-header-bar :is(.alpha-utility-action, .alpha-profile-button):hover { background: #163832 !important; color: #fff !important; }
+.dark .alpha-header-bar .alpha-profile-button small { color: #b7cec1; }
+.dark .alpha-profile-notification-dot { box-shadow: 0 0 0 2px #0f1312; }
+@media (max-width: 720px) {
+  .alpha-header-bar::before, .alpha-header-bar::after { width: 14px; height: 18px; }
+  .alpha-header-shell { padding-inline: 12px !important; }
+}
 @media (max-width: 1120px) {
   .recruitment-workspace .kanban-board { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
   .recruitment-workspace .stage-sequence { display: block; color: var(--muted); margin-bottom: 3px; }
