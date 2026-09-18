@@ -10,7 +10,6 @@ const lazyNamed = (loader, exportName) => lazy(() => loader().then((module) => (
 
 const RequisitionsScreen = lazyNamed(() => import("./screens/RequisitionsScreen.jsx"), "RequisitionsScreen");
 const RequisitionCreateScreen = lazyNamed(() => import("./screens/RequisitionCreateScreen.jsx"), "RequisitionCreateScreen");
-const ApprovalsScreen = lazyNamed(() => import("./screens/ApprovalsScreen.jsx"), "ApprovalsScreen");
 const VacanciesScreen = lazyNamed(() => import("./screens/VacanciesScreen.jsx"), "VacanciesScreen");
 const VacancyCreateScreen = lazyNamed(() => import("./screens/VacancyCreateScreen.jsx"), "VacancyCreateScreen");
 const KanbanScreen = lazyNamed(() => import("./screens/KanbanScreen.jsx"), "KanbanScreen");
@@ -37,6 +36,7 @@ export function App() {
   const [route, setRoute] = useState(() => previewCandidate ? ROUTES.kanban : routeFromHash());
   const [interviewMode, setInterviewMode] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
+  const [sourceRequisition, setSourceRequisition] = useState(null);
   const [editingRequisition, setEditingRequisition] = useState(null);
   const [requisitionItems, setRequisitionItems] = useState(initialRequisitions);
 
@@ -46,18 +46,17 @@ export function App() {
     return () => window.removeEventListener("hashchange", updateRoute);
   }, []);
 
-  const go = (nextRoute) => navigateTo(nextRoute);
+  const go = (nextRoute) => { if (nextRoute !== ROUTES.vacancyCreate) setSourceRequisition(null); navigateTo(nextRoute); };
 
   if (showWelcome) return <WelcomeIntro userName={currentUser.name} onComplete={() => { setShowWelcome(false); go(ROUTES.home); }} />;
   if (route === ROUTES.login) return <LoginScreen onEnter={() => setShowWelcome(true)} />;
 
   let content;
   if (route === ROUTES.home) content = <HomeScreen onNavigate={go} />;
-  else if (route === ROUTES.requisitions) content = <RequisitionsScreen requisitions={requisitionItems} onNavigate={go} onCreate={() => { setEditingRequisition(null); go(ROUTES.requisitionCreate); }} onEdit={(requisition) => { setEditingRequisition(requisition); go(ROUTES.requisitionCreate); }} />;
-  else if (route === ROUTES.requisitionCreate) content = <RequisitionCreateScreen onNavigate={go} initialData={editingRequisition} onSave={(updated) => { setRequisitionItems((current) => current.map((item) => item.code === updated.code ? updated : item)); setEditingRequisition(updated); }} />;
-  else if (route === ROUTES.approvals) content = <ApprovalsScreen onNavigate={go} />;
+  else if (route === ROUTES.requisitions) content = <RequisitionsScreen onCreateVacancy={(item) => { setSourceRequisition(item); go(ROUTES.vacancyCreate); }} requisitions={requisitionItems} onNavigate={go} onCreate={() => { setEditingRequisition(null); go(ROUTES.requisitionCreate); }} onEdit={(requisition) => { setEditingRequisition(requisition); go(ROUTES.requisitionCreate); }} />;
+  else if (route === ROUTES.requisitionCreate) content = <RequisitionCreateScreen onNavigate={go} initialData={editingRequisition} onSave={(updated) => { setRequisitionItems((current) => current.some((item) => item.code === updated.code) ? current.map((item) => item.code === updated.code ? updated : item) : [updated, ...current]); setEditingRequisition(updated); }} />;
   else if (route === ROUTES.vacancies) content = <VacanciesScreen onNavigate={go} />;
-  else if (route === ROUTES.vacancyCreate) content = <VacancyCreateScreen onNavigate={go} />;
+  else if (route === ROUTES.vacancyCreate) content = <VacancyCreateScreen onNavigate={go} sourceRequisition={sourceRequisition} />;
   else if (kanbanCodeFromRoute(route)) content = <KanbanScreen key={route} vacancyCode={kanbanCodeFromRoute(route)} onInterviewModeChange={setInterviewMode} />;
   else if (route === ROUTES.talents) content = <TalentsScreen onNavigate={go} />;
   else if (route === ROUTES.agenda) content = <AgendaScreen />;

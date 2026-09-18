@@ -3,7 +3,7 @@ export const ROUTES = {
   home: "/inicio",
   requisitions: "/recrutamento/requisicoes",
   requisitionCreate: "/recrutamento/requisicoes/nova",
-  approvals: "/recrutamento/aprovacoes",
+
   vacancies: "/recrutamento/vagas",
   vacancyCreate: "/recrutamento/vagas/nova",
   kanban: "/recrutamento/vagas/2026-0157/kanban",
@@ -28,6 +28,7 @@ function isKnownRoute(route) {
 export function routeFromHash(hash = window.location.hash) {
   if (!hash || hash === "#" || hash === "#/") return ROUTES.login;
   const route = hash.replace(/^#/, "").split("?")[0];
+  if (route === "/recrutamento/aprovacoes") return ROUTES.requisitions;
   return isKnownRoute(route) ? route : ROUTES.home;
 }
 

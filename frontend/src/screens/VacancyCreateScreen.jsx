@@ -44,10 +44,10 @@ const initialVacancy = {
   description: "Executar limpeza e conservação das áreas do posto, seguindo os procedimentos operacionais e de segurança.",
 };
 
-export function VacancyCreateScreen({ onNavigate }) {
+export function VacancyCreateScreen({ onNavigate, sourceRequisition = null }) {
   const [step, setStep] = useState(0);
   const [published, setPublished] = useState(false);
-  const [vacancy, setVacancy] = useState(initialVacancy);
+  const [vacancy, setVacancy] = useState(() => sourceRequisition ? { ...initialVacancy, title: sourceRequisition.role, post: sourceRequisition.post, quantity: String(sourceRequisition.openings), vacancyType: sourceRequisition.needType || initialVacancy.vacancyType, startDate: sourceRequisition.startDate || "", description: sourceRequisition.reason || "" } : initialVacancy);
   const [questions, setQuestions] = useState([
     { text: "Possui disponibilidade para trabalhar à noite?", required: true, type: "Sim ou não" },
     { text: "Qual é sua disponibilidade para início?", required: true, type: "Data" },
@@ -64,9 +64,9 @@ export function VacancyCreateScreen({ onNavigate }) {
 
   return (
     <main className="screen-workspace vacancy-builder-screen">
-      <ScreenHeader title="Criar vaga" description="Transforme a requisição aprovada em uma vaga clara, objetiva e pronta para receber candidaturas." />
+      <ScreenHeader title="Criar vaga" description="Prepare os detalhes da vaga e publique quando estiver pronta para receber candidaturas." />
 
-      <div className="source-approval"><CheckCircle size={19} weight="fill" /><div><strong>REQ-2026-041 aprovada pela Diretoria</strong><span>Auxiliar de Serviços Gerais · Leblon Power · 4 vagas</span></div><button type="button">Ver requisição</button></div>
+      {sourceRequisition && <div className="source-approval"><ClipboardText size={19} /><div><strong>Origem: {sourceRequisition.code}</strong><span>{sourceRequisition.role} · {sourceRequisition.post} · {sourceRequisition.openings} vagas</span></div><button type="button" onClick={() => onNavigate(ROUTES.requisitions)}>Ver requisições</button></div>}
 
       {published ? (
         <div className="workflow-success" role="status"><span><Check size={20} weight="bold" /></span><div><strong>Vaga publicada no protótipo</strong><p>O fluxo visual foi concluído. Nenhuma publicação externa ou gravação real foi executada.</p></div><button type="button" onClick={() => onNavigate(ROUTES.kanban)}>Visualizar vaga <ArrowRight size={17} /></button></div>
