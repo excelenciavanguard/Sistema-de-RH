@@ -1102,3 +1102,4 @@
 .dark :is(.text-action, .load-more, .detail-section-title button, .agenda-dialog-list time) {
   color: #9ed3bc !important;
 }
+.dark .reports-reference-screen .source-row em,.dark .reports-reference-screen .aggregate-stages em,.dark .reports-reference-screen .progress-track em{background:var(--report-series-color,#79b39d)!important}.dark .reports-reference-screen .report-primary-kpis .report-kpi-blue{border-color:#4a91d9!important}.dark .reports-reference-screen .report-primary-kpis .report-kpi-violet{border-color:#9570eb!important}.dark .reports-reference-screen .report-primary-kpis .report-kpi-amber{border-color:#d99a37!important}
